@@ -1,0 +1,9 @@
+{
+    "path" : "C:/wamp64/www/drunktweets",
+    "sortOrder" : [
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}
