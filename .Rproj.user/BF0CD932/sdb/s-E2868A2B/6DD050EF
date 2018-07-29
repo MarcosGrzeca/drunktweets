@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "library(keras)\nlibrary(readr)\nlibrary(stringr)\nlibrary(purrr)\nlibrary(tibble)\nlibrary(dplyr)\nlibrary(tools)\n\nsource(file_path_as_absolute(\"utils/getDados.R\"))\ndados <- getDados()\n\n#Separação teste e treinamento\nset.seed(10)\nsplit=0.80\ntrainIndex <- createDataPartition(dados$resposta, p=split, list=FALSE)\n\n#dados_train <- as.data.frame(unclass(dados[ trainIndex,]))\ndados_train <- as.data.frame(dados[ trainIndex,])\n\nx_train <- subset(dados_train, select = c(textOriginal))\ny_train <- dados_train$resposta\nlabels_train <- as.array(y_train)\n\n\ndados_test <- dados[-trainIndex,]\nx_test <- subset(dados_test, select = c(textOriginal))\ny_test <- dados_test$resposta\nlabels_test <- as.array(as.numeric(y_test))\n\n#VERIFICAR\n# Data Preparation --------------------------------------------------------s\nmax_features <- 10000\nmaxlen <- 50\n\n# Parameters --------------------------------------------------------------\nbatch_size <- 32\nepochs <- 3\nembedding_dims <- 100\nfilters <- 250\nkernel_size <- 3\nhidden_dims <- 250\n\n## PRÉ-PROCESSAMENTO\ndadosProcessados <- processarDados(dados_train$textOriginal, maxlen, max_features)\nView(dadosProcessados)\n\nmodel <- keras_model_sequential()\nmodel %>% \n  # Start off with an efficient embedding layer which maps\n  # the vocab indices into embedding_dims dimensions\n  layer_embedding(max_features, embedding_dims, input_length = maxlen) %>%\n  layer_dropout(0.2) %>%\n  \n  # Add a Convolution1D, which will learn filters\n  # Word group filters of size filter_length:\n  layer_conv_1d(\n    filters, kernel_size, \n    padding = \"valid\", activation = \"relu\", strides = 1\n  ) %>%\n  # Apply max pooling:\n  layer_global_max_pooling_1d() %>%\n  \n  # Add a vanilla hidden layer:\n  layer_dense(hidden_dims) %>%\n  \n  # Apply 20% layer dropout\n  layer_dropout(0.2) %>%\n  layer_activation(\"relu\") %>%\n  \n  # Project onto a single unit output layer, and squash it with a sigmoid\n  \n  layer_dense(1) %>%\n  layer_activation(\"sigmoid\")\n\n# Compile model\nmodel %>% compile(\n  loss = \"binary_crossentropy\",\n  optimizer = \"adam\",\n  metrics = \"accuracy\"\n)\n\n# Training ----------------------------------------------------------------\nhistory <- model %>%\n  fit(\n    dadosProcessados, array(dados_train$resposta),\n    batch_size = batch_size,\n    epochs = epochs,\n    validation_split = 0.2\n  )\n",
+    "created" : 1532884883415.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3665154674",
+    "id" : "6DD050EF",
+    "lastKnownWriteTime" : 1532890941,
+    "last_content_update" : 1532890941644,
+    "path" : "C:/wamp64/www/drunktweets/modelos/cnn_drunk.R",
+    "project_path" : "modelos/cnn_drunk.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -9,8 +9,6 @@ library(tools)
 source(file_path_as_absolute("utils/getDados.R"))
 dados <- getDados()
 
-View(dados)
-
 #Separação teste e treinamento
 set.seed(10)
 split=0.80
@@ -18,11 +16,11 @@ trainIndex <- createDataPartition(dados$resposta, p=split, list=FALSE)
 
 #dados_train <- as.data.frame(unclass(dados[ trainIndex,]))
 dados_train <- as.data.frame(dados[ trainIndex,])
+
 x_train <- subset(dados_train, select = c(textOriginal))
 y_train <- dados_train$resposta
-labels_train <- as.array(as.numeric(y_train))
+labels_train <- as.array(y_train)
 
-View(x_train)
 
 dados_test <- dados[-trainIndex,]
 x_test <- subset(dados_test, select = c(textOriginal))
@@ -43,7 +41,7 @@ kernel_size <- 3
 hidden_dims <- 250
 
 ## PRÉ-PROCESSAMENTO
-dadosProcessados <- processarDados(x_train, maxlen, max_features)
+dadosProcessados <- processarDados(dados_train$textOriginal, maxlen, max_features)
 View(dadosProcessados)
 
 model <- keras_model_sequential()
@@ -83,11 +81,9 @@ model %>% compile(
 
 # Training ----------------------------------------------------------------
 
-
-
 history <- model %>%
   fit(
-    dadosProcessados, labels_train,
+    dadosProcessados, array(dados_train$resposta),
     batch_size = batch_size,
     epochs = epochs,
     validation_split = 0.2

@@ -36,7 +36,8 @@ getDados <- function() {
   dados$resposta[dados$resposta == "N"] <- 0
   dados$resposta[dados$resposta == "S"] <- 1
 
-  dados$resposta <- as.factor(dados$resposta)
+  #dados$resposta <- as.factor(dados$resposta)
+  dados$resposta <- as.numeric(dados$resposta)
   dados$textOriginal <- enc2utf8(dados$textOriginal)
   dados$textOriginal <- iconv(dados$textOriginal, to='ASCII//TRANSLIT')
   
