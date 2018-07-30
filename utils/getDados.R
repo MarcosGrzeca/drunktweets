@@ -30,6 +30,8 @@ getDados <- function() {
                       textOriginal,
                       hashtags
                       FROM semantic_tweets_alcolic
+                      WHERE possuiURL = 0
+                      AND LENGTH(textOriginal) > 5
                       ")
 
   dados$resposta[dados$resposta == "X"] <- 1
@@ -40,6 +42,11 @@ getDados <- function() {
   dados$resposta <- as.numeric(dados$resposta)
   dados$textOriginal <- enc2utf8(dados$textOriginal)
   dados$textOriginal <- iconv(dados$textOriginal, to='ASCII//TRANSLIT')
+  
+
+  dados$textOriginal = gsub("\b#drunk\b,", "", dados$textOriginal,ignore.case=T)
+  dados$textOriginal = gsub("\b#drank\b,", "", dados$textOriginal,ignore.case=T)
+  dados$textOriginal = gsub("\b#imdrunk\b,", "", dados$textOriginal,ignore.case=T)
   
   #dados$textParser <- enc2utf8(dados$textParser)
   #dados$textParser <- iconv(dados$textParser, to='ASCII//TRANSLIT')

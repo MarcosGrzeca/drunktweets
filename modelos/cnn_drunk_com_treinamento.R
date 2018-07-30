@@ -7,30 +7,68 @@ library(dplyr)
 library(tools)
 
 source(file_path_as_absolute("utils/getDados.R"))
+source(file_path_as_absolute("utils/tokenizer.R"))
 dados <- getDados()
 
 #Separação teste e treinamento
 set.seed(10)
 split=0.80
 trainIndex <- createDataPartition(dados$resposta, p=split, list=FALSE)
+trainIndex
 
 #dados_train <- as.data.frame(unclass(dados[ trainIndex,]))
-dados_train <- as.data.frame(dados[ trainIndex,])
+dados_train <- dados[ trainIndex,]
+x_train <- dados_train
 
-x_train <- subset(dados_train, select = c(textOriginal))
-y_train <- dados_train$resposta
-labels_train <- as.array(y_train)
-
+#x_train <- subset(dados_train, select = c(textOriginal))
+#y_train <- dados_train$resposta
+#labels_train <- as.array(y_train)
 
 dados_test <- dados[-trainIndex,]
-x_test <- subset(dados_test, select = c(textOriginal))
+x_test <- dados_test
+
+#x_test <- subset(dados_test, select = c(textOriginal))
+
 y_test <- dados_test$resposta
 labels_test <- as.array(as.numeric(y_test))
 
-#VERIFICAR
+x3 <- sample(1:10, 1)
+
+# Transformação para integer
+dadosTransformado <- dados %>%
+  mutate(
+    textOriginal = map(textOriginal, ~tokenize_words(.x))
+  ) %>%
+  select(textOriginal)
+
+dadosTransformadoTest <- x_test %>%
+  mutate(
+    textOriginal = map(textOriginal, ~tokenize_words(.x))
+  ) %>%
+  select(textOriginal)
+
+all_data <- bind_rows(dadosTransformado, dadosTransformadoTest)
+vocab <- c(unlist(dadosTransformado$textOriginal), unlist(dadosTransformadoTest$textOriginal)) %>%
+  unique() %>%
+  sort()
+
+all_data <- bind_rows(dadosTransformado)
+vocab <- c(unlist(dadosTransformado$textOriginal)) %>%
+  unique() %>%
+  sort()
+
+vocab_size <- length(vocab) + 1
+maxlen <- map_int(all_data$textOriginal, ~length(.x)) %>% max()
+
+train_vec <- vectorize_stories(dadosTransformado, vocab, maxlen)
+
+textParsers <- map(dadosTransformado$textOriginal, function(x){
+  map_int(x, ~which(.x == vocab))
+})
+
 # Data Preparation --------------------------------------------------------s
 max_features <- 10000
-maxlen <- 50
+#maxlen <- 50
 
 # Parameters --------------------------------------------------------------
 batch_size <- 32
@@ -41,13 +79,14 @@ kernel_size <- 3
 hidden_dims <- 250
 
 ## PRÉ-PROCESSAMENTO
-dadosProcessados <- processarDados(dados_train$textOriginal, maxlen, max_features)
+#dadosProcessados <- processarDados(dados_train$textOriginal, maxlen, max_features)
 
 model <- keras_model_sequential()
 model %>% 
   # Start off with an efficient embedding layer which maps
   # the vocab indices into embedding_dims dimensions
-  layer_embedding(max_features, embedding_dims, input_length = maxlen) %>%
+  #layer_embedding(max_features, embedding_dims, input_length = maxlen) %>%
+  layer_embedding(vocab_size, embedding_dims, input_length = maxlen) %>%
   layer_dropout(0.2) %>%
   
   # Add a Convolution1D, which will learn filters
