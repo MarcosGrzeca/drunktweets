@@ -16,26 +16,19 @@ split=0.80
 trainIndex <- createDataPartition(dados$resposta, p=split, list=FALSE)
 trainIndex
 
-#dados_train <- as.data.frame(unclass(dados[ trainIndex,]))
 dados_train <- dados[ trainIndex,]
-x_train <- dados_train
+dados_test <- dados[-trainIndex,]
 
+x_train <- dados_train
+x_test <- dados_test
 #x_train <- subset(dados_train, select = c(textOriginal))
 #y_train <- dados_train$resposta
 #labels_train <- as.array(y_train)
-
-dados_test <- dados[-trainIndex,]
-x_test <- dados_test
-
-#x_test <- subset(dados_test, select = c(textOriginal))
-
-y_test <- dados_test$resposta
-labels_test <- as.array(as.numeric(y_test))
-
-x3 <- sample(1:10, 1)
+#y_test <- dados_test$resposta
+#labels_test <- as.array(as.numeric(y_test))
 
 # Transformação para integer
-dadosTransformado <- dados %>%
+dadosTransformado <- x_train %>%
   mutate(
     textOriginal = map(textOriginal, ~tokenize_words(.x))
   ) %>%
@@ -52,19 +45,10 @@ vocab <- c(unlist(dadosTransformado$textOriginal), unlist(dadosTransformadoTest$
   unique() %>%
   sort()
 
-all_data <- bind_rows(dadosTransformado)
-vocab <- c(unlist(dadosTransformado$textOriginal)) %>%
-  unique() %>%
-  sort()
-
 vocab_size <- length(vocab) + 1
 maxlen <- map_int(all_data$textOriginal, ~length(.x)) %>% max()
 
 train_vec <- vectorize_stories(dadosTransformado, vocab, maxlen)
-
-textParsers <- map(dadosTransformado$textOriginal, function(x){
-  map_int(x, ~which(.x == vocab))
-})
 
 # Data Preparation --------------------------------------------------------s
 max_features <- 10000
