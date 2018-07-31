@@ -43,22 +43,38 @@ getDados <- function() {
   dados$textOriginal <- enc2utf8(dados$textOriginal)
   dados$textOriginal <- iconv(dados$textOriginal, to='ASCII//TRANSLIT')
   
-
-  dados$textOriginal = gsub("\b#drunk\b,", "", dados$textOriginal,ignore.case=T)
-  dados$textOriginal = gsub("\b#drank\b,", "", dados$textOriginal,ignore.case=T)
-  dados$textOriginal = gsub("\b#imdrunk\b,", "", dados$textOriginal,ignore.case=T)
+  dados$textOriginal = gsub("#drunk |#drunk$", "", dados$textOriginal,ignore.case=T)
+  dados$textOriginal = gsub("#drank |#drank$", "", dados$textOriginal,ignore.case=T)
+  dados$textOriginal = gsub("#imdrunk |#imdrunk$", "", dados$textOriginal,ignore.case=T)
   
   #dados$textParser <- enc2utf8(dados$textParser)
   #dados$textParser <- iconv(dados$textParser, to='ASCII//TRANSLIT')
   #dados$hashtags = gsub("#", "#tag_", dados$hashtags)
   #dados$textParser = gsub("'", "", dados$textParser)
   #dados$numeroErros[dados$numeroErros > 1] <- 1
+  return (dados)
+}
 
-#  dados$entidades <- enc2utf8(dados$entidades)
-#  dados$entidades <- iconv(dados$entidades, to='ASCII//TRANSLIT')
-#  dados$entidades = gsub(" ", "_", dados$entidades)
-#  dados$entidades = gsub(",", " ", dados$entidades)
-#  dados$entidades[is.na(dados$entidades)] <- ""
+getDadosSemHashtags <- function() {
+  dados <- query("SELECT drunk AS resposta,
+                      textOriginal,
+                      hashtags
+                      FROM semantic_tweets_alcolic
+                      WHERE possuiURL = 0
+                      AND LENGTH(textOriginal) > 5
+                      ")
+
+  dados$resposta[dados$resposta == "X"] <- 1
+  dados$resposta[dados$resposta == "N"] <- 0
+  dados$resposta[dados$resposta == "S"] <- 1
+
+  dados$resposta <- as.numeric(dados$resposta)
+  dados$textOriginal <- enc2utf8(dados$textOriginal)
+  dados$textOriginal <- iconv(dados$textOriginal, to='ASCII//TRANSLIT')
+  
+  dados$textOriginal = gsub("#drunk |#drunk$", "", dados$textOriginal,ignore.case=T)
+  dados$textOriginal = gsub("#drank |#drank$", "", dados$textOriginal,ignore.case=T)
+  dados$textOriginal = gsub("#imdrunk |#imdrunk$", "", dados$textOriginal,ignore.case=T)
   return (dados)
 }
 

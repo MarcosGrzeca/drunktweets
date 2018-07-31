@@ -10,6 +10,12 @@ source(file_path_as_absolute("utils/getDados.R"))
 source(file_path_as_absolute("utils/tokenizer.R"))
 dados <- getDados()
 
+library(doMC)
+library(mlbench)
+
+CORES <- 4
+registerDoMC(CORES)
+
 #Separação teste e treinamento
 set.seed(10)
 split=0.80
@@ -19,22 +25,14 @@ trainIndex
 dados_train <- dados[ trainIndex,]
 dados_test <- dados[-trainIndex,]
 
-x_train <- dados_train
-x_test <- dados_test
-#x_train <- subset(dados_train, select = c(textOriginal))
-#y_train <- dados_train$resposta
-#labels_train <- as.array(y_train)
-#y_test <- dados_test$resposta
-#labels_test <- as.array(as.numeric(y_test))
-
 # Transformação para integer
-dadosTransformado <- x_train %>%
+dadosTransformado <- dados_train %>%
   mutate(
     textOriginal = map(textOriginal, ~tokenize_words(.x))
   ) %>%
   select(textOriginal)
 
-dadosTransformadoTest <- x_test %>%
+dadosTransformadoTest <- dados_test %>%
   mutate(
     textOriginal = map(textOriginal, ~tokenize_words(.x))
   ) %>%
@@ -104,10 +102,29 @@ model %>% compile(
 # Training ----------------------------------------------------------------
 history <- model %>%
   fit(
-    dadosProcessados, array(dados_train$resposta),
+    train_vec$new_textParser, array(dados_train$resposta),
     batch_size = batch_size,
     epochs = epochs,
     validation_split = 0.2
   )
 
 history
+
+test_vec <- vectorize_stories(dadosTransformadoTest, vocab, maxlen)
+
+evaluation <- model %>% evaluate(
+  test_vec$new_textParser, array(dados_test$resposta),
+  batch_size = batch_size
+)
+evaluation
+
+#predictions <- model %>% predict(test_vec$new_textParser, type="class")
+#predictions <- model %>% predict(test_vec$new_textParser)
+
+predictions <- model %>% predict_classes(test_vec$new_textParser)
+results <- model %>% evaluate(x_test, y_test)
+print(results)
+
+matriz <- confusionMatrix(data = as.factor(predictions), as.factor(dados_test$resposta), positive="1")
+matriz
+print(paste("F1 ", matriz$byClass["F1"] * 100, "Precisao ", matriz$byClass["Precision"] * 100, "Recall ", matriz$byClass["Recall"] * 100, "Acuracia ", matriz$overall["Accuracy"] * 100))
