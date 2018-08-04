@@ -19,6 +19,7 @@ dados <- query("SELECT t.id, drunk AS resposta,
                     FROM semantic_tweets_nlp tn
                     JOIN semantic_conceito c ON c.palavra = tn.palavra
                     WHERE c.sucesso = 1
+                    GROUP BY 1,2
                   ) AS louco
                JOIN resource_type ty ON ty.resource = louco.resource
                WHERE louco.idTweet = t.id
@@ -68,6 +69,8 @@ library(RWeka)
 
 maFinal <- cbind.fill(dados, dataFrameResource)
 maFinal <- subset(maFinal, select = -c(id, resources))
+
+View(maFinal)
 
 if (!require("FSelector")) {
   install.packages("FSelector")
