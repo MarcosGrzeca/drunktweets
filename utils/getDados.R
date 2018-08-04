@@ -30,7 +30,8 @@ getDados <- function() {
                       textOriginal,
                       hashtags
                       FROM semantic_tweets_alcolic
-                      WHERE possuiURL = 0
+                      WHERE situacao = 1
+                      AND possuiURL = 0
                       AND LENGTH(textOriginal) > 5
                       ")
 
@@ -60,7 +61,8 @@ getDadosSemHashtags <- function() {
                       textOriginal,
                       hashtags
                       FROM semantic_tweets_alcolic
-                      WHERE possuiURL = 0
+                      WHERE situacao = 1
+                      AND possuiURL = 0
                       AND LENGTH(textOriginal) > 5
                       ")
 
