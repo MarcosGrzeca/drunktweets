@@ -1,2 +1,7 @@
 Loading required package: DBI
 Loading required package: methods
+Loading required package: text2vec
+Warning message:
+In data.row.names(row.names, rowsi, i) :
+  some row.names duplicated: 525,623 --> row.names NOT used
+Loading required package: FSelector
