@@ -27,6 +27,8 @@ dados <- query("SELECT t.id, drunk AS resposta,
                FROM semantic_tweets_alcolic t
                WHERE situacao = 1")
 
+save(dados, file = "rdas/cfs.Rda")
+
 dados$resposta[is.na(dados$resposta)] <- 0
 dados$resposta[dados$resposta == "X"] <- 1
 dados$resposta[dados$resposta == "N"] <- 0
