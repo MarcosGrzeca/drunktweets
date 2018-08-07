@@ -28,8 +28,14 @@ getDados <- function() {
 
       dados <- query("SELECT drunk AS resposta,
                       textOriginal,
-                      hashtags
-                      FROM semantic_tweets_alcolic
+                      hashtags,
+                      (
+                      SELECT GROUP_CONCAT(tn.palavra)
+                       FROM semantic_tweets_nlp tn
+                       WHERE tn.idTweet = t.id
+                       GROUP BY tn.idTweet
+                      ) AS entidades
+                      FROM semantic_tweets_alcolic t
                       WHERE situacao = 1
                       AND possuiURL = 0
                       AND LENGTH(textOriginal) > 5
@@ -95,7 +101,7 @@ processarDados <- function(textParser, maxlen, max_words) {
   return (data);
 }
 
-processarSequence <- function(textParser, maxlen, max_words) {
+processarSequence <- function(textParser, max_words) {
   onlyTexts <- textParser
   texts <- as.character(as.matrix(onlyTexts))
   tokenizer <- text_tokenizer(num_words = max_words) %>%
