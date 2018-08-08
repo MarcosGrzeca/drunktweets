@@ -102,9 +102,12 @@ history <- model %>%
     validation_split = 0.2
   )
 
+history
+
 #Generate Test
 test_vec <- vectorize_stories(dadosTransformadoTest, vocab, maxlen)
-max_length_dimension <- 5000
+
+# max_length_dimension <- 5000
 sequences_test <- processarSequence(dados_test$entidades, max_length_dimension)
 sequences_test <- vectorize_sequences(sequences_test, dimension = max_length_dimension)
 
@@ -115,13 +118,36 @@ evaluation <- model %>% evaluate(
 )
 evaluation
 
-#predictions <- model %>% predict(test_vec$new_textParser, type="class")
-#predictions <- model %>% predict(test_vec$new_textParser)
+predictions <- model %>% predict(list(test_vec$new_textParser, sequences_test))
+predictions
+predictions[4,]
+predictions[992,]
 
-predictions <- model %>% predict_classes(test_vec$new_textParser)
-results <- model %>% evaluate(x_test, y_test)
-print(results)
+predictions2 <- round(predictions, 0)
+predictions2[4]
 
-matriz <- confusionMatrix(data = as.factor(predictions), as.factor(dados_test$resposta), positive="1")
+np.argmax(predictions,axis=1)
+#predictions <- model %>% predict_classes(list(test_vec$new_textParser, sequences_test))
+#results <- model %>% evaluate(x_test, y_test)
+#print(results)
+
+str(as.factor(predictions2))
+str(as.factor(dados_test$resposta))
+
+matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
 matriz
 print(paste("F1 ", matriz$byClass["F1"] * 100, "Precisao ", matriz$byClass["Precision"] * 100, "Recall ", matriz$byClass["Recall"] * 100, "Acuracia ", matriz$overall["Accuracy"] * 100))
+
+
+
+load(file="rdas/treinamento_teste.RData")
+
+predictions[10, ]
+predictions[10]
+
+which.max(predictions[10, ])
+predictions
+
+for (year in 1:1000){
+  print(which.max(predictions[year, ]))
+}
