@@ -24,3 +24,13 @@ vectorize_stories <- function(data, vocab, textParser_maxlen){
     new_textParser = pad_sequences(textParsers, maxlen = textParser_maxlen)
   )
 }
+
+vectorize_entities <- function(data, vocab, max_len){
+  entities <- map(data$entidades, function(x){
+    map_int(x, ~which(.x == vocab))
+  })
+  
+  list(
+    entidades = pad_sequences(entities, maxlen = max_len)
+  )
+}

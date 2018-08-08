@@ -53,7 +53,11 @@ getDados <- function() {
   dados$textOriginal = gsub("#drunk |#drunk$", "", dados$textOriginal,ignore.case=T)
   dados$textOriginal = gsub("#drank |#drank$", "", dados$textOriginal,ignore.case=T)
   dados$textOriginal = gsub("#imdrunk |#imdrunk$", "", dados$textOriginal,ignore.case=T)
-  
+
+  dados$entidades <- enc2utf8(dados$entidades)
+  dados$entidades <- iconv(dados$entidades, to='ASCII//TRANSLIT')
+  dados$entidades = gsub(",", ", ", dados$entidades, ignore.case=T)
+
   #dados$textParser <- enc2utf8(dados$textParser)
   #dados$textParser <- iconv(dados$textParser, to='ASCII//TRANSLIT')
   #dados$hashtags = gsub("#", "#tag_", dados$hashtags)
