@@ -5,3 +5,5 @@ Warning message:
 In data.row.names(row.names, rowsi, i) :
   some row.names duplicated: 525,623 --> row.names NOT used
 Loading required package: FSelector
+Warning message:
+system call failed: Cannot allocate memory 
