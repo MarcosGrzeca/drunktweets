@@ -10,9 +10,10 @@ DATABASE <- "icwsm"
 clearConsole();
 
 dados <- query("SELECT t.id, drunk AS resposta,
-                  (SELECT GROUP_CONCAT(tn.palavra)
+                  (SELECT GROUP_CONCAT(DISTINCT(tn.palavra))
                    FROM semantic_tweets_nlp tn
                    WHERE tn.idTweet = t.id
+                   AND tn.tipo NOT IN ('language', 'socialTag')
                    GROUP BY t.id) AS entidades
               FROM semantic_tweets_alcolic t
               WHERE situacao = 1")
