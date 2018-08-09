@@ -26,7 +26,8 @@ getDados <- function() {
                  #AND q2 = 1
                  #")
 
-      dados <- query("SELECT drunk AS resposta,
+      dados <- query("SELECT id, 
+                      drunk AS resposta,
                       textOriginal,
                       hashtags,
                       (
@@ -38,8 +39,11 @@ getDados <- function() {
                       FROM semantic_tweets_alcolic t
                       WHERE situacao = 1
                       AND possuiURL = 0
-                      AND LENGTH(textOriginal) > 5
+                      AND LENGTH(textOriginal) > 5              
+                      -- ORDER by data DESC
+                      -- LIMIT 15000
                       ")
+      # AND id = 1021368493743255552
 
   dados$resposta[dados$resposta == "X"] <- 1
   dados$resposta[dados$resposta == "N"] <- 0
@@ -56,13 +60,26 @@ getDados <- function() {
 
   dados$entidades <- enc2utf8(dados$entidades)
   dados$entidades <- iconv(dados$entidades, to='ASCII//TRANSLIT')
-  dados$entidades = gsub(",", ", ", dados$entidades, ignore.case=T)
+  
+  # dados$entidades = gsub(",", ", ", dados$entidades, ignore.case=T)
+  # dados$entidades = gsub("http://", "", dados$entidades, ignore.case=T)
+  # dados$entidades = gsub("https://", "", dados$entidades, ignore.case=T)
+  # dados$entidades = gsub("/", "_", dados$entidades, ignore.case=T)
+  # dados$entidades = gsub(" ", "__", dados$entidades, ignore.case=T)
+  # dados$entidades = gsub(".", "EEE", dados$entidades, ignore.case=T)
+  # dados$entidades = gsub(",", "MARCOSVAMOS", dados$entidades, ignore.case=T)
+  dados$entidades = gsub(" ", "eee", dados$entidades, ignore.case=T)
+  # dados$entidades = gsub("MARCOSVAMOS", ", ", dados$entidades, ignore.case=T)
+  # dados$entidades = gsub("-", "_", dados$entidades, ignore.case=T)
+  dados$entidades = gsub("[^A-Za-z0-9,_ ]","",dados$entidades, ignore.case=T)
 
   #dados$textParser <- enc2utf8(dados$textParser)
   #dados$textParser <- iconv(dados$textParser, to='ASCII//TRANSLIT')
   #dados$hashtags = gsub("#", "#tag_", dados$hashtags)
   #dados$textParser = gsub("'", "", dados$textParser)
   #dados$numeroErros[dados$numeroErros > 1] <- 1
+
+  dados$entidades[is.na(dados$entidades)] <- "SEM_ENTIDADES"
   return (dados)
 }
 
