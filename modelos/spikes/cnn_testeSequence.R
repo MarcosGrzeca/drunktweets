@@ -60,3 +60,16 @@ maxlen <- map_int(all_data$entidades, ~length(.x)) %>% max()
 resultados
 vectorize_entities(dados1, vocab, maxlen)
 vectorize_entities(dados2, vocab, maxlen)
+
+
+
+
+
+
+
+
+
+library("tokenizers")
+tokenize_words("MArcos a Augusto. Vamos almoçar")
+tokenize_words("MArcos a Augusto. Vamos almoçar", lowercase = TRUE)
+
