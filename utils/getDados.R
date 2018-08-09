@@ -26,21 +26,29 @@ getDados <- function() {
                  #AND q2 = 1
                  #")
 
-      dados <- query("SELECT id, 
+      dados <- query("SELECT id,
                       drunk AS resposta,
                       textOriginal,
                       hashtags,
                       (
-                      SELECT GROUP_CONCAT(DISTINCT(tn.palavra))
-                       FROM semantic_tweets_nlp tn
-                       WHERE tn.idTweet = t.id
-                       -- AND tn.tipo NOT IN ('language', 'socialTag')
-                       GROUP BY tn.idTweet
-                      ) AS entidades
+                        SELECT GROUP_CONCAT(DISTINCT(tn.palavra))
+                        FROM semantic_tweets_nlp tn
+                        WHERE tn.idTweet = t.id
+                        -- AND tn.tipo NOT IN ('language', 'socialTag')
+                        GROUP BY tn.idTweet
+                      ) AS entidades,
+                      (
+                        SELECT GROUP_CONCAT(DISTINCT(ty.type))
+                        FROM semantic_tweets_nlp tn
+                        JOIN semantic_conceito c ON c.palavra = tn.palavra
+                        JOIN resource_type ty ON ty.resource = c.resource
+                        WHERE tn.idTweet = t.id
+                        GROUP BY t.id
+                      ) AS types
                       FROM semantic_tweets_alcolic t
                       WHERE situacao = 1
                       AND possuiURL = 0
-                      AND LENGTH(textOriginal) > 5              
+                      AND LENGTH(textOriginal) > 5
                       -- ORDER by data DESC
                       -- LIMIT 15000
                       ")
