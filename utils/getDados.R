@@ -70,6 +70,12 @@ getDados <- function() {
   dados$types = gsub("[^A-Za-z0-9,_ ]","",dados$types, ignore.case=T)
   dados$types[is.na(dados$types)] <- "SEM_ENTIDADES"
 
+  dados$enriquecimentoTypes <- enc2utf8(dados$enriquecimentoTypes)
+  dados$enriquecimentoTypes <- iconv(dados$enriquecimentoTypes, to='ASCII//TRANSLIT')
+  dados$enriquecimentoTypes = gsub(" ", "eee", dados$enriquecimentoTypes, ignore.case=T)
+  dados$enriquecimentoTypes = gsub("[^A-Za-z0-9,_ ]","",dados$enriquecimentoTypes, ignore.case=T)
+  dados$enriquecimentoTypes[is.na(dados$enriquecimentoTypes)] <- "SEM_ENTIDADES"
+
   return (dados)
 }
 
