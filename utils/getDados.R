@@ -31,9 +31,10 @@ getDados <- function() {
                       textOriginal,
                       hashtags,
                       (
-                      SELECT GROUP_CONCAT(tn.palavra)
+                      SELECT GROUP_CONCAT(DISTINCT(tn.palavra))
                        FROM semantic_tweets_nlp tn
                        WHERE tn.idTweet = t.id
+                       -- AND tn.tipo NOT IN ('language', 'socialTag')
                        GROUP BY tn.idTweet
                       ) AS entidades
                       FROM semantic_tweets_alcolic t
