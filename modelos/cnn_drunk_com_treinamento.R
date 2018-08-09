@@ -122,8 +122,7 @@ evaluation
 #predictions <- model %>% predict(test_vec$new_textParser)
 
 predictions <- model %>% predict_classes(test_vec$new_textParser)
-results <- model %>% evaluate(x_test, y_test)
-print(results)
+predictions
 
 matriz <- confusionMatrix(data = as.factor(predictions), as.factor(dados_test$resposta), positive="1")
 matriz
