@@ -9,23 +9,6 @@ source(file_path_as_absolute("utils/functions.R"))
 DATABASE <- "icwsm"
 
 getDados <- function() {
-  #dados <- query("SELECT q3 AS resposta,
-                 #CONCAT(textParser, ' marcos') as textParser,
-                 #textoParserRisadaEmoticom,
-                 #textoParserEmoticom,
-                 #hashtags,
-                 #textEmbedding,
-                 #(SELECT GROUP_CONCAT(tn.palavra)
-                   #FROM tweets_nlp tn
-                   #WHERE tn.idTweetInterno = t.idInterno
-                   #GROUP BY tn.idTweetInterno) AS entidades
-                 #FROM tweets t
-                 #WHERE textparser <> ''
-                 #AND id <> 462478714693890048
-                 #AND q3 IS NOT NULL
-                 #AND q2 = 1
-                 #")
-
       dados <- query("SELECT id,
                       drunk AS resposta,
                       textOriginal,
@@ -38,7 +21,15 @@ getDados <- function() {
                         GROUP BY tn.idTweet
                       ) AS entidades,
                       (
-                        SELECT GROUP_CONCAT(DISTINCT(ty.type))
+                        SELECT GROUP_CONCAT(DISTINCT(tn.type))
+                        FROM semantic_tweets_nlp tn
+                        WHERE tn.idTweet = t.id
+                        AND type IS NOT NULL
+                        AND type <> ''
+                        GROUP BY tn.idTweet
+                      ) AS enriquecimentoTypes,
+                      (
+                        SELECT GROUP_CONCAT(DISTINCT(REPLACE(ty.type, 'http://dbpedia.org/class/', '')))
                         FROM semantic_tweets_nlp tn
                         JOIN semantic_conceito c ON c.palavra = tn.palavra
                         JOIN resource_type ty ON ty.resource = c.resource

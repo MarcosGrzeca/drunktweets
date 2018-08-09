@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "load(file=\"rdas/infogain_enriquecimento.RData\")\nf\nweights\n",
+    "created" : 1533836746671.000,
+    "dirty" : true,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "3636933157",
+    "id" : "99171E01",
+    "lastKnownWriteTime" : 3419473789575321445,
+    "last_content_update" : 1533836791955,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
