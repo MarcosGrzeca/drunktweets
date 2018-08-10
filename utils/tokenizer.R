@@ -41,11 +41,20 @@ vectorize_stories <- function(data, vocab, textParser_maxlen){
 
 vectorize_entities <- function(data, vocab, max_len){
   entities <- map(data$entidades, function(x){
-    # map_if(is_empty(x), ~ NA_character_) %>%
+    map_int(x, ~which(.x == vocab))
+  })
+
+  types <- map(data$types, function(x){
+    map_int(x, ~which(.x == vocab))
+  })
+
+  enriquecimentoTypes <- map(data$enriquecimentoTypes, function(x){
     map_int(x, ~which(.x == vocab))
   })
   
   list(
-    entidades = pad_sequences(entities, maxlen = max_len)
+    entidades = pad_sequences(entities, maxlen = max_len),
+    types = pad_sequences(types, maxlen = max_len),
+    enriquecimentoTypes = pad_sequences(enriquecimentoTypes, maxlen = max_len)
   )
 }
