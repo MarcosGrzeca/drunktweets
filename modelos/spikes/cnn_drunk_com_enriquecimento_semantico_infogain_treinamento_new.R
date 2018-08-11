@@ -10,7 +10,8 @@ source(file_path_as_absolute("utils/getDados.R"))
 source(file_path_as_absolute("utils/tokenizer.R"))
 dados <- getDadosInfoGain()
 
-str(dados)
+#nrow(dados[dados$resposta == 0,])
+#nrow(dados[dados$resposta == 1,])
 
 library(doMC)
 library(mlbench)
@@ -31,16 +32,16 @@ dados_test <- dados[-trainIndex,]
 dadosTransformado <- dados_train %>%
   mutate(
     textOriginal = map(textOriginal, ~tokenize_words(.x)),
-    types = map(types, ~tokenize_entities(.x))
+    entidades = map(entidades, ~tokenize_entities(.x))
   ) %>%
-  select(textOriginal, types)
+  select(textOriginal, entidades)
 
 dadosTransformadoTest <- dados_test %>%
   mutate(
     textOriginal = map(textOriginal, ~tokenize_words(.x)),
-    types = map(types, ~tokenize_entities(.x))
+    entidades = map(entidades, ~tokenize_entities(.x))
   ) %>%
-  select(textOriginal, types)
+  select(textOriginal, entidades)
 
 all_data <- bind_rows(dadosTransformado, dadosTransformadoTest)
 
@@ -55,44 +56,16 @@ maxlen <- map_int(all_data$textOriginal, ~length(.x)) %>% max()
 train_vec <- vectorize_stories(dadosTransformado, vocab, maxlen)
 
 #Vocabulario enttidades
-vocabtypes <- c(unlist(dadosTransformado$types), unlist(dadosTransformadoTest$types)) %>%
+vocabEntidades <- c(unlist(dadosTransformado$entidades), unlist(dadosTransformadoTest$entidades)) %>%
   unique() %>%
   sort()
 
-maxlen_types <- map_int(all_data$types, ~length(.x)) %>% max()
-sequences <- vectorize_entities(dadosTransformado, vocabtypes, maxlen_types)
-str(sequences)
-
-vectorize_sequences <- function(sequences, dimension = 10000) {
-  results <- matrix(0, nrow = length(sequences), ncol = dimension)
-  for (i in 1:length(sequences))
-    results[i, sequences[[i]]] <- 1
-  results
-}
-
-to_one_hot <- function(labels, dimension = 46) {
-  results <- matrix(0, nrow = length(labels), ncol = dimension)
-  for (i in 1:length(labels))
-    results[i, labels[[i]] + 1] <- 1
-  results
-}
-
-
-View(vectorize_sequences(sequences$types, 10000))
-
-tokenizer <- text_tokenizer(num_words = 1000) %>%
-            fit_text_tokenizer(sequences)
-
-tokenizer
-
-sequences
-one_hot_results <- texts_to_matrix(tokenizer, sequences, mode = "binary")
-
-
+maxlen_entidades <- map_int(all_data$entidades, ~length(.x)) %>% max()
+sequences <- vectorize_entities(dadosTransformado, vocabEntidades, maxlen_entidades)
 
 # Data Preparation --------------------------------------------------------
 # Parameters --------------------------------------------------------------
-batch_size <- 32
+batch_size <- 128
 epochs <- 3
 embedding_dims <- 100
 filters <- 250
@@ -112,10 +85,13 @@ ccn_out <- main_input %>%
   layer_dropout(0.2) %>%
   layer_activation("relu")
 
-auxiliary_input <- layer_input(shape = c(maxlen_types))
+auxiliary_input <- layer_input(shape = c(maxlen_entidades))
+entities_out <- auxiliary_input %>%
+                layer_dropout(0.2) %>%
+                layer_activation("relu")
 
-main_output <- layer_concatenate(c(ccn_out, auxiliary_input)) %>%  
-  layer_dense(units = 64, activation = 'relu') %>% 
+main_output <- layer_concatenate(c(ccn_out, entities_out)) %>%  
+  layer_dense(units = 32, activation = 'relu') %>% 
   layer_dense(units = 1, activation = 'sigmoid')
 
 model <- keras_model(
@@ -132,7 +108,7 @@ model %>% compile(
 
 history <- model %>%
   fit(
-    x = list(train_vec$new_textParser, sequences$types),
+    x = list(train_vec$new_textParser, sequences$entidades),
     y = array(dados_train$resposta),
     batch_size = batch_size,
     epochs = epochs,
@@ -143,16 +119,16 @@ history
 
 #Generate Test
 test_vec <- vectorize_stories(dadosTransformadoTest, vocab, maxlen)
-sequences_test <- vectorize_entities(dadosTransformadoTest, vocabtypes, maxlen_types)
+sequences_test <- vectorize_entities(dadosTransformadoTest, vocabEntidades, maxlen_entidades)
 
 evaluation <- model %>% evaluate(
-  list(test_vec$new_textParser, sequences_test$types),
+  list(test_vec$new_textParser, sequences_test$entidades),
   array(dados_test$resposta),
   batch_size = batch_size
 )
 evaluation
 
-predictions <- model %>% predict(list(test_vec$new_textParser, sequences_test$types))
+predictions <- model %>% predict(list(test_vec$new_textParser, sequences_test$entidades))
 predictions
 
 predictions2 <- round(predictions, 0)
@@ -161,10 +137,4 @@ matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$r
 matriz
 print(paste("F1 ", matriz$byClass["F1"] * 100, "Precisao ", matriz$byClass["Precision"] * 100, "Recall ", matriz$byClass["Recall"] * 100, "Acuracia ", matriz$overall["Accuracy"] * 100))
 
-
-dbEscapeStrings(connect(), "new year's")
-
-max(sapply(sequences$types, max))
-sequences$types
-1373
-vectorize_sequences(sequences$types, 1373)
+#load(file="rdas/treinamento_teste.RData")
