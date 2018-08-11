@@ -58,3 +58,11 @@ vectorize_entities <- function(data, vocab, max_len){
     enriquecimentoTypes = pad_sequences(enriquecimentoTypes, maxlen = max_len)
   )
 }
+
+to_one_hot <- function(labels, dimension = 46) {
+  results <- matrix(0, nrow = length(labels), ncol = dimension)
+  for (i in 1:length(labels))
+    results[i, labels[[i]] + 1] <- 1
+  results
+  # one_hot_results <- texts_to_matrix(tokenizer, sequences, mode = "binary")
+}

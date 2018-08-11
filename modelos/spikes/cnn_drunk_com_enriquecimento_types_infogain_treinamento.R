@@ -10,8 +10,6 @@ source(file_path_as_absolute("utils/getDados.R"))
 source(file_path_as_absolute("utils/tokenizer.R"))
 dados <- getDadosInfoGain()
 
-str(dados)
-
 library(doMC)
 library(mlbench)
 
@@ -61,34 +59,6 @@ vocabtypes <- c(unlist(dadosTransformado$types), unlist(dadosTransformadoTest$ty
 
 maxlen_types <- map_int(all_data$types, ~length(.x)) %>% max()
 sequences <- vectorize_entities(dadosTransformado, vocabtypes, maxlen_types)
-str(sequences)
-
-vectorize_sequences <- function(sequences, dimension = 10000) {
-  results <- matrix(0, nrow = length(sequences), ncol = dimension)
-  for (i in 1:length(sequences))
-    results[i, sequences[[i]]] <- 1
-  results
-}
-
-to_one_hot <- function(labels, dimension = 46) {
-  results <- matrix(0, nrow = length(labels), ncol = dimension)
-  for (i in 1:length(labels))
-    results[i, labels[[i]] + 1] <- 1
-  results
-}
-
-
-View(vectorize_sequences(sequences$types, 10000))
-
-tokenizer <- text_tokenizer(num_words = 1000) %>%
-            fit_text_tokenizer(sequences)
-
-tokenizer
-
-sequences
-one_hot_results <- texts_to_matrix(tokenizer, sequences, mode = "binary")
-
-
 
 # Data Preparation --------------------------------------------------------
 # Parameters --------------------------------------------------------------
@@ -150,21 +120,10 @@ evaluation <- model %>% evaluate(
   array(dados_test$resposta),
   batch_size = batch_size
 )
-evaluation
 
 predictions <- model %>% predict(list(test_vec$new_textParser, sequences_test$types))
-predictions
-
 predictions2 <- round(predictions, 0)
 
 matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
 matriz
 print(paste("F1 ", matriz$byClass["F1"] * 100, "Precisao ", matriz$byClass["Precision"] * 100, "Recall ", matriz$byClass["Recall"] * 100, "Acuracia ", matriz$overall["Accuracy"] * 100))
-
-
-dbEscapeStrings(connect(), "new year's")
-
-max(sapply(sequences$types, max))
-sequences$types
-1373
-vectorize_sequences(sequences$types, 1373)
