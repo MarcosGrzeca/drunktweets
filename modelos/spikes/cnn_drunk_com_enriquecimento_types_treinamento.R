@@ -120,10 +120,8 @@ evaluation <- model %>% evaluate(
   array(dados_test$resposta),
   batch_size = batch_size
 )
-evaluation
 
 predictions <- model %>% predict(list(test_vec$new_textParser, sequences_test$types))
-predictions
 
 predictions2 <- round(predictions, 0)
 

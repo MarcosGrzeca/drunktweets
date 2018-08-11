@@ -131,3 +131,10 @@ matriz
 print(paste("F1 ", matriz$byClass["F1"] * 100, "Precisao ", matriz$byClass["Precision"] * 100, "Recall ", matriz$byClass["Recall"] * 100, "Acuracia ", matriz$overall["Accuracy"] * 100))
 
 #load(file="rdas/treinamento_teste.RData")
+install.packages("here")
+library(here)
+here("DESCRIPTION")
+
+basename(getwd())
+getwd()
+
