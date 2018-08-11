@@ -10,8 +10,10 @@ source(file_path_as_absolute("utils/getDados.R"))
 source(file_path_as_absolute("utils/tokenizer.R"))
 dados <- getDadosInfoGain()
 
-#nrow(dados[dados$resposta == 0,])
-#nrow(dados[dados$resposta == 1,])
+tokenizer <- text_tokenizer(num_words = 1000) %>%
+             fit_text_tokenizer(dados$entidades)
+vocabEntitiesLenght <- length(tokenizer$word_index)
+dados$sequences <- texts_to_sequences(tokenizer, dados$entidades)
 
 library(doMC)
 library(mlbench)
@@ -31,17 +33,15 @@ dados_test <- dados[-trainIndex,]
 # Texto
 dadosTransformado <- dados_train %>%
   mutate(
-    textOriginal = map(textOriginal, ~tokenize_words(.x)),
-    entidades = map(entidades, ~tokenize_entities(.x))
+    textOriginal = map(textOriginal, ~tokenize_words(.x))
   ) %>%
-  select(textOriginal, entidades)
+  select(textOriginal)
 
 dadosTransformadoTest <- dados_test %>%
   mutate(
-    textOriginal = map(textOriginal, ~tokenize_words(.x)),
-    entidades = map(entidades, ~tokenize_entities(.x))
+    textOriginal = map(textOriginal, ~tokenize_words(.x))
   ) %>%
-  select(textOriginal, entidades)
+  select(textOriginal)
 
 all_data <- bind_rows(dadosTransformado, dadosTransformadoTest)
 
@@ -56,16 +56,12 @@ maxlen <- map_int(all_data$textOriginal, ~length(.x)) %>% max()
 train_vec <- vectorize_stories(dadosTransformado, vocab, maxlen)
 
 #Vocabulario enttidades
-vocabEntidades <- c(unlist(dadosTransformado$entidades), unlist(dadosTransformadoTest$entidades)) %>%
-  unique() %>%
-  sort()
-
-maxlen_entidades <- map_int(all_data$entidades, ~length(.x)) %>% max()
-sequences <- vectorize_entities(dadosTransformado, vocabEntidades, maxlen_entidades)
+max_sequence <- max(sapply(dados_train$sequences, max))
+sequences <- vectorize_sequences(dados_train$sequences, dimension = max_sequence)
 
 # Data Preparation --------------------------------------------------------
 # Parameters --------------------------------------------------------------
-batch_size <- 128
+batch_size <- 32
 epochs <- 3
 embedding_dims <- 100
 filters <- 250
@@ -85,13 +81,10 @@ ccn_out <- main_input %>%
   layer_dropout(0.2) %>%
   layer_activation("relu")
 
-auxiliary_input <- layer_input(shape = c(maxlen_entidades))
-entities_out <- auxiliary_input %>%
-                layer_dropout(0.2) %>%
-                layer_activation("relu")
+auxiliary_input <- layer_input(shape = c(max_sequence))
 
-main_output <- layer_concatenate(c(ccn_out, entities_out)) %>%  
-  layer_dense(units = 32, activation = 'relu') %>% 
+main_output <- layer_concatenate(c(ccn_out, auxiliary_input)) %>%  
+  layer_dense(units = 64, activation = 'relu') %>% 
   layer_dense(units = 1, activation = 'sigmoid')
 
 model <- keras_model(
@@ -108,7 +101,7 @@ model %>% compile(
 
 history <- model %>%
   fit(
-    x = list(train_vec$new_textParser, sequences$entidades),
+    x = list(train_vec$new_textParser, sequences),
     y = array(dados_train$resposta),
     batch_size = batch_size,
     epochs = epochs,
@@ -119,16 +112,16 @@ history
 
 #Generate Test
 test_vec <- vectorize_stories(dadosTransformadoTest, vocab, maxlen)
-sequences_test <- vectorize_entities(dadosTransformadoTest, vocabEntidades, maxlen_entidades)
+sequences_test <- vectorize_sequences(dados_test$sequences, dimension = max_sequence)
 
 evaluation <- model %>% evaluate(
-  list(test_vec$new_textParser, sequences_test$entidades),
+  list(test_vec$new_textParser, sequences_test),
   array(dados_test$resposta),
   batch_size = batch_size
 )
 evaluation
 
-predictions <- model %>% predict(list(test_vec$new_textParser, sequences_test$entidades))
+predictions <- model %>% predict(list(test_vec$new_textParser, sequences_test))
 predictions
 
 predictions2 <- round(predictions, 0)
