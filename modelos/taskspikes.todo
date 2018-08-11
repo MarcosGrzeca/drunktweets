@@ -1,0 +1,35 @@
+ cnn_drunk_com_enriquecimento_semantico_infogain_treinamento.R:
+ ✔ modelos/spikes/cnn_drunk_com_enriquecimento_semantico_infogain_treinamento.R @done (18-08-11 14:53)
+ ☐ Treinamento
+   acc: 0.985
+    loss: 0.04325
+ val_acc: 0.885
+val_loss: 0.3108
+ ☐ Testes
+  F1  79.1666666666667 Precisao  74.6583143507973 Recall  84.254498714653 Acuracia  86.8596457817559"
+
+cnn_drunk_com_enriquecimento_semantico_infogain_treinamento_bow.R:
+ ✔ modelos/cnn_drunk_com_enriquecimento_semantico_infogain_treinamento_bow.R @done (18-08-11 14:53)
+ ☐ Testes
+  F1  81.1963092586701 Precisao  80.4032766225583 Recall  82.0051413881748 Acuracia  88.7450009521996
+
+
+cnn_drunk_com_enriquecimento_types_infogain_treinamento.R:
+ ☐ modelos/spikes/cnn_drunk_com_enriquecimento_types_infogain_treinamento.R
+ ☐ Treinamento
+   acc: 0.7623
+    loss: 3.68
+ val_acc: 0.9479
+val_loss: 0.6997
+ ☐ Testes
+  "F1  59.6153846153846 Precisao  79.1489361702128 Recall  47.8149100257069 Acuracia  80.8036564463912"
+
+cnn_drunk_com_enriquecimento_types_treinamento.R:
+ ☐ modelos/spikes/cnn_drunk_com_enriquecimento_types_treinamento.R
+ ☐ Treinamento
+       acc: 0.6343
+    loss: 5.895
+ val_acc: 0.9752
+val_loss: 0.399
+ ☐ Testes
+  "F1  NA Precisao  NA Recall  0 Acuracia  70.3675490382784"
