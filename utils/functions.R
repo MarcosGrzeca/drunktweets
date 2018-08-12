@@ -84,3 +84,11 @@ magica <- function(dados) {
   dados$hashtags = gsub("#", "#tag_", dados$hashtags)
   return (dados)
 }
+
+discretizarTurno <- function(dados) {
+  dados$turno <- 0
+  dados$turno[dados$hora >= 5] <- 1
+  dados$turno[dados$hora >= 17] <- 0
+  dados <- subset(dados, select = -c(hora))
+  return (dados)
+}
