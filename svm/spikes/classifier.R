@@ -9,7 +9,7 @@ library(doMC)
 library(mlbench)
 library(magrittr)
 
-CORES <- 5
+CORES <- 4
 registerDoMC(CORES)
 
 treinar <- function(data_train){
