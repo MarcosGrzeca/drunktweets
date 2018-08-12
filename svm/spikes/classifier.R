@@ -9,6 +9,10 @@ library(doMC)
 library(mlbench)
 library(magrittr)
 
+try({
+	load(fileName)
+})
+
 CORES <- 5
 registerDoMC(CORES)
 
@@ -62,15 +66,15 @@ split=0.80
 # })
 
 try({
-	load(file = "rdas/2gram-entidades-hora-erro.Rda")
+	load(file = "rdas/2gram-entidades-hora-erro-sem-controle.Rda")
 	maFinal$resposta <- as.factor(maFinal$resposta)
 	trainIndex <- createDataPartition(maFinal$resposta, p=split, list=FALSE)
 	data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
 	data_test <- maFinal[-trainIndex,]
 
-	treegram25NotNullPoly <- treinarPoly(data_train)
-	treegram25NotNullPoly
-	matriz3Gram25NotNullPoly <- getMatriz(treegram25NotNullPoly, data_test)
-	resultados <- addRow(resultados, "2 GRAM - Entidades - Erro (Poly)", matriz3Gram25NotNullPoly)
+	treegram25NotNullSemControle <- treinar(data_train)
+	treegram25NotNullSemControle
+	matriz3Gram25NotNullSemControle <- getMatriz(treegram25NotNullSemControle, data_test)
+	resultados <- addRow(resultados, "2 GRAM - Entidades - Erro - Sem Controle", matriz3Gram25NotNullSemControle)
 	save.image(file=fileName)
 })
