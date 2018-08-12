@@ -204,6 +204,9 @@ getDadosSVM <- function() {
   dados$textOriginal <- enc2utf8(dados$textOriginal)
   dados$textOriginal <- iconv(dados$textOriginal, to='ASCII//TRANSLIT')
   
+  dados$textParser <- enc2utf8(dados$textParser)
+  dados$textParser <- iconv(dados$textParser, to='ASCII//TRANSLIT')
+  
   dados$textOriginal = gsub("#drunk |#drunk$", "", dados$textOriginal,ignore.case=T)
   dados$textOriginal = gsub("#drank |#drank$", "", dados$textOriginal,ignore.case=T)
   dados$textOriginal = gsub("#imdrunk |#imdrunk$", "", dados$textOriginal,ignore.case=T)
