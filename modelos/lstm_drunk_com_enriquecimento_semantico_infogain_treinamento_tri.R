@@ -79,23 +79,18 @@ hidden_dims <- 200
 main_input <- layer_input(shape = c(maxlen), dtype = "int32")
 ccn_out <- main_input %>% 
   layer_embedding(vocab_size, embedding_dims, input_length = maxlen) %>%
-  layer_dropout(0.2) %>%
-  layer_conv_1d(
-    filters, kernel_size, 
-    padding = "valid", activation = "relu", strides = 1
-  ) %>%
-  layer_global_max_pooling_1d() %>%
-  layer_dense(hidden_dims) %>%
-  layer_dropout(0.2) %>%
-  layer_activation("relu")
+  # layer_dropout(0.2) %>%
+  layer_lstm(units = 32) %>%
+  layer_dense(units = 16, activation = "relu") %>%
+  layer_dense(units = 16, activation = "relu")
 
 auxiliary_input <- layer_input(shape = c(max_sequence))
 entities_out <- auxiliary_input %>%  
-                layer_dense(units = 16, activation = 'relu')
+                layer_dense(units = 32, activation = 'relu')
 
 auxiliary_input_types <- layer_input(shape = c(max_sequence_types))
 types_out <- auxiliary_input_types %>%  
-                layer_dense(units = 16, activation = 'relu')
+                layer_dense(units = 32, activation = 'relu')
 
 main_output <- layer_concatenate(c(ccn_out, entities_out, types_out)) %>%  
   layer_dense(units = 64, activation = 'relu') %>% 

@@ -81,12 +81,15 @@ ccn_out <- main_input %>%
   layer_embedding(vocab_size, embedding_dims, input_length = maxlen) %>%
   layer_dropout(0.2) %>%
   layer_conv_1d(
-    filters, kernel_size, 
-    padding = "valid", activation = "relu", strides = 1
+    filters, 
+    kernel_size, 
+    padding = "valid",
+    activation = "relu",
+    strides = 1
   ) %>%
-  layer_global_max_pooling_1d() %>%
-  layer_dense(hidden_dims) %>%
-  layer_dropout(0.2) %>%
+  layer_max_pooling_1d(4) %>%
+  layer_lstm(70) %>%
+  layer_dense(1) %>%
   layer_activation("relu")
 
 auxiliary_input <- layer_input(shape = c(max_sequence))

@@ -117,37 +117,10 @@ evaluation <- model %>% evaluate(
   batch_size = batch_size
 )
 evaluation
-
 predictions <- model %>% predict(list(test_vec$new_textParser, sequences_test))
-predictions
-predictions[4,]
-predictions[992,]
-
 predictions2 <- round(predictions, 0)
-predictions2[4]
-
-np.argmax(predictions,axis=1)
-#predictions <- model %>% predict_classes(list(test_vec$new_textParser, sequences_test))
-#results <- model %>% evaluate(x_test, y_test)
-#print(results)
-
-str(as.factor(predictions2))
-str(as.factor(dados_test$resposta))
-
 matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
 matriz
 print(paste("F1 ", matriz$byClass["F1"] * 100, "Precisao ", matriz$byClass["Precision"] * 100, "Recall ", matriz$byClass["Recall"] * 100, "Acuracia ", matriz$overall["Accuracy"] * 100))
 
-
-
-load(file="rdas/treinamento_teste.RData")
-
-predictions[10, ]
-predictions[10]
-
-which.max(predictions[10, ])
-predictions
-
-for (year in 1:1000){
-  print(which.max(predictions[year, ]))
-}
+#load(file="rdas/treinamento_teste.RData")

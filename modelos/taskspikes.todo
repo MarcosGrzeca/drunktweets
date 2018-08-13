@@ -33,3 +33,7 @@ cnn_drunk_com_enriquecimento_types_treinamento.R:
 val_loss: 0.399
  ☐ Testes
   "F1  NA Precisao  NA Recall  0 Acuracia  70.3675490382784"
+
+
+modelos/cnn_drunk_com_enriquecimento_treinamento.R:
+  ☐ modelos/cnn_drunk_com_enriquecimento_treinamento.R
