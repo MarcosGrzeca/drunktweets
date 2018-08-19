@@ -1,0 +1,49 @@
+We propose an enrichment framework to improve the classification of drunk tweets. The striking role of the framework is the addition of conceptual and semantic features that provide context to the textual properties of the tweets. Contextual enrichment is achieved using two complementary techniques: natural language understanding, which expands the vocabulary to concepts,  named-entities and categories; and semantic enrichment, which relates this vocabulary to DBPedia knowledge, generalizing and grouping conceptual features. The framework also encompasses the correction of mistyping errors, possibly due to drunkenness, and a pruning strategy to select semantic features that are discriminative.
+
+
+The research questions that guide our work are:
+How to semantically enrich tweets and to identify the most important entities
+What is the best way to use word embeddings in this context?
+How can word embeddings and semantic enrichment complement each other?
+
+
+We also propose a strategy to overcome “word mismatch” combining word embeddings generated from tweets with the features resulted from semantic enrichment. While word embeddings are useful to determine the similarity of words, semantic enrichment contributes by adding context to the text.
+
+Three experiments were performed to classify the tweets according to dataset annotations.  % in the dataset. In the first experiment (\textit{Exp 1}), we evaluated the performance of the framework for classifier tweets that mention alcohol consumption (Q1). However, \textit{Exp 1} may also contain tweets related to news or ads linked to alcohol consumption. Therefore, we created the second experiment (\textit{Exp 2}) to evaluate the effectiveness of the framework for identifying tweets in which the user is consuming alcohol. Exp 2 is a problem classification related to Q2. Finally, in the third experiment (\textit{Exp 3}) we classify tweets where the user is tweeting while drunk (Q3). We consider Q2 and Q3 more relevant with regard to our goal of drunk texting classification, since Q1 is annotated for the mere mention to alcohol (including ads), not assessing whether the user is drunk.
+
+To this end, we propose the enrichment using two complementary techniques to deal with the sparness, shortness and noise of tweets. NLU help expanding the vocabulary and semantic enrichment, generalizing them. A pruning step helps eliminating irrelevant or redundant features. The error handling component not only correct the tweet, but also provide a relevant feature for classifying drunk tweets.
+
+We propose an enrichment framework that provide context to the textual properties of the tweets. Contextual enrichment is achieved using natural language understanding to expands the vocabulary; and semantic enrichment, which relates this vocabulary to DBPedia knowledge, generalizing and grouping conceptual features.
+The framework also encompasses the correction of mistyping errors, possibly due to drunkenness, and a pruning strategy to select semantic features that are discriminative.
+
+
+Such neural networks have layers of embeddings for the text of tweets and auxiliary inputs for semantic enrichment, so that the embedding vector is concatenated to the auxiliary vector. 
+
+
+and algorithm Support Vector Machine (SVM)
+
+Combine word embeddings with semantic enrichment
+Evaluate new mechanisms of semantic enrichment and pruning
+Apply the proposed framework to new datasets
+
+Method to automatic identification of drunk texting
+
+Automatic identification of drunk texting
+Enrichment framework
+Error handling component
+Method to combine word embeddings with semantic enrichment
+
+
+Automatic identification of drunk texting
+Enrichment framework
+Error handling component
+Method to combine word embeddings with semantic enrichment
+
+Combine word embeddings and semantic enrichment
+
+
+Semantically enrich tweets and identify entities
+Use word embeddings in drunk texting
+Combine word embeddings and semantic enrichment
+
+Method to identifying texting while under the influence of alcohol (drunk texting).
