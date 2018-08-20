@@ -24,14 +24,17 @@ main_input <- layer_input(shape = c(maxlen), dtype = "int32")
 ccn_out <- main_input %>% 
   layer_embedding(vocab_size, embedding_dims, input_length = maxlen) %>%
   layer_flatten() %>%
+  layer_dropout(0.2) %>%
   layer_dense(units = 32, activation = "relu")
 
 auxiliary_input <- layer_input(shape = c(max_sequence))
 entities_out <- auxiliary_input %>%  
+                layer_dropout(0.2) %>%
                 layer_dense(units = 16, activation = 'relu')
 
 auxiliary_input_types <- layer_input(shape = c(max_sequence_types))
 types_out <- auxiliary_input_types %>%  
+                layer_dropout(0.2) %>%
                 layer_dense(units = 16, activation = 'relu')
 
 main_output <- layer_concatenate(c(ccn_out, entities_out, types_out)) %>%  
@@ -61,15 +64,7 @@ history <- model %>%
 
 history
 
-evaluation <- model %>% evaluate(
-  list(test_vec$new_textParser, sequences_test, sequences_test_types),
-  array(dados_test$resposta),
-  batch_size = batch_size
-)
-evaluation
-
 predictions <- model %>% predict(list(test_vec$new_textParser, sequences_test, sequences_test_types))
-#predictions
 predictions2 <- round(predictions, 0)
 
 matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
