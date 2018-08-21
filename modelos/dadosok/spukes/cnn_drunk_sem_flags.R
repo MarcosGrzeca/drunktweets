@@ -1,18 +1,9 @@
 library(keras)
-library(readr)
-library(stringr)
-library(purrr)
-library(tibble)
-library(dplyr)
-library(tools)
-
-source(file_path_as_absolute("utils/getDados.R"))
-source(file_path_as_absolute("utils/tokenizer.R"))
-
 load("rdas/sequences.RData")
 
 # Data Preparation --------------------------------------------------------
 # Parameters --------------------------------------------------------------
+epochs <- 4
 embedding_dims <- 100
 filters <- 200
 kernel_size <- 10
@@ -59,7 +50,7 @@ history <- model %>%
   fit(
     x = list(train_vec$new_textParser, sequences, sequences_types),
     y = array(dados_train$resposta),
-    batch_size = epochs,
+    batch_size = 128,
     epochs = 4,
     validation_split = 0.2
   )
