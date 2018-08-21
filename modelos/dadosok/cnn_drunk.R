@@ -19,7 +19,7 @@ FLAGS <- flags(
   flag_integer("dense_units2", 128),
 
   flag_integer("epochs", 4),
-  flag_integer("batch_size", 64),
+  flag_integer("batch_size", 64)
 )
 
 # Data Preparation --------------------------------------------------------
@@ -76,13 +76,6 @@ history <- model %>%
   )
 
 history
-
-evaluation <- model %>% evaluate(
-  list(test_vec$new_textParser, sequences_test, sequences_test_types),
-  array(dados_test$resposta),
-  batch_size = FLAGS$batch_size
-)
-evaluation
 
 predictions <- model %>% predict(list(test_vec$new_textParser, sequences_test, sequences_test_types))
 #predictions

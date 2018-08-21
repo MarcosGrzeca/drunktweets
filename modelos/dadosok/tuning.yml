@@ -3,7 +3,7 @@ trainingInput:
   masterType: standard_gpu
   hyperparameters:
     goal: MAXIMIZE
-    hyperparameterMetricTag: val_acc
+    hyperparameterMetricTag: acc
     maxTrials: 10
     maxParallelTrials: 2
     params:

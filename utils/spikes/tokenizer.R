@@ -1,8 +1,8 @@
-https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/6.1-one-hot-encoding-of-words-or-characters.nb.html
+#https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/6.1-one-hot-encoding-of-words-or-characters.nb.html
 
-tokenizer$word_index
+#tokenizer$word_index
 
-https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/3.4-classifying-movie-reviews.nb.html
+#https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/3.4-classifying-movie-reviews.nb.html
 
 
 library(keras)

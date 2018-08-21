@@ -75,10 +75,10 @@ sequences_test_types <- vectorize_sequences(dados_test$sequences_types, dimensio
 # Data Preparation --------------------------------------------------------
 # Parameters --------------------------------------------------------------
 batch_size <- 64
-epochs <- 3
+epochs <- 4
 embedding_dims <- 100
 filters <- 200
-kernel_size <- 3
+kernel_size <- 10
 hidden_dims <- 200
 
 main_input <- layer_input(shape = c(maxlen), dtype = "int32")
@@ -137,8 +137,7 @@ evaluation <- model %>% evaluate(
 evaluation
 
 predictions <- model %>% predict(list(test_vec$new_textParser, sequences_test, sequences_test_types))
-predictions
-
+#predictions
 predictions2 <- round(predictions, 0)
 
 matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
