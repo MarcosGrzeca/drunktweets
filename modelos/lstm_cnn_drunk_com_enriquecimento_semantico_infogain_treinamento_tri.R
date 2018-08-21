@@ -67,6 +67,11 @@ sequences <- vectorize_sequences(dados_train$sequences, dimension = max_sequence
 max_sequence_types <- max(sapply(dados_train$sequences_types, max))
 sequences_types <- vectorize_sequences(dados_train$sequences_types, dimension = max_sequence_types)
 
+#Generate Test
+test_vec <- vectorize_stories(dadosTransformadoTest, vocab, maxlen)
+sequences_test <- vectorize_sequences(dados_test$sequences, dimension = max_sequence)
+sequences_test_types <- vectorize_sequences(dados_test$sequences_types, dimension = max_sequence_types)
+
 # Data Preparation --------------------------------------------------------
 # Parameters --------------------------------------------------------------
 batch_size <- 64
@@ -126,11 +131,6 @@ history <- model %>%
   )
 
 history
-
-#Generate Test
-test_vec <- vectorize_stories(dadosTransformadoTest, vocab, maxlen)
-sequences_test <- vectorize_sequences(dados_test$sequences, dimension = max_sequence)
-sequences_test_types <- vectorize_sequences(dados_test$sequences_types, dimension = max_sequence_types)
 
 evaluation <- model %>% evaluate(
   list(test_vec$new_textParser, sequences_test, sequences_test_types),
