@@ -93,3 +93,24 @@ discretizarTurno <- function(dados) {
   dados <- subset(dados, select = -c(hora))
   return (dados)
 }
+
+adicionarResultadosTestes <-function(contexto, f1, precision, recall) {
+  fileName <- "results/resultados.rds"
+
+  resultsGeral <- data.frame(matrix(ncol = 5, nrow = 0))
+  names(resultsGeral) <- c("Contexto", "F1", "Precisao", "Revocacao", "Data")
+  try({
+    resultsGeral <- readRDS(fileName)
+  })
+
+  resultsGeral <- addRow(resultsGeral, contexto, f1, precision, recall)
+  saveRDS(resultsGeral, fileName) 
+}
+
+addRow <- function(resultados, contexto, f1, precision, recall) {
+  newRes <- data.frame(contexto, f1, precision, recall, Sys.time())
+  rownames(newRes) <- contexto
+  names(newRes) <- c("Contexto", "F1", "Precisao", "Revocacao", "Data")
+  newdf <- rbind(resultados, newRes)
+  return (newdf)
+}
