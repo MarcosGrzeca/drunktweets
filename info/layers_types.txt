@@ -1,0 +1,13 @@
+https://keras.rstudio.com/reference/index.html
+
+layer_add() => Layer that adds a list of inputs.
+layer_subtract() => Layer that subtracts two inputs.
+layer_multiply() => Layer that multiplies (element-wise) a list of inputs.
+layer_average() => Layer that averages a list of inputs.
+layer_maximum() => Layer that computes the maximum (element-wise) a list of inputs.
+layer_minimum() => Layer that computes the minimum (element-wise) a list of inputs.
+layer_concatenate() => Layer that concatenates a list of inputs.
+layer_dot() => Layer that computes a dot product between samples in two tensors
+
+#Alternativa para usar o list
+layer_repeat_vector(n = story_maxlen)
