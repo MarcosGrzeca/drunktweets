@@ -1,5 +1,18 @@
+#dir.create("tensorrunson")
+#tensorboard("tensorruns")
+
 library(keras)
+library(caret)
+library(tools)
+source(file_path_as_absolute("utils/functions.R"))
+
 load("rdas/sequences.RData")
+
+FLAGS <- flags(
+  flag_numeric("F1", 0),
+  flag_numeric("Precision", 0),
+  flag_numeric("Recall", 0)
+)
 
 # Data Preparation --------------------------------------------------------
 # Parameters --------------------------------------------------------------
@@ -31,7 +44,7 @@ types_out <- auxiliary_input_types %>%
                 layer_dense(units = 128, activation = 'relu')
 
 main_output <- layer_concatenate(c(ccn_out, entities_out, types_out)) %>%  
-  layer_dense(units = 128, activation = 'relu') %>% 
+  layer_dense(units = 64, activation = 'relu') %>% 
   layer_dense(units = 1, activation = 'sigmoid')
 
 model <- keras_model(
@@ -46,6 +59,14 @@ model %>% compile(
   metrics = "accuracy"
 )
 
+# callbacks = list(
+#   callback_tensorboard(
+#     log_dir = "tensorruns/c",
+#     histogram_freq = 1,
+#     embeddings_freq = 1
+#   )
+# )
+
 history <- model %>%
   fit(
     x = list(train_vec$new_textParser, sequences, sequences_types),
@@ -53,14 +74,21 @@ history <- model %>%
     batch_size = 128,
     epochs = 4,
     validation_split = 0.2
+    # , callbacks = callbacks
   )
 
 history
 
 predictions <- model %>% predict(list(test_vec$new_textParser, sequences_test, sequences_test_types))
-#predictions
 predictions2 <- round(predictions, 0)
 
 matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
 matriz
 print(paste("F1 ", matriz$byClass["F1"] * 100, "Precisao ", matriz$byClass["Precision"] * 100, "Recall ", matriz$byClass["Recall"] * 100, "Acuracia ", matriz$overall["Accuracy"] * 100))
+
+FLAGS$F1 <- matriz$byClass["F1"] * 100
+FLAGS$Precision <- matriz$byClass["Precision"] * 100
+FLAGS$Recall <- matriz$byClass["Recall"] * 100
+
+source(file_path_as_absolute("utils/functions.R"))
+adicionarResultadosTestes("cnn_drunk_sem_flags.R", matriz$byClass["F1"] * 100, matriz$byClass["Precision"] * 100, matriz$byClass["Recall"] * 100)
