@@ -7,10 +7,61 @@ library(dplyr)
 library(tools)
 
 source(file_path_as_absolute("utils/getDados.R"))
-load("rdas/sequences.RData")
+source(file_path_as_absolute("utils/tokenizer.R"))
+dados <- getDadosCFS()
+
+library(doMC)
+library(mlbench)
 
 CORES <- 4
 registerDoMC(CORES)
+
+#Separação teste e treinamento
+set.seed(10)
+split=0.80
+
+trainIndex <- createDataPartition(dados$resposta, p=split, list=FALSE)
+
+dados_train <- dados[ trainIndex,]
+dados_test <- dados[-trainIndex,]
+
+# Texto
+dadosTransformado <- dados_train %>%
+  mutate(
+    textOriginal = map(textOriginal, ~tokenize_words(.x)),
+    entidades = map(entidades, ~tokenize_entities(.x))
+  ) %>%
+  select(textOriginal, entidades)
+
+dadosTransformadoTest <- dados_test %>%
+  mutate(
+    textOriginal = map(textOriginal, ~tokenize_words(.x)),
+    entidades = map(entidades, ~tokenize_entities(.x))
+  ) %>%
+  select(textOriginal, entidades)
+
+all_data <- bind_rows(dadosTransformado, dadosTransformadoTest)
+
+#Vocabulario texto
+vocab <- c(unlist(dadosTransformado$textOriginal), unlist(dadosTransformadoTest$textOriginal)) %>%
+  unique() %>%
+  sort()
+
+vocab_size <- length(vocab) + 1
+maxlen <- map_int(all_data$textOriginal, ~length(.x)) %>% max()
+
+train_vec <- vectorize_stories(dadosTransformado, vocab, maxlen)
+
+#Vocabulario enttidades
+vocabEntidades <- c(unlist(dadosTransformado$entidades), unlist(dadosTransformadoTest$entidades)) %>%
+  unique() %>%
+  sort()
+
+maxlen_entidades <- map_int(all_data$entidades, ~length(.x)) %>% max()
+sequences <- vectorize_entities(dadosTransformado, vocabEntidades, maxlen_entidades)
+
+test_vec <- vectorize_stories(dadosTransformadoTest, vocab, maxlen)
+sequences_test <- vectorize_sequences(dados_test$sequences, dimension = max_sequence)
 
 # Data Preparation --------------------------------------------------------
 # Parameters --------------------------------------------------------------

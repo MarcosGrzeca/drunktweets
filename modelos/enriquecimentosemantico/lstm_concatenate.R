@@ -7,10 +7,44 @@ library(dplyr)
 library(tools)
 
 source(file_path_as_absolute("utils/getDados.R"))
-load("rdas/sequences.RData")
+source(file_path_as_absolute("utils/tokenizer.R"))
+dados <- getDadosInfoGain()
+
+tokenizer <- text_tokenizer(num_words = 1000) %>%
+fit_text_tokenizer(dados$entidades)
+vocabEntitiesLenght <- length(tokenizer$word_index)
+dados$sequences <- texts_to_sequences(tokenizer, dados$entidades)
+
+tokenizer_types <- text_tokenizer(num_words = 1000) %>%
+fit_text_tokenizer(dados$types)
+vocabTypesLenght <- length(tokenizer_types$word_index)
+dados$sequences_types <- texts_to_sequences(tokenizer_types, dados$types)
+
+library(doMC)
+library(mlbench)
 
 CORES <- 4
 registerDoMC(CORES)
+
+#Separação teste e treinamento
+set.seed(10)
+split=0.80
+
+trainIndex <- createDataPartition(dados$resposta, p=split, list=FALSE)
+
+dados_train <- dados[ trainIndex,]
+dados_test <- dados[-trainIndex,]
+
+#Vocabulario enttidades
+max_sequence <- max(sapply(dados_train$sequences, max))
+sequences <- vectorize_sequences(dados_train$sequences, dimension = max_sequence)
+
+max_sequence_types <- max(sapply(dados_train$sequences_types, max))
+sequences_types <- vectorize_sequences(dados_train$sequences_types, dimension = max_sequence_types)
+
+#Generate Test
+sequences_test <- vectorize_sequences(dados_test$sequences, dimension = max_sequence)
+sequences_test_types <- vectorize_sequences(dados_test$sequences_types, dimension = max_sequence_types)
 
 # Data Preparation --------------------------------------------------------
 # Parameters --------------------------------------------------------------
@@ -71,5 +105,3 @@ predictions2 <- round(predictions, 0)
 matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
 matriz
 print(paste("F1 ", matriz$byClass["F1"] * 100, "Precisao ", matriz$byClass["Precision"] * 100, "Recall ", matriz$byClass["Recall"] * 100, "Acuracia ", matriz$overall["Accuracy"] * 100))
-
-adicionarResultadosTestes("relu_concatenate.R apenas semântico", matriz$byClass["F1"] * 100, matriz$byClass["Precision"] * 100, matriz$byClass["Recall"] * 100)

@@ -40,12 +40,12 @@ entities_out <- auxiliary_input
 auxiliary_input_types <- layer_input(shape = c(max_sequence_types))
 types_out <- auxiliary_input_types
 
-main_output <- layer_concatenate(c(entities_out, types_out)) %>%  
-layer_dense(units = 64, activation = 'relu') %>% 
-layer_dense(units = 1, activation = 'sigmoid')
+main_output <- types_out %>% 
+    layer_dense(units = 64, activation = 'relu') %>% 
+    layer_dense(units = 1, activation = 'sigmoid')
 
 model <- keras_model(
-  inputs = c(auxiliary_input, auxiliary_input_types),
+  inputs = auxiliary_input_types,
   outputs = main_output
   )
 
@@ -58,7 +58,7 @@ model %>% compile(
 
 history <- model %>%
 fit(
-  x = list(sequences, sequences_types),
+  x = sequences_types,
   y = array(dados_train$resposta),
   batch_size = batch_size,
   epochs = epochs,
@@ -66,10 +66,13 @@ fit(
   )
 
 history
-predictions <- model %>% predict(list(sequences_test, sequences_test_types))
+predictions <- model %>% predict(sequences_test_types)
 predictions2 <- round(predictions, 0)
 matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
 matriz
 print(paste("F1 ", matriz$byClass["F1"] * 100, "Precisao ", matriz$byClass["Precision"] * 100, "Recall ", matriz$byClass["Recall"] * 100, "Acuracia ", matriz$overall["Accuracy"] * 100))
 
-adicionarResultadosTestes("relu_concatenate.R apenas semântico", matriz$byClass["F1"] * 100, matriz$byClass["Precision"] * 100, matriz$byClass["Recall"] * 100)
+adicionarResultadosTestes("relu_only_types.R apenas semântico", matriz$byClass["F1"] * 100, matriz$byClass["Precision"] * 100, matriz$byClass["Recall"] * 100)
+
+
+View(readRDS("results/resultados.rds"))
