@@ -152,6 +152,79 @@ getDadosInfoGain <- function() {
   return (dados)
 }
 
+getDadosCFS <- function() {
+      # con <- dbEscapeStrings(connect(), "new year's")
+      dados <- query("SELECT id,
+                      drunk AS resposta,
+                      textOriginal,
+                      hashtags,
+                      (
+                        SELECT GROUP_CONCAT(DISTINCT(tn.palavra))
+                        FROM semantic_tweets_nlp tn
+                        WHERE tn.idTweet = t.id
+                        AND palavra IN ('/food and drink/beverages/alcoholic beverages/cocktails and beer')
+                        GROUP BY tn.idTweet
+                      ) AS entidades,
+                      (
+                        SELECT GROUP_CONCAT(DISTINCT(tn.type))
+                        FROM semantic_tweets_nlp tn
+                        WHERE tn.idTweet = t.id
+                        AND type IS NOT NULL
+                        AND type <> ''
+                        GROUP BY tn.idTweet
+                      ) AS enriquecimentoTypes,
+                      (
+                        SELECT GROUP_CONCAT(DISTINCT(REPLACE(ty.type, 'http://dbpedia.org/class/', '')))
+                        FROM semantic_tweets_nlp tn
+                        JOIN semantic_conceito c ON c.palavra = tn.palavra
+                        JOIN resource_type ty ON ty.resource = c.resource
+                        WHERE tn.idTweet = t.id
+                        AND ty.type IN ('http://dbpedia.org/class/yago/WikicatBeerStyles', 'http://dbpedia.org/ontology/Beverage', 'http://dbpedia.org/class/yago/WikicatVirtualCommunities')
+                        GROUP BY t.id
+                      ) AS types
+                      FROM semantic_tweets_alcolic t
+                      WHERE situacao = 1
+                      AND possuiURL = 0
+                      AND LENGTH(textOriginal) > 5
+                      -- ORDER by data DESC
+                      -- LIMIT 15000
+                      ")
+      # AND id = 1021368493743255552
+
+  dados$resposta[dados$resposta == "X"] <- 1
+  dados$resposta[dados$resposta == "N"] <- 0
+  dados$resposta[dados$resposta == "S"] <- 1
+
+  #dados$resposta <- as.factor(dados$resposta)
+  dados$resposta <- as.numeric(dados$resposta)
+  dados$textOriginal <- enc2utf8(dados$textOriginal)
+  dados$textOriginal <- iconv(dados$textOriginal, to='ASCII//TRANSLIT')
+  
+  dados$textOriginal = gsub("#drunk |#drunk$", "", dados$textOriginal,ignore.case=T)
+  dados$textOriginal = gsub("#drank |#drank$", "", dados$textOriginal,ignore.case=T)
+  dados$textOriginal = gsub("#imdrunk |#imdrunk$", "", dados$textOriginal,ignore.case=T)
+
+  dados$entidades <- enc2utf8(dados$entidades)
+  dados$entidades <- iconv(dados$entidades, to='ASCII//TRANSLIT')
+  dados$entidades = gsub(" ", "eee", dados$entidades, ignore.case=T)
+  dados$entidades = gsub("[^A-Za-z0-9,_ ]","",dados$entidades, ignore.case=T)
+  dados$entidades[is.na(dados$entidades)] <- "SEM_ENTIDADES"
+
+  dados$types <- enc2utf8(dados$types)
+  dados$types <- iconv(dados$types, to='ASCII//TRANSLIT')
+  dados$types = gsub(" ", "eee", dados$types, ignore.case=T)
+  dados$types = gsub("[^A-Za-z0-9,_ ]","",dados$types, ignore.case=T)
+  dados$types[is.na(dados$types)] <- "SEM_ENTIDADES"
+
+  dados$enriquecimentoTypes <- enc2utf8(dados$enriquecimentoTypes)
+  dados$enriquecimentoTypes <- iconv(dados$enriquecimentoTypes, to='ASCII//TRANSLIT')
+  dados$enriquecimentoTypes = gsub(" ", "eee", dados$enriquecimentoTypes, ignore.case=T)
+  dados$enriquecimentoTypes = gsub("[^A-Za-z0-9,_ ]","",dados$enriquecimentoTypes, ignore.case=T)
+  dados$enriquecimentoTypes[is.na(dados$enriquecimentoTypes)] <- "SEM_ENTIDADES"
+
+  return (dados)
+}
+
 getDadosSVM <- function() {
       dados <- query("SELECT id,
                       drunk AS resposta,

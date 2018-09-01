@@ -1,5 +1,5 @@
 #dir.create("tensorrunson")
-#tensorboard("tensorruns")
+tensorboard("tensorruns")
 
 library(keras)
 library(caret)
@@ -59,13 +59,13 @@ model %>% compile(
   metrics = "accuracy"
 )
 
-# callbacks = list(
-#   callback_tensorboard(
-#     log_dir = "tensorruns/c",
-#     histogram_freq = 1,
-#     embeddings_freq = 1
-#   )
-# )
+callbacks = list(
+  callback_tensorboard(
+    log_dir = "tensorruns/c",
+    histogram_freq = 1,
+    embeddings_freq = 1
+  )
+)
 
 history <- model %>%
   fit(
@@ -74,7 +74,7 @@ history <- model %>%
     batch_size = 128,
     epochs = 4,
     validation_split = 0.2
-    # , callbacks = callbacks
+    , callbacks = callbacks
   )
 
 history
