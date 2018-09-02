@@ -62,19 +62,19 @@ getDados <- function() {
   dados$entidades <- iconv(dados$entidades, to='ASCII//TRANSLIT')
   dados$entidades = gsub(" ", "eee", dados$entidades, ignore.case=T)
   dados$entidades = gsub("[^A-Za-z0-9,_ ]","",dados$entidades, ignore.case=T)
-  dados$entidades[is.na(dados$entidades)] <- "SEM_ENTIDADES"
+  dados$entidades[is.na(dados$entidades)] <- "SEMENTIDADES"
 
   dados$types <- enc2utf8(dados$types)
   dados$types <- iconv(dados$types, to='ASCII//TRANSLIT')
   dados$types = gsub(" ", "eee", dados$types, ignore.case=T)
   dados$types = gsub("[^A-Za-z0-9,_ ]","",dados$types, ignore.case=T)
-  dados$types[is.na(dados$types)] <- "SEM_ENTIDADES"
+  dados$types[is.na(dados$types)] <- "SEMENTIDADES"
 
   dados$enriquecimentoTypes <- enc2utf8(dados$enriquecimentoTypes)
   dados$enriquecimentoTypes <- iconv(dados$enriquecimentoTypes, to='ASCII//TRANSLIT')
   dados$enriquecimentoTypes = gsub(" ", "eee", dados$enriquecimentoTypes, ignore.case=T)
   dados$enriquecimentoTypes = gsub("[^A-Za-z0-9,_ ]","",dados$enriquecimentoTypes, ignore.case=T)
-  dados$enriquecimentoTypes[is.na(dados$enriquecimentoTypes)] <- "SEM_ENTIDADES"
+  dados$enriquecimentoTypes[is.na(dados$enriquecimentoTypes)] <- "SEMENTIDADES"
 
   return (dados)
 }
@@ -135,19 +135,19 @@ getDadosInfoGain <- function() {
   dados$entidades <- iconv(dados$entidades, to='ASCII//TRANSLIT')
   dados$entidades = gsub(" ", "eee", dados$entidades, ignore.case=T)
   dados$entidades = gsub("[^A-Za-z0-9,_ ]","",dados$entidades, ignore.case=T)
-  dados$entidades[is.na(dados$entidades)] <- "SEM_ENTIDADES"
+  dados$entidades[is.na(dados$entidades)] <- "SEMENTIDADES"
 
   dados$types <- enc2utf8(dados$types)
   dados$types <- iconv(dados$types, to='ASCII//TRANSLIT')
   dados$types = gsub(" ", "eee", dados$types, ignore.case=T)
   dados$types = gsub("[^A-Za-z0-9,_ ]","",dados$types, ignore.case=T)
-  dados$types[is.na(dados$types)] <- "SEM_ENTIDADES"
+  dados$types[is.na(dados$types)] <- "SEMENTIDADES"
 
   dados$enriquecimentoTypes <- enc2utf8(dados$enriquecimentoTypes)
   dados$enriquecimentoTypes <- iconv(dados$enriquecimentoTypes, to='ASCII//TRANSLIT')
   dados$enriquecimentoTypes = gsub(" ", "eee", dados$enriquecimentoTypes, ignore.case=T)
   dados$enriquecimentoTypes = gsub("[^A-Za-z0-9,_ ]","",dados$enriquecimentoTypes, ignore.case=T)
-  dados$enriquecimentoTypes[is.na(dados$enriquecimentoTypes)] <- "SEM_ENTIDADES"
+  dados$enriquecimentoTypes[is.na(dados$enriquecimentoTypes)] <- "SEMENTIDADES"
 
   return (dados)
 }
@@ -187,7 +187,7 @@ getDadosCFS <- function() {
                       AND possuiURL = 0
                       AND LENGTH(textOriginal) > 5
                       -- ORDER by data DESC
-                      -- LIMIT 15000
+                      -- LIMIT 5000
                       ")
       # AND id = 1021368493743255552
 
@@ -208,19 +208,19 @@ getDadosCFS <- function() {
   dados$entidades <- iconv(dados$entidades, to='ASCII//TRANSLIT')
   dados$entidades = gsub(" ", "eee", dados$entidades, ignore.case=T)
   dados$entidades = gsub("[^A-Za-z0-9,_ ]","",dados$entidades, ignore.case=T)
-  dados$entidades[is.na(dados$entidades)] <- "SEM_ENTIDADES"
+  dados$entidades[is.na(dados$entidades)] <- "SEMENTIDADES"
 
   dados$types <- enc2utf8(dados$types)
   dados$types <- iconv(dados$types, to='ASCII//TRANSLIT')
   dados$types = gsub(" ", "eee", dados$types, ignore.case=T)
   dados$types = gsub("[^A-Za-z0-9,_ ]","",dados$types, ignore.case=T)
-  dados$types[is.na(dados$types)] <- "SEM_ENTIDADES"
+  dados$types[is.na(dados$types)] <- "SEMENTIDADES"
 
   dados$enriquecimentoTypes <- enc2utf8(dados$enriquecimentoTypes)
   dados$enriquecimentoTypes <- iconv(dados$enriquecimentoTypes, to='ASCII//TRANSLIT')
   dados$enriquecimentoTypes = gsub(" ", "eee", dados$enriquecimentoTypes, ignore.case=T)
   dados$enriquecimentoTypes = gsub("[^A-Za-z0-9,_ ]","",dados$enriquecimentoTypes, ignore.case=T)
-  dados$enriquecimentoTypes[is.na(dados$enriquecimentoTypes)] <- "SEM_ENTIDADES"
+  dados$enriquecimentoTypes[is.na(dados$enriquecimentoTypes)] <- "SEMENTIDADES"
 
   return (dados)
 }
@@ -288,19 +288,19 @@ getDadosSVM <- function() {
   dados$entidades <- iconv(dados$entidades, to='ASCII//TRANSLIT')
   dados$entidades = gsub(" ", "eee", dados$entidades, ignore.case=T)
   dados$entidades = gsub("[^A-Za-z0-9,_ ]","",dados$entidades, ignore.case=T)
-  dados$entidades[is.na(dados$entidades)] <- "SEM_ENTIDADES"
+  dados$entidades[is.na(dados$entidades)] <- "SEMENTIDADES"
 
   dados$types <- enc2utf8(dados$types)
   dados$types <- iconv(dados$types, to='ASCII//TRANSLIT')
   dados$types = gsub(" ", "eee", dados$types, ignore.case=T)
   dados$types = gsub("[^A-Za-z0-9,_ ]","",dados$types, ignore.case=T)
-  dados$types[is.na(dados$types)] <- "SEM_ENTIDADES"
+  dados$types[is.na(dados$types)] <- "SEMENTIDADES"
 
   dados$enriquecimentoTypes <- enc2utf8(dados$enriquecimentoTypes)
   dados$enriquecimentoTypes <- iconv(dados$enriquecimentoTypes, to='ASCII//TRANSLIT')
   dados$enriquecimentoTypes = gsub(" ", "eee", dados$enriquecimentoTypes, ignore.case=T)
   dados$enriquecimentoTypes = gsub("[^A-Za-z0-9,_ ]","",dados$enriquecimentoTypes, ignore.case=T)
-  dados$enriquecimentoTypes[is.na(dados$enriquecimentoTypes)] <- "SEM_ENTIDADES"
+  dados$enriquecimentoTypes[is.na(dados$enriquecimentoTypes)] <- "SEMENTIDADES"
 
   return (dados)
 }
