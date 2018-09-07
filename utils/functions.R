@@ -95,7 +95,7 @@ discretizarTurno <- function(dados) {
 }
 
 adicionarResultadosTestes <-function(contexto, f1, precision, recall) {
-  fileName <- "results/resultados.rds"
+  fileName <- FILE_NAME_RESULTS
 
   resultsGeral <- data.frame(matrix(ncol = 5, nrow = 0))
   names(resultsGeral) <- c("Contexto", "F1", "Precisao", "Revocacao", "Data")
