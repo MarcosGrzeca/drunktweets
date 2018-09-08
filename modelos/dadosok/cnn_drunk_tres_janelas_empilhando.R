@@ -39,6 +39,11 @@ ccn_out3 <- main_input3 %>%
     filters, kernel_size, 
     padding = "valid", activation = "relu", strides = 1
   ) %>%
+  layer_max_pooling_1d(pool_size = 5) %>%
+  layer_conv_1d(
+    filters, kernel_size, 
+    padding = "valid", activation = "relu", strides = 1
+  ) %>%
   layer_global_max_pooling_1d()
 
 # layer_conv_2d(filters = 32, kernel_size = c(3, 3), activation = "relu",
@@ -52,10 +57,20 @@ ccn_out4 <- main_input4 %>%
     filters, kernel_size + 1, 
     padding = "valid", activation = "relu", strides = 1
   ) %>%
+  layer_max_pooling_1d(pool_size = 5) %>%
+  layer_conv_1d(
+    filters, kernel_size + 1, 
+    padding = "valid", activation = "relu", strides = 1
+  ) %>%
   layer_global_max_pooling_1d()
 
 ccn_out5 <- main_input5 %>% 
   layer_embedding(vocab_size, embedding_dims, input_length = maxlen) %>%
+  layer_conv_1d(
+    filters, kernel_size + 2, 
+    padding = "valid", activation = "relu", strides = 1
+  ) %>%
+  layer_max_pooling_1d(pool_size = 5) %>%
   layer_conv_1d(
     filters, kernel_size + 2, 
     padding = "valid", activation = "relu", strides = 1
