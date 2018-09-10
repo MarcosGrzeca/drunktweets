@@ -1,0 +1,5 @@
+model = Sequential()
+model.add(LSTM(..., input_shape=(...)))
+model.add(RepeatVector(...))
+model.add(LSTM(..., return_sequences=True))
+model.add(TimeDistributed(Dense(...)))
