@@ -1,9 +1,7 @@
 Para implementar
 https://keras.rstudio.com/articles/examples/index.html
 https://keras.rstudio.com/articles/examples/imdb_cnn_lstm.html
-https://keras.rstudio.com/articles/examples/imdb_lstm.html
 https://keras.rstudio.com/articles/examples/imdb_fasttext.html
-https://keras.rstudio.com/articles/examples/imdb_bidirectional_lstm.html
 https://keras.rstudio.com/articles/examples/conv_lstm.html
 https://keras.rstudio.com/articles/examples/lstm_seq2seq.html
 
@@ -12,3 +10,5 @@ https://github.com/jjallaire/deep-learning-with-r-notebooks
 
 Já implementados
  - https://keras.rstudio.com/articles/examples/imdb_cnn.html
+ - https://keras.rstudio.com/articles/examples/imdb_bidirectional_lstm.html
+ - https://keras.rstudio.com/articles/examples/imdb_lstm.html
