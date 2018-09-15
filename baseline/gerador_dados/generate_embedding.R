@@ -1,4 +1,3 @@
-library(keras)
 library(readr)
 library(stringr)
 library(purrr)
@@ -9,8 +8,6 @@ library(tools)
 source(file_path_as_absolute("utils/getDados.R"))
 source(file_path_as_absolute("baseline/dados.R"))
 source(file_path_as_absolute("utils/tokenizer.R"))
-dados <- getDadosBaseline()
-
 vectorize_local <- function(data, vocab, textParser_maxlen){
   
   textEmbedding <- map(data$textEmbedding, function(x){
@@ -21,12 +18,17 @@ vectorize_local <- function(data, vocab, textParser_maxlen){
     textEmbedding = pad_sequences(textEmbedding, maxlen = textParser_maxlen)
   )
 }
+dados <- getDadosBaseline()
 
-library(doMC)
-library(mlbench)
+tokenizer <- text_tokenizer(num_words = 1000) %>%
+             fit_text_tokenizer(dados$entidades)
+vocabEntitiesLenght <- length(tokenizer$word_index)
+dados$sequences <- texts_to_sequences(tokenizer, dados$entidades)
 
-CORES <- 4
-registerDoMC(CORES)
+tokenizer_types <- text_tokenizer(num_words = 1000) %>%
+             fit_text_tokenizer(dados$types)
+vocabTypesLenght <- length(tokenizer_types$word_index)
+dados$sequences_types <- texts_to_sequences(tokenizer_types, dados$types)
 
 #Separação teste e treinamento
 set.seed(10)
@@ -61,8 +63,15 @@ vocab_size <- length(vocab) + 1
 maxlen <- map_int(all_data$textEmbedding, ~length(.x)) %>% max()
 
 train_vec <- vectorize_local(dadosTransformado, vocab, maxlen)
-
-#Generate Test
 test_vec <- vectorize_local(dadosTransformadoTest, vocab, maxlen)
 
-save.image(file="rdas/baseline_embeddings.RData")
+max_sequence <- max(sapply(dados_train$sequences, max))
+max_sequence_types <- max(sapply(dados_train$sequences_types, max))
+
+train_sequences <- vectorize_sequences(dados_train$sequences, dimension = max_sequence)
+train_sequences_types <- vectorize_sequences(dados_train$sequences_types, dimension = max_sequence_types)
+
+test_sequences <- vectorize_sequences(dados_test$sequences, dimension = max_sequence)
+test_sequences_types <- vectorize_sequences(dados_test$sequences_types, dimension = max_sequence_types)
+
+save.image(file="rdas/baseline_embeddings_q3.RData")
