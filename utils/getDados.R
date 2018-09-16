@@ -474,3 +474,21 @@ processarSequence <- function(textParser, maxlen, max_words) {
   sequences <- texts_to_sequences(tokenizer, texts)
   return (sequences);
 }
+
+getDadosWordEmbeddings <- function() {
+      dados <- query("SELECT textOriginal as textEmbedding
+                      FROM semantic_tweets_alcolic t
+                      WHERE situacao = 1
+                      AND possuiURL = 0
+                      AND LENGTH(textOriginal) > 5
+                      UNION ALL
+                      SELECT textEmbedding 
+                      FROM tweets t
+                      WHERE LENGTH(textoParserRisadaEmoticom) > 5
+                      ")
+
+  dados$textEmbedding <- enc2utf8(dados$textEmbedding)
+  dados$textEmbedding <- iconv(dados$textEmbedding, to='ASCII//TRANSLIT')
+  dados$textEmbedding = gsub("'", "", dados$textEmbedding, ignore.case=T)
+  return (dados)
+}
