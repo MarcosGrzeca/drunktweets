@@ -59,7 +59,7 @@ for (year in 1:10){
   	data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
   	data_test <- maFinal[-trainIndex,]
 
-  	treegram25NotNull <- treinar(data_train)
+  	treegram25NotNull <- treinarPoly(data_train)
   	treegram25NotNull
   	matriz3Gram25NotNull <- getMatriz(treegram25NotNull, data_test)
   	resultados <- addRow(resultados, "2 GRAM - Entidades - Erro", matriz3Gram25NotNull)
@@ -95,16 +95,16 @@ for (year in 1:10){
 #   save.image(file=fileName)
 # })
 
-try({
-	load(file = "rdas/2gram-entidades-hora-erro-without-text.Rda")
-	maFinal$resposta <- as.factor(maFinal$resposta)
-	trainIndex <- createDataPartition(maFinal$resposta, p=split, list=FALSE)
-	data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
-	data_test <- maFinal[-trainIndex,]
+# try({
+# 	load(file = "rdas/2gram-entidades-hora-erro-without-text.Rda")
+# 	maFinal$resposta <- as.factor(maFinal$resposta)
+# 	trainIndex <- createDataPartition(maFinal$resposta, p=split, list=FALSE)
+# 	data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
+# 	data_test <- maFinal[-trainIndex,]
 
-	gramEntidadesSemTexto <- treinar(data_train)
-	gramEntidadesSemTexto
-	matrizGramSemTexto <- getMatriz(gramEntidadesSemTexto, data_test)
-	resultados <- addRow(resultados, "2 GRAM - Entidades - Erro - Sem texto", matrizGramSemTexto)
-	save.image(file=fileName)
-})
+# 	gramEntidadesSemTexto <- treinar(data_train)
+# 	gramEntidadesSemTexto
+# 	matrizGramSemTexto <- getMatriz(gramEntidadesSemTexto, data_test)
+# 	resultados <- addRow(resultados, "2 GRAM - Entidades - Erro - Sem texto", matrizGramSemTexto)
+# 	save.image(file=fileName)
+# })
