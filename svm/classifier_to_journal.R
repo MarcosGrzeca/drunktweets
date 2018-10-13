@@ -13,7 +13,7 @@ try({
 	load(fileName)
 })
 
-CORES <- 3
+CORES <- 5
 registerDoMC(CORES)
 
 treinar <- function(data_train){
@@ -66,18 +66,18 @@ for (year in 1:10){
   })
 }
 
-for (year in 1:10){
-  try({
-    load(file = "rdas/2gram-entidades-hora-erro.Rda")
-    maFinal$resposta <- as.factor(maFinal$resposta)
-    trainIndex <- createDataPartition(maFinal$resposta, p=split, list=FALSE)
-    data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
-    data_test <- maFinal[-trainIndex,]
+# for (year in 1:10){
+#   try({
+#     load(file = "rdas/2gram-entidades-hora-erro.Rda")
+#     maFinal$resposta <- as.factor(maFinal$resposta)
+#     trainIndex <- createDataPartition(maFinal$resposta, p=split, list=FALSE)
+#     data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
+#     data_test <- maFinal[-trainIndex,]
 
-    treegram25NotNull <- treinarPoly(data_train)
-    treegram25NotNull
-    matriz3Gram25NotNull <- getMatriz(treegram25NotNull, data_test)
-    resultados <- addRow(resultados, "2 GRAM - Entidades - Erro", matriz3Gram25NotNull)
-    save.image(file=fileName)
-  })
-}
+#     treegram25NotNull <- treinarPoly(data_train)
+#     treegram25NotNull
+#     matriz3Gram25NotNull <- getMatriz(treegram25NotNull, data_test)
+#     resultados <- addRow(resultados, "2 GRAM - Entidades - Erro", matriz3Gram25NotNull)
+#     save.image(file=fileName)
+#   })
+# }
