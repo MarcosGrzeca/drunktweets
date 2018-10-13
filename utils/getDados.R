@@ -305,6 +305,38 @@ getDadosSVM <- function() {
   return (dados)
 }
 
+getDadosSVMBaseline <- function() {
+      dados <- query("SELECT id,
+                      drunk AS resposta,
+                      textOriginal,
+                      textSemHashtagsControle as textParser,
+                      emoticonPos,
+                      emoticonNeg,
+                      hashtags,
+                      FROM semantic_tweets_alcolic t
+                      WHERE situacao = 1
+                      AND possuiURL = 0
+                      AND LENGTH(textOriginal) > 5
+                      ")
+
+  dados$resposta[dados$resposta == "X"] <- 1
+  dados$resposta[dados$resposta == "N"] <- 0
+  dados$resposta[dados$resposta == "S"] <- 1
+
+  #dados$resposta <- as.factor(dados$resposta)
+  dados$resposta <- as.numeric(dados$resposta)
+  dados$textOriginal <- enc2utf8(dados$textOriginal)
+  dados$textOriginal <- iconv(dados$textOriginal, to='ASCII//TRANSLIT')
+  
+  dados$textParser <- enc2utf8(dados$textParser)
+  dados$textParser <- iconv(dados$textParser, to='ASCII//TRANSLIT')
+  
+  dados$textOriginal = gsub("#drunk |#drunk$", "", dados$textOriginal,ignore.case=T)
+  dados$textOriginal = gsub("#drank |#drank$", "", dados$textOriginal,ignore.case=T)
+  dados$textOriginal = gsub("#imdrunk |#imdrunk$", "", dados$textOriginal,ignore.case=T)
+  return (dados)
+}
+
 getDadosSemHashtags <- function() {
   dados <- query("SELECT drunk AS resposta,
                       textOriginal,
