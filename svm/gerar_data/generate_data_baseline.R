@@ -64,23 +64,8 @@ vocabHashTags = create_vocabulary(it_train_hash)
 vocabHashTags = prune_vocabulary(vocabHashTags, term_count_min = 2)
 vectorizerHashTags = vocab_vectorizer(vocabHashTags)
 dtm_train_hash_tags = create_dtm(it_train_hash, vectorizerHashTags)
-
-it_train = itoken(strsplit(dados$entidades, ","),
-                  preprocessor = tolower, 
-                  tokenizer = word_tokenizer,
-                  ids = dados$id, 
-                  progressbar = TRUE)
-
-vocab = create_vocabulary(it_train)
-vocab = prune_vocabulary(vocab, term_count_min = 2)
-vectorizer = vocab_vectorizer(vocab)
-dataFrameEntidades = create_dtm(it_train, vectorizer)
-
-#Concatenar resultados
 dataFrameHash <- as.data.frame(as.matrix(dtm_train_hash_tags))
-dataFrameEntidades <- as.data.frame(as.matrix(dataFrameEntidades))
 
 maFinal <- cbind.fill(subset(dados, select = -c(textParser, id, hashtags, textOriginal)), dataFrameTexto)
 maFinal <- cbind.fill(maFinal, dataFrameHash)
-maFinal <- cbind.fill(maFinal, dataFrameEntidades)
 save(maFinal, file = "rdas/3gram-25-baseline.Rda")

@@ -53,58 +53,32 @@ split=0.80
 
 for (year in 1:10){
   try({
-  	load(file = "rdas/2gram-entidades-hora-erro.Rda")
+    load(file = "rdas/2gram-entidades-hora-erro.Rda")
+    maFinal$resposta <- as.factor(maFinal$resposta)
+    trainIndex <- createDataPartition(maFinal$resposta, p=split, list=FALSE)
+    data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
+    data_test <- maFinal[-trainIndex,]
+
+    treegram25NotNull <- treinarPoly(data_train)
+    treegram25NotNull
+    matriz3Gram25NotNull <- getMatriz(treegram25NotNull, data_test)
+    resultados <- addRow(resultados, "2 GRAM - Entidades - Erro", matriz3Gram25NotNull)
+    save.image(file=fileName)
+  })
+}
+
+for (year in 1:10){
+  try({
+  	load(file = "rdas/3gram-25-baseline.Rda")
   	maFinal$resposta <- as.factor(maFinal$resposta)
   	trainIndex <- createDataPartition(maFinal$resposta, p=split, list=FALSE)
   	data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
   	data_test <- maFinal[-trainIndex,]
 
-  	treegram25NotNull <- treinarPoly(data_train)
-  	treegram25NotNull
-  	matriz3Gram25NotNull <- getMatriz(treegram25NotNull, data_test)
-  	resultados <- addRow(resultados, "2 GRAM - Entidades - Erro", matriz3Gram25NotNull)
+  	treegram25NotNullBaseline <- treinarPoly(data_train)
+  	treegram25NotNullBaseline
+  	matriz3Gram25NotNullBaseline <- getMatriz(treegram25NotNullBaseline, data_test)
+  	resultados <- addRow(resultados, "3 GRAM 25", matriz3Gram25NotNullBaseline)
   	save.image(file=fileName)
   })
 }
-
-# try({
-#   load(file = "rdas/2gram-entidades-hora-erro-sem-controle.Rda")
-#   maFinal$resposta <- as.factor(maFinal$resposta)
-#   trainIndex <- createDataPartition(maFinal$resposta, p=split, list=FALSE)
-#   data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
-#   data_test <- maFinal[-trainIndex,]
-
-#   treegram25NotNullSemControle <- treinar(data_train)
-#   treegram25NotNullSemControle
-#   matriz3Gram25NotNullSemControle <- getMatriz(treegram25NotNullSemControle, data_test)
-#   resultados <- addRow(resultados, "2 GRAM - Entidades - Erro - Sem Controle", matriz3Gram25NotNullSemControle)
-#   save.image(file=fileName)
-# })
-
-# try({
-#   load(file = "rdas/2gram-entidades-hora-erro-sem-entidades.Rda")
-#   maFinal$resposta <- as.factor(maFinal$resposta)
-#   trainIndex <- createDataPartition(maFinal$resposta, p=split, list=FALSE)
-#   data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
-#   data_test <- maFinal[-trainIndex,]
-
-#   treegram25NotNullSemEntidades <- treinar(data_train)
-#   treegram25NotNullSemEntidades
-#   matriz3Gram25NotNullSemEntidades <- getMatriz(treegram25NotNullSemEntidades, data_test)
-#   resultados <- addRow(resultados, "2 GRAM - Entidades - Erro - Sem Entidades", matriz3Gram25NotNullSemEntidades)
-#   save.image(file=fileName)
-# })
-
-# try({
-# 	load(file = "rdas/2gram-entidades-hora-erro-without-text.Rda")
-# 	maFinal$resposta <- as.factor(maFinal$resposta)
-# 	trainIndex <- createDataPartition(maFinal$resposta, p=split, list=FALSE)
-# 	data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
-# 	data_test <- maFinal[-trainIndex,]
-
-# 	gramEntidadesSemTexto <- treinar(data_train)
-# 	gramEntidadesSemTexto
-# 	matrizGramSemTexto <- getMatriz(gramEntidadesSemTexto, data_test)
-# 	resultados <- addRow(resultados, "2 GRAM - Entidades - Erro - Sem texto", matrizGramSemTexto)
-# 	save.image(file=fileName)
-# })
