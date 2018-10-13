@@ -312,7 +312,7 @@ getDadosSVMBaseline <- function() {
                       textSemHashtagsControle as textParser,
                       emoticonPos,
                       emoticonNeg,
-                      hashtags,
+                      hashtags
                       FROM semantic_tweets_alcolic t
                       WHERE situacao = 1
                       AND possuiURL = 0
