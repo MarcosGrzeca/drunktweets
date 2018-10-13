@@ -13,7 +13,7 @@ try({
 	load(fileName)
 })
 
-CORES <- 5
+CORES <- 3
 registerDoMC(CORES)
 
 treinar <- function(data_train){
