@@ -1,0 +1,17 @@
+Loading required package: lattice
+Loading required package: ggplot2
+Loading required package: foreach
+Loading required package: iterators
+Loading required package: parallel
+Error in readChar(con, 5L, useBytes = TRUE) : cannot open the connection
+In addition: Warning message:
+In readChar(con, 5L, useBytes = TRUE) :
+  cannot open compressed file 'rdas/svm_journal.Rdata', probable reason 'No such file or directory'
+Loading required package: kernlab
+
+Attaching package: ‘kernlab’
+
+The following object is masked from ‘package:ggplot2’:
+
+    alpha
+
