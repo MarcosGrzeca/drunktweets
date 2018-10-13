@@ -13,7 +13,7 @@ try({
 	load(fileName)
 })
 
-CORES <- 5
+CORES <- 3
 registerDoMC(CORES)
 
 treinar <- function(data_train){
@@ -50,34 +50,34 @@ addRow <- function(resultados, baseline, matriz, ...) {
 
 set.seed(10)
 split=0.80
-for (year in 1:10){
-  try({
-  	load(file = "rdas/3gram-25-baseline.Rda")
-  	maFinal$resposta <- as.factor(maFinal$resposta)
-  	trainIndex <- createDataPartition(maFinal$resposta, p=split, list=FALSE)
-  	data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
-  	data_test <- maFinal[-trainIndex,]
-
-  	treegram25NotNullBaseline <- treinar(data_train)
-  	treegram25NotNullBaseline
-  	matriz3Gram25NotNullBaseline <- getMatriz(treegram25NotNullBaseline, data_test)
-  	resultados <- addRow(resultados, "3 GRAM 25", matriz3Gram25NotNullBaseline)
-  	save.image(file=fileName)
-  })
-}
-
 # for (year in 1:10){
 #   try({
-#     load(file = "rdas/2gram-entidades-hora-erro.Rda")
-#     maFinal$resposta <- as.factor(maFinal$resposta)
-#     trainIndex <- createDataPartition(maFinal$resposta, p=split, list=FALSE)
-#     data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
-#     data_test <- maFinal[-trainIndex,]
+#   	load(file = "rdas/3gram-25-baseline.Rda")
+#   	maFinal$resposta <- as.factor(maFinal$resposta)
+#   	trainIndex <- createDataPartition(maFinal$resposta, p=split, list=FALSE)
+#   	data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
+#   	data_test <- maFinal[-trainIndex,]
 
-#     treegram25NotNull <- treinarPoly(data_train)
-#     treegram25NotNull
-#     matriz3Gram25NotNull <- getMatriz(treegram25NotNull, data_test)
-#     resultados <- addRow(resultados, "2 GRAM - Entidades - Erro", matriz3Gram25NotNull)
-#     save.image(file=fileName)
+#   	treegram25NotNullBaseline <- treinar(data_train)
+#   	treegram25NotNullBaseline
+#   	matriz3Gram25NotNullBaseline <- getMatriz(treegram25NotNullBaseline, data_test)
+#   	resultados <- addRow(resultados, "3 GRAM 25", matriz3Gram25NotNullBaseline)
+#   	save.image(file=fileName)
 #   })
 # }
+
+for (year in 1:10){
+  try({
+    load(file = "rdas/2gram-entidades-hora-erro.Rda")
+    maFinal$resposta <- as.factor(maFinal$resposta)
+    trainIndex <- createDataPartition(maFinal$resposta, p=split, list=FALSE)
+    data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
+    data_test <- maFinal[-trainIndex,]
+
+    treegram25NotNull <- treinarPoly(data_train)
+    treegram25NotNull
+    matriz3Gram25NotNull <- getMatriz(treegram25NotNull, data_test)
+    resultados <- addRow(resultados, "2 GRAM - Entidades - Erro", matriz3Gram25NotNull)
+    save.image(file=fileName)
+  })
+}
