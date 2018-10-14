@@ -18,6 +18,11 @@ source(file_path_as_absolute("utils/tokenizer.R"))
 
 dadosTreinarEmbeddings <- getDadosWordEmbeddings()
 
+library(doMC)
+library(mlbench)
+CORES <- 5
+registerDoMC(CORES)
+
 library(keras)
 tokenizer <- text_tokenizer(num_words = 45000)
 tokenizer %>% fit_text_tokenizer(dadosTreinarEmbeddings$textEmbedding)
