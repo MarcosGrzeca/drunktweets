@@ -1,11 +1,13 @@
 library(tools)
 
+tensorboard("tensorruns")
+
 fileName <- "ipm/results_q4.Rdata"
 source(file_path_as_absolute("ipm/loads.R"))
 
 DESC <- "Exp4 - CNN + Semantic Enrichment + Word embeddings"
 
-for (year in 1:10){
+for (year in 1:1){
   try({
     load("rdas/sequences.RData")
     FLAGS <- flags(
@@ -55,14 +57,22 @@ for (year in 1:10){
 	  metrics = "accuracy"
 	)
 
+	callbacks = list(
+	  callback_tensorboard(
+	    log_dir = "tensorruns/exp4",
+	    histogram_freq = 1,
+	    embeddings_freq = 1
+	  )
+	)
+
 	history <- model %>%
 	  fit(
 	    x = list(train_vec$new_textParser, sequences, sequences_types),
 	    y = array(dados_train$resposta),
 	    batch_size = FLAGS$batch_size,
 	    epochs = FLAGS$epochs,
-	    validation_split = 0.2
-	    #, callbacks = callbacks
+	    validation_split = 0.2, 
+	    callbacks = callbacks
 	  )
 
 	predictions <- model %>% predict(list(test_vec$new_textParser, sequences_test, sequences_test_types))
@@ -71,7 +81,7 @@ for (year in 1:10){
 	resultados <- addRowAdpater(resultados, DESC, matriz)
   })
 }
-save.image(file=fileName)
-resultados$F1
-resultados$Precision
-resultados$Recall
+# save.image(file=fileName)
+# resultados$F1
+# resultados$Precision
+# resultados$Recall
