@@ -1,11 +1,3 @@
-# download.file("https://snap.stanford.edu/data/finefoods.txt.gz", "finefoods.txt.gz")
-
-# library(readr)
-# library(stringr)
-# reviews <- read_lines("finefoods.txt.gz") 
-# reviews <- reviews[str_sub(reviews, 1, 12) == "review/text:"]
-# reviews <- str_sub(reviews, start = 14)
-
 library(tools)
 library(text2vec)
 library(data.table)
@@ -23,9 +15,21 @@ library(mlbench)
 CORES <- 5
 registerDoMC(CORES)
 
+word_count <- str_count(dadosTreinarEmbeddings$textEmbedding, "\\S+" )
+word_count
+reviews <- dadosTreinarEmbeddings$textEmbedding[word_count > 2]
+str(dadosTreinarEmbeddings$textEmbedding)
+str(reviews)
+
 library(keras)
 tokenizer <- text_tokenizer(num_words = 45000)
-tokenizer %>% fit_text_tokenizer(dadosTreinarEmbeddings$textEmbedding)
+tokenizer %>% fit_text_tokenizer(reviews)
+
+#tokenizer %>% fit_text_tokenizer(dadosTreinarEmbeddings$textEmbedding)
+#reviews_check <- dadosTreinarEmbeddings$textEmbedding %>% texts_to_sequences(tokenizer,.) %>% lapply(., function(x) length(x) > 1) %>% unlist(.)
+#table(reviews_check)
+#reviews <- dadosTreinarEmbeddings$textEmbedding[reviews_check]
+#reviews <- reviews[reviews_check]
 
 library(reticulate)
 library(purrr)
@@ -74,8 +78,8 @@ model %>% compile(loss = "binary_crossentropy", optimizer = "adam")
 
 model %>%
   fit_generator(
-    skipgrams_generator(dadosTreinarEmbeddings$textEmbedding, tokenizer, skip_window, negative_samples), 
-    steps_per_epoch = 40000, epochs = 5
+    skipgrams_generator(reviews, tokenizer, skip_window, negative_samples), 
+    steps_per_epoch = 10000, epochs = 5
     )
 
 library(dplyr)

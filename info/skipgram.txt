@@ -1,0 +1,2 @@
+https://www.r-bloggers.com/word-embeddings-with-keras/
+https://github.com/rstudio/keras/issues/244
