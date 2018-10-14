@@ -79,7 +79,7 @@ model %>% compile(loss = "binary_crossentropy", optimizer = "adam")
 model %>%
   fit_generator(
     skipgrams_generator(reviews, tokenizer, skip_window, negative_samples), 
-    steps_per_epoch = 10000, epochs = 5
+    steps_per_epoch = 20000, epochs = 5
     )
 
 library(dplyr)
