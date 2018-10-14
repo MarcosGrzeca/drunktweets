@@ -21,7 +21,7 @@ str(dadosTreinarEmbeddings$textEmbedding)
 str(reviews)
 
 library(keras)
-tokenizer <- text_tokenizer(num_words = 45000)
+tokenizer <- text_tokenizer(num_words = 40000)
 tokenizer %>% fit_text_tokenizer(reviews)
 
 #tokenizer %>% fit_text_tokenizer(dadosTreinarEmbeddings$textEmbedding)
@@ -38,6 +38,7 @@ skipgrams_generator <- function(text, tokenizer, window_size, negative_samples) 
     skip <- iter_next(gen) %>%
       skipgrams(
         vocabulary_size = tokenizer$num_words, 
+        #vocabulary_size = length(tokenizer$word_index), 
         window_size = window_size, 
         negative_samples = 1
       )

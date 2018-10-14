@@ -26,7 +26,6 @@ word_vectors_main <- glove$fit_transform(tcm, n_iter = 10)
 word_vectors_context = glove$components
 embeddings_index = word_vectors_main + t(word_vectors_context)
 
-embeddings_index["beer"]
 
 #Fim Generate embeddings
 
