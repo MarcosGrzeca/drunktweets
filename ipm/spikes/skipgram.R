@@ -16,7 +16,6 @@ CORES <- 5
 registerDoMC(CORES)
 
 word_count <- str_count(dadosTreinarEmbeddings$textEmbedding, "\\S+" )
-word_count
 reviews <- dadosTreinarEmbeddings$textEmbedding[word_count > 2]
 str(dadosTreinarEmbeddings$textEmbedding)
 str(reviews)

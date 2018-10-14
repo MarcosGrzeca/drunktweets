@@ -1,0 +1,19 @@
+Ensemble:
+ - https://dzone.com/articles/build-custom-ensemble-models-using-caret-in-r
+ - https://cran.r-project.org/web/packages/caretEnsemble/vignettes/caretEnsemble-intro.html
+ - https://machinelearningmastery.com/machine-learning-ensembles-with-r/
+ - SVM
+ - RandomForest
+ - ReLu
+
+# create submodels
+control <- trainControl(method="repeatedcv", number=10, repeats=3, savePredictions=TRUE, classProbs=TRUE)
+algorithmList <- c('lda', 'rpart', 'glm', 'knn', 'svmRadial')
+set.seed(seed)
+models <- caretList(Class~., data=dataset, trControl=control, methodList=algorithmList)
+results <- resamples(models)
+summary(results)
+dotplot(results)
+
+https://topepo.github.io/caret/available-models.html
+- rf: RandomForest
