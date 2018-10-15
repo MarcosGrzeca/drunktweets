@@ -1,2 +1,3 @@
 https://www.r-bloggers.com/word-embeddings-with-keras/
 https://github.com/rstudio/keras/issues/244
+https://blogs.rstudio.com/tensorflow/posts/2017-12-22-word-embeddings-with-keras/
