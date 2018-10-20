@@ -1,6 +1,6 @@
 library(tools)
 
-tensorboard("tensorruns")
+#tensorboard("tensorruns")
 
 fileName <- "ipm/results_q4.Rdata"
 source(file_path_as_absolute("ipm/loads.R"))
@@ -57,13 +57,13 @@ for (year in 1:10){
 	  metrics = "accuracy"
 	)
 
-	callbacks = list(
-	  callback_tensorboard(
-	    log_dir = "tensorruns/exp4",
-	    histogram_freq = 1,
-	    embeddings_freq = 1
-	  )
-	)
+	# callbacks = list(
+	#   callback_tensorboard(
+	#     log_dir = "tensorruns/exp4",
+	#     histogram_freq = 1,
+	#     embeddings_freq = 1
+	#   )
+	# )
 
 	history <- model %>%
 	  fit(
@@ -71,8 +71,8 @@ for (year in 1:10){
 	    y = array(dados_train$resposta),
 	    batch_size = FLAGS$batch_size,
 	    epochs = FLAGS$epochs,
-	    validation_split = 0.2, 
-	    callbacks = callbacks
+	    validation_split = 0.2
+	    #, callbacks = callbacks
 	  )
 
 	predictions <- model %>% predict(list(test_vec$new_textParser, sequences_test, sequences_test_types))
