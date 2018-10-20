@@ -8,37 +8,47 @@ source(file_path_as_absolute("utils/getDados.R"))
 source(file_path_as_absolute("baseline/dados.R"))
 source(file_path_as_absolute("utils/tokenizer.R"))
 
-dadosTreinarEmbeddings <- getDadosWordEmbeddings()
+#dadosTreinarEmbeddings <- getDadosWordEmbeddings()
+
+dadosTreinarEmbeddings <- read.csv(file="teste2.csv", header=TRUE, sep=",")
+reviews <- dadosTreinarEmbeddings$texto
+reviews <- iconv(reviews, to = "UTF-8")
+
+#View(reviews)
 
 library(doMC)
 library(mlbench)
 CORES <- 5
 registerDoMC(CORES)
 
-library(keras)
-tokenizer <- text_tokenizer(num_words = 40000)
-tokenizer %>% fit_text_tokenizer(dadosTreinarEmbeddings$textEmbedding)
+word_count <- str_count(reviews, "\\S+" )
+word_count
+lengths(gregexpr("[A-z]\\W+", reviews)) + 1L
 
-reviews_check <- dadosTreinarEmbeddings$textEmbedding %>% texts_to_sequences(tokenizer,.) %>% lapply(., function(x) length(x) > 1) %>% unlist(.)
-reviews <- dadosTreinarEmbeddings$textEmbedding[reviews_check]
+sapply(gregexpr("[[:alpha:]]+", reviews), function(x) sum(x > 0))
+
+reviews_check <- reviews %>% texts_to_sequences(tokenizer,.) %>% lapply(., function(x) length(x) > 1) %>% unlist(.)
+reviews_check
+
+word_count[3]
+#reviews <- dadosTreinarEmbeddings$textEmbedding[word_count > 4]
+
+library(keras)
+tokenizer <- text_tokenizer(num_words = 500)
+tokenizer %>% fit_text_tokenizer(reviews)
+
+#tokenizer %>% fit_text_tokenizer(dadosTreinarEmbeddings$textEmbedding)
+#reviews_check <- dadosTreinarEmbeddings$textEmbedding %>% texts_to_sequences(tokenizer,.) %>% lapply(., function(x) length(x) > 1) %>% unlist(.)
+#table(reviews_check)
+#reviews <- dadosTreinarEmbeddings$textEmbedding[reviews_check]
+#reviews <- reviews[reviews_check]
 
 library(reticulate)
 library(purrr)
-
-vectorize_local <- function(data, vocab, textParser_maxlen){
-  
-  textEmbedding <- map(data$textEmbedding, function(x){
-    map_int(x, ~which(.x == vocab))
-  })
-  
-  list(
-    textEmbedding = pad_sequences(textEmbedding, maxlen = textParser_maxlen)
-  )
-}
-
 skipgrams_generator <- function(text, tokenizer, window_size, negative_samples) {
   gen <- texts_to_sequences_generator(tokenizer, sample(text))
-  function() {
+  
+    function() {
     try({
       skip <- iter_next(gen) %>%
         skipgrams(
@@ -67,8 +77,6 @@ embedding <- layer_embedding(
   name = "embedding"
 )
 
-#layer_embedding(vocab_size, embedding_dims, input_length = maxlen) %>%
-
 target_vector <- input_target %>% 
   embedding() %>% 
   layer_flatten()
@@ -83,38 +91,14 @@ output <- layer_dense(dot_product, units = 1, activation = "sigmoid")
 model <- keras_model(list(input_target, input_context), output)
 model %>% compile(loss = "binary_crossentropy", optimizer = "adam")
 
+tokenizer$word_index
+
 model %>%
   fit_generator(
     skipgrams_generator(reviews, tokenizer, skip_window, negative_samples), 
-    steps_per_epoch = 6000, epochs = 5
-    )
-
-embedding_matrix <- get_weights(model)[[1]]
+    steps_per_epoch = 15, epochs = 5
+  )
 
 library(dplyr)
 
 embedding_matrix <- get_weights(model)[[1]]
-
-words <- data_frame(
-  word = names(tokenizer$word_index), 
-  id = as.integer(unlist(tokenizer$word_index))
-)
-
-words <- words %>%
-  filter(id <= tokenizer$num_words) %>%
-  arrange(id)
-
-row.names(embedding_matrix) <- c("UNK", words$word)
-
-save(embedding_matrix, file = "ipm/embeddings/skipgram.Rda")
-save.image(file="ipm/embeddings/skipgram.RData")
-
-library(text2vec)
-
-find_similar_words <- function(word, embedding_matrix, n = 5) {
-  similarities <- embedding_matrix[word, , drop = FALSE] %>%
-    sim2(embedding_matrix, y = ., method = "cosine")
-  
-  similarities[,1] %>% sort(decreasing = TRUE) %>% head(n)
-}
-find_similar_words("2", embedding_matrix)
