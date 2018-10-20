@@ -7,7 +7,7 @@ source(file_path_as_absolute("ipm/loads.R"))
 
 DESC <- "Exp4 - CNN + Semantic Enrichment + Word embeddings"
 
-for (year in 1:1){
+for (year in 1:10){
   try({
     load("rdas/sequences.RData")
     FLAGS <- flags(
@@ -82,6 +82,6 @@ for (year in 1:1){
   })
 }
 # save.image(file=fileName)
-# resultados$F1
-# resultados$Precision
-# resultados$Recall
+resultados$F1
+resultados$Precision
+resultados$Recall
