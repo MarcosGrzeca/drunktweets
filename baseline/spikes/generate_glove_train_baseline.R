@@ -13,7 +13,7 @@ dados <- getDadosBaseline()
 
 #Preparação dos dados
 maxlen <- 38
-max_words <- 10000
+max_words <- 5000
 tokenizer <-  text_tokenizer(num_words = max_words) %>%
               fit_text_tokenizer(dados$textEmbedding)
 

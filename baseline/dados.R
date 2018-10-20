@@ -1,6 +1,6 @@
 library(tools)
 library(keras)
-library(caret)
+#library(caret)
 library(dplyr)
 source(file_path_as_absolute("utils/functions.R"))
 
@@ -9,7 +9,7 @@ DATABASE <- "icwsm"
 
 getDadosBaseline <- function() {
       dados <- query("SELECT id,
-                      IFNULL(q3, 0) AS resposta,
+                      q1 as resposta,
                       textoParserRisadaEmoticom,
                       textEmbedding,
                       hashtags,
@@ -45,9 +45,9 @@ getDadosBaseline <- function() {
                         GROUP BY tn.idTweetInterno) AS entidades
                       FROM tweets t
                       WHERE LENGTH(textoParserRisadaEmoticom) > 5
-                      AND q3 IS NOT NULL
-                      -- AND q1 IS NOT NULL
-                      AND q2 = 1
+                      -- AND q3 IS NOT NULL
+                      AND q1 IS NOT NULL
+                      -- AND q2 = 1
                       ")
 
   #AND palavra IN ('/food and drink/beverages/alcoholic beverages/cocktails and beer','/food and drink/beverages/alcoholic beverages/wine','beer','/food and drink','Alcoholic beverage','wine','Beer','/science/chemistry','/health and fitness/disease/cold and flu','/shopping/gifts/party supplies','party','/art and entertainment/movies and tv/movies','alcohol','/health and fitness/addiction','/law, govt and politics/law enforcement/police','/health and fitness/addiction/alcoholism','Wine','Music video','SHOT','NEW MUSIC VIDEO','J.CLANCY','shot','Gentlemen\'s club','LIFE','/sports/golf','/food and drink/beverages','/society/sex','/sports/tennis','Party','club','Dinosaur Bar-B-Que','Public house','/art and entertainment/music','/sports/polo','/health and fitness/addiction/substance abuse','tequila','/travel/specialty travel/vineyards','Ale','vodka','/sports/basketball','/food and drink/cuisines/mexican cuisine','/art and entertainment/movies and tv/comedies','/art and entertainment/dance','Ethanol','Beer pong','/pets/reptiles','England','liquor','Club')
