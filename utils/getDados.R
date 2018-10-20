@@ -516,7 +516,7 @@ getDadosWordEmbeddings <- function() {
                       UNION ALL
                       SELECT textEmbedding 
                       FROM tweets t
-                      WHERE LENGTH(textoParserRisadaEmoticom) > 5
+                      WHERE LENGTH(textEmbedding) > 5
                       ")
 
   # dados$textEmbedding <- enc2utf8(dados$textEmbedding)
