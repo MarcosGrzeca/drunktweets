@@ -83,7 +83,7 @@ getDadosInfoGain <- function() {
       # con <- dbEscapeStrings(connect(), "new year's")
       dados <- query("SELECT id,
                       drunk AS resposta,
-                      textOriginal,
+                      textOriginal as textEmbedding,
                       hashtags,
                       (
                         SELECT GROUP_CONCAT(DISTINCT(tn.palavra))
@@ -113,10 +113,7 @@ getDadosInfoGain <- function() {
                       WHERE situacao = 1
                       AND possuiURL = 0
                       AND LENGTH(textOriginal) > 5
-                      -- ORDER by data DESC
-                      -- LIMIT 15000
                       ")
-      # AND id = 1021368493743255552
 
   dados$resposta[dados$resposta == "X"] <- 1
   dados$resposta[dados$resposta == "N"] <- 0
@@ -124,12 +121,12 @@ getDadosInfoGain <- function() {
 
   #dados$resposta <- as.factor(dados$resposta)
   dados$resposta <- as.numeric(dados$resposta)
-  dados$textOriginal <- enc2utf8(dados$textOriginal)
-  dados$textOriginal <- iconv(dados$textOriginal, to='ASCII//TRANSLIT')
+  dados$textEmbedding <- enc2utf8(dados$textEmbedding)
+  dados$textEmbedding <- iconv(dados$textEmbedding, to='ASCII//TRANSLIT')
   
-  dados$textOriginal = gsub("#drunk |#drunk$", "", dados$textOriginal,ignore.case=T)
-  dados$textOriginal = gsub("#drank |#drank$", "", dados$textOriginal,ignore.case=T)
-  dados$textOriginal = gsub("#imdrunk |#imdrunk$", "", dados$textOriginal,ignore.case=T)
+  dados$textEmbedding = gsub("#drunk |#drunk$", "", dados$textEmbedding,ignore.case=T)
+  dados$textEmbedding = gsub("#drank |#drank$", "", dados$textEmbedding,ignore.case=T)
+  dados$textEmbedding = gsub("#imdrunk |#imdrunk$", "", dados$textEmbedding,ignore.case=T)
 
   dados$entidades <- enc2utf8(dados$entidades)
   dados$entidades <- iconv(dados$entidades, to='ASCII//TRANSLIT')
