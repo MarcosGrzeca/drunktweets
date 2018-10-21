@@ -116,7 +116,7 @@ for (year in 1:10){
         x = list(dados_train_sequence, train_sequences, train_sequences_types),
         y = array(dados_train$resposta),
         batch_size = 64,
-        epochs = 3,
+        epochs = epochs_num,
         validation_split = 0.2
       )
 

@@ -13,6 +13,7 @@ dados <- getDadosBaseline()
 try({
 	maxlen <- 38
 	max_words <- 7452
+	epochs_num <- 5
 	source(file_path_as_absolute("ipm/skipgram/ipmtrain_embedding.R"))
 })
 resultados$F1
