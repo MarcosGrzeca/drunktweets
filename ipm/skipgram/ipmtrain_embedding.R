@@ -64,7 +64,7 @@ for (word in names(word_index)) {
 print("FINALLLLLLLLLLLL")
 print(contador)
 
-for (year in 1:3){
+for (year in 1:10){
   try({
     # Parameters --------------------------------------------------------------
     filters <- 200
