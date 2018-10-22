@@ -34,3 +34,16 @@ wv_main <- fit_transform(tcm, glove, n_iter = 25)
 wv_context <- glove$components
 word_vectors <- wv_main + t(wv_context)
 save(word_vectors, file = "ipm/embeddings/skipgram_glove.Rda")
+
+library(Rtsne)
+library(ggplot2)
+library(plotly)
+
+tsne <- Rtsne(word_vectors, perplexity = 50, pca = TRUE)
+
+tsne_plot <- tsne$Y %>%
+  as.data.frame() %>%
+  mutate(word = row.names(word_vectors)) %>%
+  ggplot(aes(x = V1, y = V2, label = word)) + 
+  geom_text(size = 3)
+tsne_plot
