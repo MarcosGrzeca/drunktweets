@@ -505,7 +505,7 @@ processarSequence <- function(textParser, maxlen, max_words) {
 }
 
 getDadosWordEmbeddings <- function() {
-      dados <- query("SELECT textOriginal as textEmbedding
+      dados <- query("SELECT textParser as textEmbedding
                       FROM semantic_tweets_alcolic t
                       WHERE situacao = 1
                       AND possuiURL = 0

@@ -1,0 +1,28 @@
+yum install libxml2-devel
+yum install gcc
+
+https://github.com/rstudio/httpuv/issues/82
+
+sudo cp /usr/lib64/R/etc/Makeconf.rpmnew /usr/lib64/R/etc/Makeconf
+sudo cp /usr/lib64/R/etc/ldpaths.rpmnew /usr/lib64/R/etc/ldpaths
+
+
+echo $(R RHOME)/etc/Makeconf
+CXX = g++ -m64
+CXXCPP = $(CXX) -E
+CXXFLAGS = -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic $(LTO)
+CXXPICFLAGS = -fpic
+CXX98 = g++ -m64
+CXX98FLAGS = -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic
+CXX98PICFLAGS = -fpic
+CXX98STD =
+CXX11 = g++ -m64
+CXX11FLAGS = -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic
+CXX11PICFLAGS = -fpic
+CXX11STD = -std=gnu++11
+
+R CMD config CXX11
+R CMD config CXX11FLAGS
+
+Update all packages
+update.packages(checkBuilt=TRUE, ask=FALSE)
