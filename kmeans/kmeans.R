@@ -183,11 +183,40 @@ fviz_pca(fit, data = df)
 
 
 
-
-
 #http://www.sthda.com/english/wiki/factoextra-r-package-easy-multivariate-data-analyses-and-elegant-visualization
 
 
 library(cluster) 
-fit <- kmeans(embedding_matrixTwo, 15, iter.max = 100)
-fviz_cluster(fit, data = embedding_matrixTwo)
+df <- embedding_matrixTwo[conjunto, ]
+fit <- kmeans(df, 4, iter.max = 100)
+fviz_cluster(fit, data = df, main = "TD IDF 1000 words Hidden Layers")
+
+library(text2vec)
+library(data.table)
+library(SnowballC)
+
+setDT(dados)
+setkey(dados, id)
+
+it_train = itoken(dados$textEmbedding, 
+                  preprocessor = tolower,
+                  tokenizer = word_tokenizer,
+                  ids = dados$id, 
+                  progressbar = TRUE)
+
+vocab_test = create_vocabulary(it_train, stopwords = tm::stopwords("en"))
+vocab_test = prune_vocabulary(vocab_test, term_count_min = 10)
+vectorizer = vocab_vectorizer(vocab_test)
+
+vectorizer
+
+conjunto <- c()
+for (word in mais_importantes$word) {
+  try({
+    if (!is.null(embedding_matrixTwo[word, ])) {
+      if (!(word %in% conjunto)) {
+            conjunto <- c(conjunto, word)  
+      }
+    }
+  })
+}

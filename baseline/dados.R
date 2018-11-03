@@ -183,3 +183,17 @@ getDadosBaselineAdaptado <- function() {
 
   return (dados)
 }
+
+getDadosTFIDF <- function() {
+      dados <- query("SELECT id as book,
+                      textParser as text
+                      FROM tweets t
+                      WHERE LENGTH(textoParserRisadaEmoticom) > 5
+                      AND q1 IS NOT NULL
+                      ")
+
+  dados$text <- enc2utf8(dados$text)
+  dados$text <- iconv(dados$text, to='ASCII//TRANSLIT')
+  dados$text = gsub("'", "", dados$text, ignore.case=T)
+  return (dados)
+}
