@@ -75,9 +75,17 @@ if (!require("FSelector")) {
 library(FSelector)
 weights <- information.gain(resposta~., maFinal)
 print(weights)
-subset <- cutoff.k(weights, 100)
+subset <- cutoff.k(weights, 200)
 f <- as.simple.formula(subset, "resposta")
 print(f)
 
+subset
+
 dump(weights, "chat/infogain_dbpedia.csv")
 save.image(file="chat/rdas/infogain_dbpedia.RData")
+
+
+load("chat/rdas/infogain_dbpedia.RData")
+View(weights)
+
+View(weights[order(-weights$attr_importance),])
