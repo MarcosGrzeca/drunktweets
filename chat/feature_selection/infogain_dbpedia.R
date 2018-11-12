@@ -24,7 +24,8 @@ dados <- query("SELECT t.id, drunk AS resposta,
                JOIN resource_type ty ON ty.resource = louco.resource
                WHERE louco.idTweet = t.id
                ) AS resources
-               FROM chat_tweets t")
+               FROM chat_tweets t
+               WHERE contabilizar = 1")
 
 save(dados, file = "chat/rdas/cfs.Rda")
 
@@ -81,11 +82,11 @@ print(f)
 
 subset
 
-dump(weights, "chat/infogain_dbpedia.csv")
+dump(weights, "chat/feature_selection/infogain_dbpedia.csv")
 save.image(file="chat/rdas/infogain_dbpedia.RData")
 
 
-load("chat/rdas/infogain_dbpedia.RData")
-View(weights)
+# load("chat/rdas/infogain_dbpedia.RData")
+# View(weights)
 
-View(weights[order(-weights$attr_importance),])
+# View(weights[order(-weights$attr_importance),])

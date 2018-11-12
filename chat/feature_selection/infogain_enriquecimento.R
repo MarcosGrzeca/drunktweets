@@ -15,7 +15,8 @@ dados <- query("SELECT t.id, drunk AS resposta,
                    WHERE tn.idTweet = t.id
                    AND tn.tipo NOT IN ('language', 'socialTag')
                    GROUP BY t.id) AS entidades
-              FROM chat_tweets t")
+              FROM chat_tweets t
+              WHERE contabilizar = 1")
 
 dados$resposta[is.na(dados$resposta)] <- 0
 dados$resposta[dados$resposta == "Y"] <- 1
@@ -66,6 +67,6 @@ subset <- cutoff.k(weights, 100)
 f <- as.simple.formula(subset, "resposta")
 print(f)
 
-dump(weights, "chat/rdas/infogain_enriquecimento.csv")
+dump(weights, "chat/feature_selection/infogain_enriquecimento.csv")
 
 save.image(file="chat/rdas/infogain_enriquecimento.RData")
