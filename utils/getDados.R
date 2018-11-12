@@ -527,7 +527,7 @@ getDadosChat <- function() {
   dados <- query("SELECT id,
                       drunk AS resposta,
                       textSemPalavrasControle as textParser,
-                      textoOriginal as textEmbedding,
+                      textoOriginal as textOriginal,
                       hashtags,
                       erros as numeroErros,
                       (
@@ -556,8 +556,8 @@ getDadosChat <- function() {
 
   #dados$resposta <- as.factor(dados$resposta)
   dados$resposta <- as.numeric(dados$resposta)
-  # dados$textOriginal <- enc2utf8(dados$textOriginal)
-  # dados$textOriginal <- iconv(dados$textOriginal, to='ASCII//TRANSLIT')
+  dados$textOriginal <- enc2utf8(dados$textOriginal)
+  dados$textOriginal <- iconv(dados$textOriginal, to='ASCII//TRANSLIT')
   
   dados$textParser <- enc2utf8(dados$textParser)
   dados$textParser <- iconv(dados$textParser, to='ASCII//TRANSLIT')

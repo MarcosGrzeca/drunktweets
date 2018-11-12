@@ -38,25 +38,25 @@ dados_test <- dados[-trainIndex,]
 # Texto
 dadosTransformado <- dados_train %>%
   mutate(
-    textEmbedding = map(textEmbedding, ~tokenize_words(.x))
+    textOriginal = map(textOriginal, ~tokenize_words(.x))
   ) %>%
-  select(textEmbedding)
+  select(textOriginal)
 
 dadosTransformadoTest <- dados_test %>%
   mutate(
-    textEmbedding = map(textEmbedding, ~tokenize_words(.x))
+    textOriginal = map(textOriginal, ~tokenize_words(.x))
   ) %>%
-  select(textEmbedding)
+  select(textOriginal)
 
 all_data <- bind_rows(dadosTransformado, dadosTransformadoTest)
 
 #Vocabulario texto
-vocab <- c(unlist(dadosTransformado$textEmbedding), unlist(dadosTransformadoTest$textEmbedding)) %>%
+vocab <- c(unlist(dadosTransformado$textOriginal), unlist(dadosTransformadoTest$textOriginal)) %>%
   unique() %>%
   sort()
 
 vocab_size <- length(vocab) + 1
-maxlen <- map_int(all_data$textEmbedding, ~length(.x)) %>% max()
+maxlen <- map_int(all_data$textOriginal, ~length(.x)) %>% max()
 
 train_vec <- vectorize_stories(dadosTransformado, vocab, maxlen)
 
