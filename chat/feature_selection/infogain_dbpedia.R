@@ -82,7 +82,7 @@ print(f)
 
 subset
 
-dump(weights, "chat/feature_selection/infogain_dbpedia.csv")
+dump(subset, "chat/feature_selection/infogain_dbpedia.csv")
 save.image(file="chat/rdas/infogain_dbpedia.RData")
 
 
