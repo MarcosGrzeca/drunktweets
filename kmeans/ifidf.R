@@ -12,8 +12,6 @@ book_words <- dados %>%
   count(book, word, sort = TRUE) %>%
   ungroup()
 
-book_words
-
 book_words <- book_words %>%
   bind_tf_idf(word, book, n)
 
@@ -21,9 +19,7 @@ mais_importantes <- book_words %>%
   arrange(desc(tf_idf)) %>% 
   top_n(1000)
 
-mais_importantes$word
-
-
+# mais_importantes$word
 # book_words %>%
 #   arrange(desc(tf_idf)) %>%
 #   mutate(word = factor(word, levels = rev(unique(word)))) %>% 

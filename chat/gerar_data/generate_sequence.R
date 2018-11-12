@@ -72,4 +72,4 @@ test_vec <- vectorize_stories(dadosTransformadoTest, vocab, maxlen)
 sequences_test <- vectorize_sequences(dados_test$sequences, dimension = max_sequence)
 sequences_test_types <- vectorize_sequences(dados_test$sequences_types, dimension = max_sequence_types)
 
-save.image(file="chat/rdas/sequencesexp4.RData")
+save.image(file="chat/rdas/sequencesexp5.RData")
