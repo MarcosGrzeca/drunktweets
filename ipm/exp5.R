@@ -5,7 +5,7 @@ source(file_path_as_absolute("ipm/loads.R"))
 
 DESC <- "Exp5 - CNN + Semantic Enrichment + Word embeddings"
 
-#for (year in 1:10){
+for (year in 1:10){
 	try({
 		load("chat/rdas/sequencesexp5.RData")
 		
@@ -79,7 +79,7 @@ DESC <- "Exp5 - CNN + Semantic Enrichment + Word embeddings"
 		matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
 		resultados <- addRowAdpater(resultados, DESC, matriz)
 	  })
-#}
+}
 # save.image(file=fileName)
 resultados$F1
 resultados$Precision
