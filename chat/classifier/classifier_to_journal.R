@@ -66,7 +66,7 @@ split=0.80
 #   })
 # }
 
-for (year in 1:9){
+for (year in 1:10){
   try({
     load(file = "chat/rdas/2gram-entidades-erro.Rda")
     maFinal$resposta <- as.factor(maFinal$resposta)
