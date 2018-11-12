@@ -56,14 +56,6 @@ for (year in 1:10){
 			metrics = "accuracy"
 		)
 
-		# callbacks = list(
-		#   callback_tensorboard(
-		#     log_dir = "tensorruns/exp4",
-		#     histogram_freq = 1,
-		#     embeddings_freq = 1
-		#   )
-		# )
-
 		history <- model %>%
 			fit(
 			  x = list(train_vec$new_textParser, sequences, sequences_types),
@@ -71,7 +63,6 @@ for (year in 1:10){
 			  batch_size = FLAGS$batch_size,
 			  epochs = FLAGS$epochs,
 			  validation_split = 0.2
-			  #, callbacks = callbacks
 			)
 
 		predictions <- model %>% predict(list(test_vec$new_textParser, sequences_test, sequences_test_types))
