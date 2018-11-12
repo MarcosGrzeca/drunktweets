@@ -188,8 +188,10 @@ fviz_pca(fit, data = df)
 
 library(cluster) 
 df <- embedding_matrixTwo[conjunto, ]
-fit <- kmeans(df, 4, iter.max = 100)
-fviz_cluster(fit, data = df, main = "TD IDF 1000 words Hidden Layers")
+fit <- kmeans(df, 15, iter.max = 100)
+png(filename="kmeans/glove_tfidf15.png")
+fviz_cluster(fit, data = df, main = "TD IDF 1000 words GloVe 15 clusters")
+dev.off()
 
 library(text2vec)
 library(data.table)

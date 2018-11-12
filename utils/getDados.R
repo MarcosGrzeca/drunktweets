@@ -527,6 +527,7 @@ getDadosChat <- function() {
   dados <- query("SELECT id,
                       drunk AS resposta,
                       textSemPalavrasControle as textParser,
+                      textoOriginal as textEmbedding,
                       hashtags,
                       erros as numeroErros,
                       (
