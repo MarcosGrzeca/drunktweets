@@ -79,5 +79,5 @@ subset <- cutoff.k(weights, 100)
 f <- as.simple.formula(subset, "resposta")
 print(f)
 
-dump(weights, "feature_selection/planilhas/infogain_dbpedia.csv")
+dump(weights, "chat/infogain_dbpedia.csv")
 save.image(file="chat/rdas/infogain_dbpedia.RData")
