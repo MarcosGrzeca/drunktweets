@@ -3,7 +3,7 @@ library(tools)
 fileName <- "ipm/results_q1_glove.Rdata"
 source(file_path_as_absolute("ipm/loads.R"))
 
-DESC <- "Exp1 GloVe- CNN + Semantic Enrichment + Word embeddings"
+DESC <- "Exp5 GloVe- CNN + Semantic Enrichment + Word embeddings"
 
 source(file_path_as_absolute("ipm/glove/load.R"))
 source(file_path_as_absolute("utils/getDados.R"))
