@@ -38,13 +38,13 @@ dados_test <- dados[-trainIndex,]
 # Texto
 dadosTransformado <- dados_train %>%
   mutate(
-    textOriginal = map(textOriginal, ~tokenize_words(.x))
+    textOriginal = map(textEmbedding, ~tokenize_words(.x))
   ) %>%
   select(textOriginal)
 
 dadosTransformadoTest <- dados_test %>%
   mutate(
-    textOriginal = map(textOriginal, ~tokenize_words(.x))
+    textOriginal = map(textEmbedding, ~tokenize_words(.x))
   ) %>%
   select(textOriginal)
 

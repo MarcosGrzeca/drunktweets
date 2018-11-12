@@ -10,7 +10,7 @@ for (year in 1:10){
 		load("chat/rdas/sequencesexp5.RData")
 		
 		FLAGS <- flags(
-			flag_integer("epochs", 4),
+			flag_integer("epochs", 3),
 			flag_integer("batch_size", 64)
 		)
 
