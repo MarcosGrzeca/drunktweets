@@ -1,2 +1,3 @@
 *.pper
 .Rproj.user/*
+rdas/glove_similar.RData
