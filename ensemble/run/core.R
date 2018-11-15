@@ -60,8 +60,7 @@ for (year in 1:10){
 	data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
 	data_test <- maFinal[-trainIndex,]
 
-	# treegram25NotNull <- treinarPoly(data_train)
-	treegram25NotNull <- treinar(data_train)
+	treegram25NotNull <- treinarPoly(data_train)
 	treegram25NotNull
 	pred <- predict(treegram25NotNull, subset(data_test, select = -c(resposta)))
 
