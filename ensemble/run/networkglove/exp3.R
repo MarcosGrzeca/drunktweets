@@ -11,10 +11,11 @@ source(file_path_as_absolute("ipm/experimenters.R"))
 source(file_path_as_absolute("utils/getDados.R"))
 source(file_path_as_absolute("baseline/dados.R"))
 source(file_path_as_absolute("utils/tokenizer.R"))
-# source(file_path_as_absolute("ipm/glove/load.R"))
+source(file_path_as_absolute("ipm/glove/load.R"))
 
 #Section: Dados classificar
-dados <- getDadosBaseline()
+dados <- getDadosBaselineByQ("q1")
+nrow(dados)
 
 try({
 	source(file_path_as_absolute("ensemble/run/networkglove/ipmtrain_embedding.R"))
