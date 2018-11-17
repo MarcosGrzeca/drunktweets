@@ -3,6 +3,14 @@
 # maxlen <- 38
 # max_words <- 5000
 
+resultados <- data.frame(matrix(ncol = 4, nrow = 0))
+names(resultados) <- c("Baseline", "F1", "Precisão", "Revocação")
+
+try({
+  load(imageFile)
+})
+
+
 for (year in 1:10){
   tokenizer <-  text_tokenizer(num_words = max_words) %>%
                 fit_text_tokenizer(dados$textEmbedding)
