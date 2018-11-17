@@ -15,9 +15,10 @@ source(file_path_as_absolute("ipm/glove/load.R"))
 
 #Section: Dados classificar
 dados <- getDadosBaselineByQ("q2")
-nrow(dados)
 
 try({
+	maxlen <- 38
+	max_words <- 5000
 	source(file_path_as_absolute("ensemble/run/networkglove/ipmtrain_embedding.R"))
 })
 resultados$F1
