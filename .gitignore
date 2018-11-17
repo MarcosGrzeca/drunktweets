@@ -5,3 +5,8 @@ glove/glove.twitter.27B/glove.twitter.27B.100d.txt
 glove/glove.twitter.27B/glove.twitter.27B.25d.txt
 glove/glove.twitter.27B/glove.twitter.27B.50d.txt
 glove/glove.twitter.27B/glove.twitter.27B.200d.txt
+ensemble/resultados/exp1/imageFileRede.RData
+ensemble/resultados/exp2/imageFileRede.RData
+ensemble/resultados/exp3/imageFileRede.RData
+ensemble/resultados/exp4/imageFileRede.RData
+ensemble/resultados/exp5/imageFileRede.RData
