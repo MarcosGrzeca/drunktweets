@@ -129,7 +129,7 @@ for (year in 1:10){
     saveRDS(predictions, file = paste0(baseResultsFiles, "neuralprob", year, ".rds"))
 
     matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
-    resultados <- addRowAdpater(resultados, DESC, matriz)
+    resultados <- addRowAdpater(resultados, "Network glove", matriz)
     save.image(file=imageFile)
   })
 }
