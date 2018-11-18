@@ -1,10 +1,10 @@
 library(tools)
 
-imageFile <- "ensemble/resultados/exp3/imageFileSVMVw2.RData"
+imageFile <- "ensemble/resultados/exp3/imageFileSVMV2.RData"
 
 datasetFile <-"ensemble/datasets/exp3/2-Gram-dbpedia-types-enriquecimento-info-q3-not-null_info_entidades.Rda"
 
-baseResultsFiles <- "ensemble/resultados/exp3/"
+baseResultsFiles <- "ensemble/resultados/exp3/v2/"
 baseResampleFiles <- "ensemble/resample/exp3/"
 
 fileResults <- "ensemble/resultados/exp3/"

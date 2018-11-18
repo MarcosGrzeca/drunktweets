@@ -65,7 +65,7 @@ for (year in 1:5){
 	treegram25NotNull
 	pred <- predict(treegram25NotNull, subset(data_test, select = -c(resposta)))
 
-	saveRDS(pred, file = paste0(baseResultsFiles, "svm", year, "v2.rds"))
+	saveRDS(pred, file = paste0(baseResultsFiles, "svm", year, ".rds"))
  	matriz3Gram25NotNull <- confusionMatrix(data = pred, data_test$resposta, positive="1")
 	resultados <- addRow(resultados, "2 GRAM - Entidades - Erro", matriz3Gram25NotNull)
 	save.image(file=imageFile)
