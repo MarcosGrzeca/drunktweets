@@ -9,4 +9,4 @@ baseResampleFiles <- "ensemble/resample/exp3/"
 
 fileResults <- "ensemble/resultados/exp3/"
 
-source(file_path_as_absolute("ensemble/run/svm/core_adpatado.R"))
+source(file_path_as_absolute("ensemble/run/svm/core_adaptado.R"))
