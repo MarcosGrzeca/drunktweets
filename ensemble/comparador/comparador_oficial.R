@@ -1,36 +1,27 @@
 library(caret)
-
-
-
-
-for (year in 1:10) {
-	pathResultads <- paste0(exp, "marcos")
-
-	resultadoOficial <- read.csv(file="ensemble/spikes/planilhas/resposta.csv", header=TRUE, sep=",")
-}
-
-
-svm <- read.csv(file="ensemble/spikes/planilhas/svm.csv", header=TRUE, sep=",")
-network <- read.csv(file="ensemble/spikes/planilhas/network.csv", header=TRUE, sep=",")
-rf <- read.csv(file="ensemble/spikes/planilhas/rf.csv", header=TRUE, sep=",")
-
 library(dplyr)
 
-bigDataFrame <- bind_cols(list(svm, network, rf)) 
-bigDataFrameSum <- rowSums(bigDataFrame)
+for (year in 1:5) {
+	svmResults <- readRDS(file = paste0("ensemble/resultados/exp3/svm", year, ".rds"))
+	rfResults <- readRDS(file = paste0("ensemble/resultados/exp3/rf", year, ".rds"))
+	nnResults <- readRDS(file = paste0("ensemble/resultados/exp3/neural", year, ".rds"))
+	
+	load("ensemble/datasets/exp3/2-Gram-dbpedia-types-enriquecimento-info-q3-not-null_info_entidades.Rda")
+	trainIndex <- readRDS(file = paste0("ensemble/resample/exp3/", "trainIndex", year, ".rds"))
+	data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
+	data_test <- maFinal[-trainIndex,]
+	
 
-result <- bigDataFrameSum / 3
-pred <- round(result,0)
-pred
-
-matriz <- confusionMatrix(data = as.factor(pred), as.factor(resultadoOficial$resposta), positive="1")
-matriz
-
-# add rownames as a column in each data.frame and bind rows
-# result <- bind_rows(svm %>% add_rownames(), 
-#           network %>% add_rownames(),
-#           rf %>% add_rownames()) %>% 
-#     # evaluate following calls for each value in the rowname column
-#     group_by(rowname) %>% 
-#     # add all non-grouping variables
-#     summarise_all(sum)
+	bigDataFrame <- bind_cols(list(as.numeric(as.character(svmResults)), as.numeric(as.character(nnResults)), as.numeric(as.character(rfResults))))
+	
+	bigDataFrameSum <- rowSums(bigDataFrame)
+	
+	result <- bigDataFrameSum / 3
+	pred <- round(result,0)
+	
+	data_test$resposta
+	matriz <- confusionMatrix(data = as.factor(pred), as.factor(data_test$resposta), positive="1")
+	print(matriz$byClass["F1"])
+	print(matriz$byClass["Precision"])
+	print(matriz$byClass["Recall"])
+}
