@@ -5,8 +5,7 @@ treinarNB <- function(data_train){
 	tunegrid <- expand.grid(.mtry=mtry)
 	fit <- train(x = subset(data_train, select = -c(resposta)),
 			y = data_train$resposta, 
-			method = "nb", 
-			tuneGrid=tunegrid,
+			method = "nb",
 			trControl = trainControl(method = "cv", number = 5, savePred=T))
 	return (fit)
 }
@@ -46,7 +45,6 @@ set.seed(10)
 split=0.80
 for (year in 1:10){
   try({
-
 	load(file = datasetFile)
 	maFinal$resposta <- as.factor(maFinal$resposta)
 	trainIndex <- readRDS(file = paste0(baseResampleFiles, "trainIndex", year, ".rds"))
