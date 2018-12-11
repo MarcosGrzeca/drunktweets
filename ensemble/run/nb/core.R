@@ -43,7 +43,7 @@ registerDoMC(CORES)
 
 set.seed(10)
 split=0.80
-for (year in 9:10){
+for (year in 1:10){
   try({
 	load(file = datasetFile)
 	maFinal$resposta <- as.factor(maFinal$resposta)
