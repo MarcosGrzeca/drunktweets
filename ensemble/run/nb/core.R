@@ -44,7 +44,6 @@ registerDoMC(CORES)
 set.seed(10)
 split=0.80
 for (year in 1:10){
-  try({
 	load(file = datasetFile)
 	maFinal$resposta <- as.factor(maFinal$resposta)
 	trainIndex <- readRDS(file = paste0(baseResampleFiles, "trainIndex", year, ".rds"))
@@ -60,5 +59,4 @@ for (year in 1:10){
  	matriz3Gram25NotNull <- confusionMatrix(data = pred, data_test$resposta, positive="1")
 	resultados <- addRow(resultados, "2 GRAM - Entidades - Erro", matriz3Gram25NotNull)
 	save.image(file=imageFile)
-  })
 }
