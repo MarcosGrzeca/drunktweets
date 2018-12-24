@@ -13,7 +13,7 @@ source(file_path_as_absolute("utils/tokenizer.R"))
 DATABASE <- "icwsm"
 clearConsole();
 
-dados <- getDadosSVM()
+dados <- getDadosSemKeyWords()
 dados$hashtags = gsub("#", "#tag_", dados$hashtags)
 dados$textParser = gsub("'", "", dados$textParser)
 dados$numeroErros[dados$numeroErros > 1] <- 1
@@ -64,4 +64,4 @@ dataFrameEntidades <- as.data.frame(as.matrix(dataFrameEntidades))
 maFinal <- cbind.fill(subset(dados, select = -c(textParser, id, hashtags, textOriginal, entidades, enriquecimentoTypes, types)), dataFrameTexto)
 maFinal <- cbind.fill(maFinal, dataFrameHash)
 maFinal <- cbind.fill(maFinal, dataFrameEntidades)
-save(maFinal, file = "rdas/2gram-entidades-hora-erro.Rda")
+save(maFinal, file = "rdas/2gram-entidades-hora-erro-semkeywords.Rda")
