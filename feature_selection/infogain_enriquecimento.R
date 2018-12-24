@@ -63,7 +63,9 @@ if (!require("FSelector")) {
 library(FSelector)
 weights <- information.gain(resposta~., maFinal)
 print(weights)
-subset <- cutoff.k(weights, 100)
+
+subset <- cutoff.k(weights, 128)
+View(subset)
 f <- as.simple.formula(subset, "resposta")
 print(f)
 

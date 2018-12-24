@@ -76,9 +76,12 @@ if (!require("FSelector")) {
 library(FSelector)
 weights <- information.gain(resposta~., maFinal)
 print(weights)
-subset <- cutoff.k(weights, 100)
+subset <- cutoff.k(weights, 438)
+View(subset)
 f <- as.simple.formula(subset, "resposta")
 print(f)
+
+dump(subset, "feature_selection/txtentidades/dbpedia.csv")
 
 dump(weights, "feature_selection/planilhas/infogain_dbpedia_semkeywords.csv")
 save.image(file="rdas/infogain_dbpedia_semkeywords.RData")
