@@ -130,3 +130,21 @@ get_os <- function(){
   }
   tolower(os)
 }
+
+convertSimilaridadeToTibble <- function(dados) {
+  library(data.table)
+  library(dplyr)
+  
+  #Similaridade to dataframe
+  dadosDF <- as.data.frame(dados)
+  #Copiar rowname para primeira coluna
+  #setDT(dadosDF, keep.rownames = TRUE)[]
+  #Renomear colunas
+  dadosDFRename <- dadosDF %>% 
+    tibble::rownames_to_column('token') %>%                            # convert rowname to a column. tibble must be installed.
+    select(token, similarity = dados, everything())
+  
+  #To tibble
+  dfFinal <- as_data_frame(dadosDFRename)
+  return (dfFinal);
+}

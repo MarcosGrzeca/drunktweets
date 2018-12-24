@@ -143,44 +143,81 @@ find_similar_words("alcohol", embedding_matrixTwo, n = 10)
 
 conj <- c("beer", "alcohol", "vodka", "sober", "drunk", "wine", "food", "men", "women", "eat", "water", "shot", "drink")
 
-conj <- c("drunk", "beer", "wine", "pub", "drink", "photo", "alcohol", "vodka", "getting", "good", "get", "liquor", "last", "tequila", "need", "ipa", "irish", "brew", "whiskey", "dinner", "ciroc", "alcoholic", "turn", "party", "club", "shot", "fucked", "life", "bad", "music", "video", "new", "know", "root", "hope", "hangover", "beverage", "sober", "today", "night", "men", "women", "run")
+# library(Rtsne) 
+# tsne <- Rtsne(embedding_matrixTwo[conj,], perplexity = 2, pca = TRUE)
 
-conj <- c("drunk", "beer", "wine", "pub", "drink", "photo", "alcohol", "vodka", "getting", "good", "get", "liquor", "last", "tequila", "need", "ipa", "irish", "brew", "whiskey", "dinner", "ciroc", "alcoholic", "turn", "party", "club", "shot", "fucked", "bad", "music", "video", "new", "know", "root", "hope", "hangover", "beverage", "sober", "today", "night", "men", "women", "run")
+# tsne_plot <- tsne$Y %>%
+#   as.data.frame() %>%
+#   mutate(word = row.names(embedding_matrixTwo[conj,])) %>%
+#   ggplot(aes(x = V1, y = V2, label = word)) + 
+#   geom_text(size = 3)
+# tsne_plot
 
-conjunto <- c()
-for (word in conj) {
-  print(word)
-  try({
-    if (is.null(embedding_matrixTwo[word, ])) {
-      
-    }
-  })
+# yum install libxml2-devel
+# yum install gcc
+if (!require("tidyverse")) {
+  install.packages("tidyverse")
 }
 
+if (!require("factoextra")) {
+  install.packages("factoextra")
+}
 library(cluster) 
 #Kmeans(x, centers, iter.max = 10, nstart = 1, method = "euclidean")
 df <- embedding_matrixTwo[conj,]
-fit <- kmeans(df, 3, iter.max = 1500000)
-fviz_cluster(fit, data = df, main="KMeans Glove 3k", geom = "text", ggtheme = theme_minimal())
+fit <- kmeans(df, 2)
+library(tidyverse)  # data manipulation
+library(cluster)    # clustering algorithms
+library(factoextra) # clustering algorithms & visualization
+distance <- get_dist(df)
+fviz_dist(distance, gradient = list(low = "#00AFBB", mid = "white", high = "#FC4E07"))
+fviz_pca(fit, data = df)
 
-# Compute PAM
-library("cluster")
-pam.res <- pam(df, 3)
-# Visualize
-fviz_cluster(pam.res, main="PAM Glove")
+#visualização k-means
+png(filename="teste.png")
+fviz_cluster(fit, data = df, main="Word", geom = "text")
+dev.off()
 
-#PCA
-library("factoextra")
-library("FactoMineR")
-
-res.pca <- PCA(embedding_matrixTwo,  graph = FALSE)
-res.pca <- PCA(df,  graph = FALSE)
-fviz_pca_ind(res.pca, col.ind = "cos2",
-             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
-             repel = TRUE # Avoid text overlapping (slow if many points)
-)
+#dev.print(pdf, 'filename.pdf')
 
 
-res.dist <- get_dist(df, stand = TRUE, method = "pearson")
-fviz_dist(res.dist, 
-          gradient = list(low = "#00AFBB", mid = "white", high = "#FC4E07"))
+
+#http://www.sthda.com/english/wiki/factoextra-r-package-easy-multivariate-data-analyses-and-elegant-visualization
+
+
+library(cluster) 
+df <- embedding_matrixTwo[conjunto, ]
+fit <- kmeans(df, 15, iter.max = 100)
+png(filename="kmeans/glove_tfidf15.png")
+fviz_cluster(fit, data = df, main = "TD IDF 1000 words GloVe 15 clusters")
+dev.off()
+
+library(text2vec)
+library(data.table)
+library(SnowballC)
+
+setDT(dados)
+setkey(dados, id)
+
+it_train = itoken(dados$textEmbedding, 
+                  preprocessor = tolower,
+                  tokenizer = word_tokenizer,
+                  ids = dados$id, 
+                  progressbar = TRUE)
+
+vocab_test = create_vocabulary(it_train, stopwords = tm::stopwords("en"))
+vocab_test = prune_vocabulary(vocab_test, term_count_min = 10)
+vectorizer = vocab_vectorizer(vocab_test)
+
+vectorizer
+
+conjunto <- c()
+for (word in mais_importantes$word) {
+  try({
+    if (!is.null(embedding_matrixTwo[word, ])) {
+      if (!(word %in% conjunto)) {
+            conjunto <- c(conjunto, word)  
+      }
+    }
+  })
+}
