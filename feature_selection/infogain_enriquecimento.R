@@ -67,6 +67,6 @@ subset <- cutoff.k(weights, 100)
 f <- as.simple.formula(subset, "resposta")
 print(f)
 
-dump(weights, "feature_selection/planilhas/infogain_enriquecimento.csv")
+dump(weights, "feature_selection/planilhas/infogain_enriquecimento_semkeywords.csv")
 
-save.image(file="rdas/infogain_enriquecimento.RData")
+save.image(file="rdas/infogain_enriquecimento_semkeywords.RData")
