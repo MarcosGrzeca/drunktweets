@@ -49,7 +49,7 @@ registerDoMC(CORES)
 
 set.seed(10)
 split=0.80
-for (year in 1:10){
+for (year in 1:5){
   try({
 
 	load(file = datasetFile)
