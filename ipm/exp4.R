@@ -1,15 +1,15 @@
 library(tools)
 
-#tensorboard("tensorruns")
-
-fileName <- "ipm/results_q4.Rdata"
+# fileName <- "ipm/results_q4.Rdata"
+fileName <- "ipm/results_q4_without_keywords.Rdata"
 source(file_path_as_absolute("ipm/loads.R"))
 
-DESC <- "Exp4 - CNN + Semantic Enrichment + Word embeddings"
+DESC <- "Exp4 - CNN + Semantic Enrichment + Word embeddings - Without keywords"
 
-for (year in 1:10){
+for (year in 1:1){
   try({
-    load("rdas/sequences.RData")
+    # load("rdas/sequences.RData")
+    load("rdas/sequences_without_keywords.RData")
     FLAGS <- flags(
 	  flag_integer("epochs", 3),
 	  flag_integer("batch_size", 64)
