@@ -6,7 +6,7 @@ source(file_path_as_absolute("ipm/loads.R"))
 
 DESC <- "Exp4 - CNN + Semantic Enrichment + Word embeddings - Without keywords"
 
-for (year in 1:1){
+for (year in 1:10){
   try({
     # load("rdas/sequences.RData")
     load("rdas/sequences_without_keywords.RData")
