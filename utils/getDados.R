@@ -305,7 +305,7 @@ getDadosSVM <- function() {
 getDadosSemKeyWords <- function() {
       dados <- query("SELECT id,
                       drunk AS resposta,
-                      textOriginal,
+                      textSemHashtagsControle as textOriginal,
                       textSemHashtagsControle as textParser,
                       emoticonPos,
                       emoticonNeg,
