@@ -81,7 +81,7 @@ for (year in 1:10){
 	resultados <- addRowAdpater(resultados, DESC, matriz)
   })
 }
-# save.image(file=fileName)
+save.image(file=fileName)
 resultados$F1
 resultados$Precision
 resultados$Recall
