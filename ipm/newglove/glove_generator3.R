@@ -20,9 +20,8 @@ wiki <- dadosTreinarEmbeddings$textEmbedding
 tokens <- space_tokenizer(wiki)
 it = itoken(tokens)
 stop_words <- tm::stopwords("en")
-#vocab <- create_vocabulary(it, stopwords = stop_words)
-vocab <- create_vocabulary(it)
-vocab <- prune_vocabulary(vocab)
+vocab <- create_vocabulary(it, stopwords = stop_words)
+#vocab <- prune_vocabulary(vocab)
 
 #vectorizer = vocab_vectorizer(vocab, grow_dtm = F, skip_grams_window = 5)
 vectorizer <- vocab_vectorizer(vocab)
@@ -33,17 +32,28 @@ glove <- GlobalVectors$new(word_vectors_size = 100, vocabulary = vocab, x_max = 
 wv_main <- fit_transform(tcm, glove, n_iter = 25)
 wv_context <- glove$components
 word_vectors <- wv_main + t(wv_context)
-save(word_vectors, file = "ipm/embeddings/skipgram_glove.Rda")
+save(word_vectors, file = "ipm/embeddings/skipgram_glove_without_stopwords.Rda")
 
 library(Rtsne)
 library(ggplot2)
 library(plotly)
 
-tsne <- Rtsne(word_vectors, perplexity = 50, pca = TRUE)
+#tsne <- Rtsne(word_vectors, perplexity = 50, pca = TRUE)
+tsne <- Rtsne(word_vectors[1:1500,], perplexity = 100, pca = TRUE)
 
 tsne_plot <- tsne$Y %>%
   as.data.frame() %>%
-  mutate(word = row.names(word_vectors)) %>%
+  mutate(word = row.names(word_vectors[1:1500,])) %>%
   ggplot(aes(x = V1, y = V2, label = word)) + 
   geom_text(size = 3)
 tsne_plot
+
+
+find_similar_words <- function(word, embedding_matrix, n = 5) {
+  similarities <- embedding_matrix[word, , drop = FALSE] %>%
+    sim2(embedding_matrix, y = ., method = "cosine")
+  
+  similarities[,1] %>% sort(decreasing = TRUE) %>% head(n)
+}
+
+find_similar_words("beer", word_vectors, 20)
