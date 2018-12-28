@@ -13,7 +13,8 @@ dados <- getDadosSemKeyWords()
 
 try({
 	maxlen <- 50
-	max_words <- 40000
+	max_words <- 50000
+	
 	source(file_path_as_absolute("ipm/glove/ipmtrain_embedding.R"))
 	})
 resultados$F1
