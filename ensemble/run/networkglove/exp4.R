@@ -14,7 +14,8 @@ source(file_path_as_absolute("utils/tokenizer.R"))
 source(file_path_as_absolute("ipm/glove/load.R"))
 
 #Section: Dados classificar
-dados <- getDadosInfoGain()
+# dados <- getDadosInfoGain()
+dados <- getDadosSemKeyWords()
 
 try({
 	maxlen <- 50
