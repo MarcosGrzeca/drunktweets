@@ -307,6 +307,7 @@ getDadosSemKeyWords <- function() {
                       drunk AS resposta,
                       textSemHashtagsControle as textOriginal,
                       textSemHashtagsControle as textParser,
+                      textSemHashtagsControle as textEmbedding,
                       emoticonPos,
                       emoticonNeg,
                       hashtags,
