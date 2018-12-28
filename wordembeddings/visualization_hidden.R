@@ -141,16 +141,13 @@ find_similar_words <- function(word, embedding_matrix, n = 5) {
 }
 find_similar_words("alcohol", embedding_matrixTwo, n = 10)
 
-conj <- c("beer", "alcohol", "vodka", "sober", "drunk", "wine", "sport", "food", "men", "women", "eat", "water")
-
-tsne <- Rtsne(embedding_matrixTwo[conj,], perplexity = 2, pca = TRUE)
-
-tsne_plot <- tsne$Y %>%
-  as.data.frame() %>%
-  mutate(word = row.names(embedding_matrixTwo[conj,])) %>%
-  ggplot(aes(x = V1, y = V2, label = word)) + 
-  geom_text(size = 3)
-tsne_plot
+#tsne <- Rtsne(embedding_matrixTwo[conj,], perplexity = 2, pca = TRUE)
+#tsne_plot <- tsne$Y %>%
+#  as.data.frame() %>%
+#  mutate(word = row.names(embedding_matrixTwo[conj,])) %>%
+#  ggplot(aes(x = V1, y = V2, label = word)) + 
+#  geom_text(size = 3)
+#tsne_plot
 
 library(ggplot2)
 library(dplyr)
@@ -169,10 +166,50 @@ search_synonyms <- function(word_vectors, selected_vector) {
     arrange(-similarity)    
 }
 
-beer <- search_synonyms(embedding_matrixTwo, embedding_matrixTwo["beer",])
-alcohol <- search_synonyms(embedding_matrixTwo, embedding_matrixTwo["alcohol",])
-drunk <- search_synonyms(embedding_matrixTwo, embedding_matrixTwo["drunk",])
-sober <- search_synonyms(embedding_matrixTwo, embedding_matrixTwo["sober",])
+beer <- convertSimilaridadeToTibble(find_similar_words("beer", embedding_matrixTwo, n = 15))
+alcohol <- convertSimilaridadeToTibble(find_similar_words("alcohol", embedding_matrixTwo, n = 15))
+drunk <- convertSimilaridadeToTibble(find_similar_words("drunk", embedding_matrixTwo, n = 15))
+sober <- convertSimilaridadeToTibble(find_similar_words("sober", embedding_matrixTwo, n = 15))
+
+# beer$token <- factor(beer$token, levels = beer$token[order(beer$similarity)])
+# alcohol$token <- factor(alcohol$token, levels = alcohol$token[order(alcohol$similarity)])
+# drunk$token <- factor(drunk$token, levels = drunk$token[order(drunk$similarity)])
+# sober$token <- factor(sober$token, levels = sober$token[order(sober$similarity)])
+
+reorder_within <- function(x, by, within, fun = mean, sep = "___", ...) {
+  new_x <- paste(x, within, sep = sep)
+  stats::reorder(new_x, by, FUN = fun)
+}
+
+scale_x_reordered <- function(..., sep = "___") {
+  reg <- paste0(sep, ".+$")
+  ggplot2::scale_x_discrete(labels = function(x) gsub(reg, "", x), ...)
+}
+
+beer %>%
+  mutate(selected = "beer") %>%
+  bind_rows(alcohol %>%
+              mutate(selected = "alcohol")) %>%
+  bind_rows(drunk %>%
+              mutate(selected = "drunk")) %>%
+  bind_rows(sober %>%
+              mutate(selected = "sober")) %>%
+  group_by(selected) %>%
+  top_n(15, similarity) %>%
+  ungroup %>%
+  #mutate(token = reorder(token, similarity)) %>%
+  ggplot(aes(reorder_within(token, similarity, selected), similarity)) +
+  geom_segment(aes(xend = reorder_within(token, similarity, selected), yend = 0), 
+               colour = "blue") +
+  scale_x_reordered() +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~selected, scales = "free") +
+  #geom_point(size = 3, aes(colour = selected)) +
+  coord_flip() +
+  theme(strip.text=element_text(hjust=0, size=12)) +
+  scale_y_continuous(expand = c(0,0)) +
+  geom_bar(stat = "identity")
+
 
 beer %>%
   mutate(selected = "beer") %>%
@@ -192,7 +229,30 @@ beer %>%
   coord_flip() +
   theme(strip.text=element_text(hjust=0, size=12)) +
   scale_y_continuous(expand = c(0,0)) +
-  labs(x = NULL, title = "What word vectors are most similar to alcohol, beer, drunk and sober?",
-       subtitle = "Based on Hidden Layers")
+  geom_bar(stat = "identity")
 
-warnings()
+
+
+beer %>%
+  mutate(selected = "beer") %>%
+  bind_rows(alcohol %>%
+              mutate(selected = "alcohol")) %>%
+  bind_rows(drunk %>%
+              mutate(selected = "drunk")) %>%
+  bind_rows(sober %>%
+              mutate(selected = "sober")) %>%
+  group_by(selected) %>%
+  top_n(15, similarity) %>%
+  ungroup %>%
+  mutate(token = reorder(token, similarity)) %>%
+  ggplot(aes(reorder_within(token, similarity, selected), similarity)) +
+  geom_segment(aes(xend = reorder_within(token, similarity, selected), yend = 0), 
+               colour = "#FF9999") +
+  scale_x_reordered() +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~selected, scales = "free") +
+  coord_flip() +
+  xlab("token") +
+  theme(strip.text=element_text(hjust=0, size=12)) +
+  scale_y_continuous(expand = c(0,0)) +
+  geom_bar(stat = "identity")
