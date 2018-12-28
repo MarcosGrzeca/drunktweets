@@ -8,7 +8,7 @@ DESC <- "Exp1 GloVe- CNN + Semantic Enrichment + Word embeddings"
 source(file_path_as_absolute("ipm/glove/load.R"))
 
 #Section: Dados classificar
-dados <- getDadosInfoGain()
+dados <- getDadosSemKeyWords()
 
 maxlen <- 50
 max_words <- 40000

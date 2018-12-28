@@ -8,7 +8,7 @@ DESC <- "Exp1 SkipGram- CNN + Semantic Enrichment + Word embeddings"
 load(file = "ipm/embeddings/skipgram_glove.Rda")
 
 #Section: Dados classificar
-dados <- getDadosInfoGain()
+dados <- getDadosSemKeyWords()
 
 try({
 	maxlen <- 38
