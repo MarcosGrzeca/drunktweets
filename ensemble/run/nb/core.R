@@ -45,7 +45,7 @@ set.seed(10)
 split=0.80
 for (year in 1:10){
 	load(file = datasetFile)
-	maFinal$resposta <- as.factor(maFinal$resposta)
+	maFinal[] <- lapply(maFinal, as.factor)
 	trainIndex <- readRDS(file = paste0(baseResampleFiles, "trainIndex", year, ".rds"))
 
 	data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
