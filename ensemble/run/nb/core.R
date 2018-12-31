@@ -38,12 +38,12 @@ try({
   load(imageFile)
 })
 
-CORES <- 5
+CORES <- 3
 registerDoMC(CORES)
 
 set.seed(10)
 split=0.80
-for (year in 1:10){
+for (year in 1:5){
 	load(file = datasetFile)
 	maFinal[] <- lapply(maFinal, as.factor)
 	trainIndex <- readRDS(file = paste0(baseResampleFiles, "trainIndex", year, ".rds"))
