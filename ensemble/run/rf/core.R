@@ -44,7 +44,7 @@ registerDoMC(CORES)
 
 set.seed(10)
 split=0.80
-for (year in 1:5){
+for (year in 4:5){
   try({
 
 	load(file = datasetFile)
