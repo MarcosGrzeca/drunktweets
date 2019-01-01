@@ -38,7 +38,7 @@ try({
   load(imageFile)
 })
 
-CORES <- 5
+CORES <- 3
 registerDoMC(CORES)
 
 set.seed(10)
