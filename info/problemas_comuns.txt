@@ -26,3 +26,8 @@ R CMD config CXX11FLAGS
 
 Update all packages
 update.packages(checkBuilt=TRUE, ask=FALSE)
+
+
+
+#OUTRA COISA
+https://forums.aws.amazon.com/thread.jspa?threadID=272761
