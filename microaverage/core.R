@@ -14,6 +14,10 @@ for (year in 1:10) {
   data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
   data_test <- maFinal[-trainIndex,]
   matriz <- confusionMatrix(data = as.factor(results), as.factor(data_test$resposta), positive="1")
+
+  # print(paste0("F1: ", matriz$byClass["F1"]))
+  # print(paste0("Precision: ", matriz$byClass["Precision"]))
+  print(paste0("Recall: ", matriz$byClass["Recall"]))
   
   TN <- matriz$table[1]
   FP <- matriz$table[2]
