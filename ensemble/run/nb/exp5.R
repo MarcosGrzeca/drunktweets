@@ -1,7 +1,10 @@
 library(tools)
 
-imageFile <- "ensemble/resultados/exp5/imageFileNB.RData"
-datasetFile <-"chat/rdas/2gram-entidades-erro.Rda"
+# imageFile <- "ensemble/resultados/exp5/imageFileNB.RData"
+# datasetFile <-"chat/rdas/2gram-entidades-erro.Rda"
+
+imageFile <- "ensemble/resultados/exp5/imageFileNB_semkeywords.RData"
+datasetFile <-"chat/rdas/2gram-entidades-erro-sem-key-words.Rda"
 
 
 baseResultsFiles <- "ensemble/resultados/exp5/"
