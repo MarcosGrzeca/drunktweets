@@ -1,15 +1,25 @@
 library(caret)
 library(dplyr)
 
-for (year in 1:5) {
-	svmResults <- readRDS(file = paste0("ensemble/resultados/exp3/svm", year, ".rds"))
-	rfResults <- readRDS(file = paste0("ensemble/resultados/exp3/rf", year, ".rds"))
-	nnResults <- readRDS(file = paste0("ensemble/resultados/exp3/neural", year, ".rds"))
+#install.packages("caret")
+
+for (year in 5:5) {
+	svmResults <- readRDS(file = paste0("ensemble/resultados/exp5/svm", year, ".rds"))
+	rfResults <- readRDS(file = paste0("ensemble/resultados/exp5/rf", year, ".rds"))
+	# rfResults <- readRDS(file = paste0("ensemble/resultados/exp5/nb", year, ".rds"))
+	nnResults <- readRDS(file = paste0("ensemble/resultados/exp5/neural", year, ".rds"))
 	
-	load("ensemble/datasets/exp3/2-Gram-dbpedia-types-enriquecimento-info-q3-not-null_info_entidades.Rda")
-	trainIndex <- readRDS(file = paste0("ensemble/resample/exp3/", "trainIndex", year, ".rds"))
+	# load("ensemble/datasets/exp1/2-Gram-dbpedia-types-enriquecimento-info-q1-not-null_info_entidades.Rda")
+	#load("ensemble/datasets/exp2/2-Gram-dbpedia-types-enriquecimento-info-q2-not-null_info_entidades.Rda")
+	#load("ensemble/datasets/exp3/2-Gram-dbpedia-types-enriquecimento-info-q3-not-null_info_entidades.Rda")
+	# load("rdas/2gram-entidades-hora-erro-semkeywords.Rda")
+	load("chat/rdas/2gram-entidades-erro.Rda")
+	
+	trainIndex <- readRDS(file = paste0("ensemble/resample/exp5/", "trainIndex", year, ".rds"))
 	data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
 	data_test <- maFinal[-trainIndex,]
+	
+	rm(maFinal)
 	
 
 	bigDataFrame <- bind_cols(list(as.numeric(as.character(svmResults)), as.numeric(as.character(nnResults)), as.numeric(as.character(rfResults))))
@@ -19,7 +29,7 @@ for (year in 1:5) {
 	result <- bigDataFrameSum / 3
 	pred <- round(result,0)
 	
-	data_test$resposta
+	
 	matriz <- confusionMatrix(data = as.factor(pred), as.factor(data_test$resposta), positive="1")
 	print(matriz$byClass["F1"])
 	print(matriz$byClass["Precision"])
