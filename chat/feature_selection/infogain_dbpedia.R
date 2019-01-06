@@ -25,9 +25,10 @@ dados <- query("SELECT t.id, drunk AS resposta,
                WHERE louco.idTweet = t.id
                ) AS resources
                FROM chat_tweets t
-               WHERE contabilizar = 1")
+               WHERE contabilizar = 1
+               AND drunk IN ('N', 'S')")
 
-save(dados, file = "chat/rdas/cfs.Rda")
+save(dados, file = "chat/rdas/cfs_sem_keywords.Rda")
 
 dados$resposta[is.na(dados$resposta)] <- 0
 dados$resposta[dados$resposta == "Y"] <- 1
@@ -82,8 +83,8 @@ print(f)
 
 subset
 
-dump(subset, "chat/feature_selection/infogain_dbpedia.csv")
-save.image(file="chat/rdas/infogain_dbpedia.RData")
+dump(subset, "chat/feature_selection/infogain_dbpedia_sem_keywords.csv")
+save.image(file="chat/rdas/infogain_dbpedia_sem_keywords.RData")
 
 
 # load("chat/rdas/infogain_dbpedia.RData")
