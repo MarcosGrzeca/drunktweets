@@ -1,6 +1,6 @@
 library(tools)
 
-fileName <- "ipm/results_q1_glove.Rdata"
+fileName <- "ipm/results_q1_glove_sem_kw.Rdata"
 source(file_path_as_absolute("ipm/loads.R"))
 
 DESC <- "Exp5 SkipGram- CNN + Semantic Enrichment + Word embeddings"

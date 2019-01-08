@@ -605,11 +605,12 @@ getDadosWordEmbeddings <- function() {
 }
 
 getDadosChat <- function() {
+
   dados <- query('SELECT id,
                       drunk AS resposta,
                       textSemPalavrasControle as textParser,
                       textoOriginal as textOriginal,
-                      textEmbedding,
+                      textSemPalavrasControle as textEmbedding,
                       hashtags,
                       erros as numeroErros,
                       (
@@ -655,6 +656,7 @@ getDadosChat <- function() {
   dados$hashtags = gsub("#hangover,|#hangover$", "", dados$hashtags,ignore.case=T)
 
   dados$hashtags = gsub("#", "#tag_", dados$hashtags)
+  dados$textParser <- stringi::stri_enc_toutf8(dados$textParser)
   dados$textParser = gsub("'", "", dados$textParser)
 
   dados$numeroErros[dados$numeroErros > 1] <- 1
