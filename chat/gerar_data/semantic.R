@@ -68,7 +68,7 @@ dataFrameHash <- as.data.frame(as.matrix(dtm_train_hash_tags))
 dataFrameEntidades <- as.data.frame(as.matrix(dataFrameEntidades))
 dataFrameTypes <- as.data.frame(as.matrix(dataFrameTypes))
 
-maFinal <- cbind.fill(subset(dados, select = -c(textParser, id, hashtags, entidades, types)), dataFrameTexto)
+maFinal <- cbind.fill(subset(dados, select = -c(textParser, textOriginal, textEmbedding, id, hashtags, entidades, types)), dataFrameTexto)
 maFinal <- cbind.fill(maFinal, dataFrameHash)
 maFinal <- cbind.fill(maFinal, dataFrameEntidades)
 maFinal <- cbind.fill(maFinal, dataFrameTypes)
