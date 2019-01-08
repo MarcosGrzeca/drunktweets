@@ -1,6 +1,6 @@
 library(tools)
 
-imageFile <- "ensemble/resultados/exp5/imageFileRede-sem-key-words.RData"
+imageFile <- "ensemble/resultados/exp5/imageFileRede.RData"
 
 baseResultsFiles <- "ensemble/resultados/exp5/"
 baseResampleFiles <- "ensemble/resample/exp5/"
