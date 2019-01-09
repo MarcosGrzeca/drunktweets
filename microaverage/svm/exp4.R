@@ -1,7 +1,7 @@
 library(tools)
 
-datasetFile <-"chat/rdas/2gram-entidades-erro-sem-key-words.Rda"
+datasetFile <-"rdas/2gram-entidades-hora-erro-semkeywords.Rda"
 fileExpName <- "svm"
-expName <- "exp5"
+expName <- "exp4"
 
 source(file_path_as_absolute("microaverage/exps.R"))

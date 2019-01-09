@@ -1,7 +1,7 @@
 library(tools)
 
-datasetFile <-"chat/rdas/3gram-25-new.Rda"
+datasetFile <-"ensemble/datasets/exp3/3gram-25-q3-not-null.Rda"
 fileExpName <- "svmbaseline"
-expName <- "exp5"
+expName <- "exp3"
 
 source(file_path_as_absolute("microaverage/exps.R"))
