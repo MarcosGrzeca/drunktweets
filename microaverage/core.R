@@ -89,13 +89,14 @@ if (ambas == 1) {
   }
 }
 
+print("Macro")
+cat(mean(precisions) * 100, "\t", mean(recalls) * 100, "\n")
+
+
 if (ambas == 1) {
   print("Micro")
   cat(precision_globalTP / precision_subPrecision * 100, "\t", recall_global / recall_globalDivider * 100, "\n")
 }
-
-print("Macro")
-cat(mean(precisions) * 100, "\t", mean(recalls) * 100, "\n")
 
 #print(paste0("Macro precision: ", mean(precisions) * 100))
 #print(paste0("Macro recall: ", mean(recalls) * 100))
