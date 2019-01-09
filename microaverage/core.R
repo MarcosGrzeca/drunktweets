@@ -16,7 +16,7 @@ if (ambas == 1) {
 precisions <- c()
 recalls <- c()
 
-for (year in 1:10) {
+for (year in 1:5) {
   results <- readRDS(file = paste0("ensemble/resultados/", expName, "/", fileExpName, year, ".rds"))
   load(datasetFile)
   trainIndex <- readRDS(file = paste0("ensemble/resample/", expName, "/", "trainIndex", year, ".rds"))
@@ -53,7 +53,7 @@ for (year in 1:10) {
 if (ambas == 1) {
   classePositiva = "1"
 
-  for (year in 1:10) {
+  for (year in 1:5) {
     results <- readRDS(file = paste0("ensemble/resultados/", expName, "/", fileExpName, year, ".rds"))
     load(datasetFile)
     trainIndex <- readRDS(file = paste0("ensemble/resample/", expName, "/", "trainIndex", year, ".rds"))
