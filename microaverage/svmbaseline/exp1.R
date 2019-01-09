@@ -1,9 +1,10 @@
 library(tools)
 
-datasetFile <-"ensemble/datasets/exp2/3gram-25-q2-v2-not-null.Rda"
+datasetFile <- "ensemble/datasets/exp1/3gram-25-not-null.Rda"
 fileExpName <- "svmbaseline"
-expName <- "exp2"
+expName <- "exp1"
 
 classePositiva <- "1"
-ambas <- 0
+ambas <- 1
+
 source(file_path_as_absolute("microaverage/core.R"))
