@@ -4,4 +4,4 @@ datasetFile <-"ensemble/datasets/exp2/2-Gram-dbpedia-types-enriquecimento-info-q
 fileExpName <- "svm"
 expName <- "exp2"
 
-source(file_path_as_absolute("microaverage/core.R"))
+source(file_path_as_absolute("microaverage/exps.R"))
