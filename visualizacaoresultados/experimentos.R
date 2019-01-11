@@ -12,7 +12,8 @@ valoresExp1 <- c(87.52, 92.15, 89.83, 92, 87.96, 89.83, 87.58, 85.96, 86.70, 87.
 valoresExp2 <- c(96.72, 81.4, 89.06, 93.26, 84.97, 88.68, 99.57, 77.80, 87.35, 94.09, 83.39, 88.31, 93.10, 83.14, 87.61)
 valoresExp3 <- c(95.18, 80.89, 88.03, 77.92, 84.23, 80.53, 86.67, 71.85, 78.01, 77.7, 76.74, 76.93, 74.96, 84.52, 78.36)
 valoresExp4 <- c(82.79, 96.99, 72.236, 77.12, 76.73, 76.49, 79.47, 80.15, 79.64, 83.33, 75.27, 78.92, 71.53, 72.21, 71.71)
-valoresExp5 <- c(88.36, 94.58, 91.36, 85.31, 95.80, 90.17, 83.71, 94.01, 88.47, 83.98, 95.15, 89.13, 80.25, 95.97, 87.32)
+# valoresExp5 <- c(88.36, 94.58, 91.36, 85.31, 95.80, 90.17, 83.71, 94.01, 88.47, 83.98, 95.15, 89.13, 80.25, 95.97, 87.32)
+valoresExp5 <- c(75.6,86.71,80.77,63.05,86.53,72.29,73.00,88.59,79.84,68.02,87.42,76.33,51.91,86.97,64.78)
 
 # df1 <- data.frame(supp=rep(c("Hidden Layers", "GloVe", "Hidden layers + GloVe", "Skip Grams", "Semantic Framework"), each=3),
 #                   metric=rep(c("Recall", "Precision", "F1-Measure"),5),
@@ -31,7 +32,7 @@ headers <- c("Semantic Framework", "GloVe", "Hidden Layers", "Hidden layers + Gl
 
 dfCerto <- data.frame(supp=rep(headers, each=3),
                   metric=rep(c("Recall", "Precision", "F1-Measure"),5),
-                  len=valoresExp4)
+                  len=valoresExp5)
 
 head(dfCerto)
 dfCerto$supp <- factor(dfCerto$supp, levels = headers)
