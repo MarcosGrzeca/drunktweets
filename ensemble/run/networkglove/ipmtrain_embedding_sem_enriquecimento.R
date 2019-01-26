@@ -90,7 +90,7 @@ for (year in 1:10){
     auxiliary_input_types <- layer_input(shape = c(max_sequence_types))
     types_out <- auxiliary_input_types
 
-    main_output <- layer_concatenate(c(relu)) %>%  
+    main_output <- relu %>%  
       layer_dense(units = 64, activation = 'relu') %>% 
       layer_dropout(0.2) %>%
       layer_dense(units = 32, activation = "relu") %>%
