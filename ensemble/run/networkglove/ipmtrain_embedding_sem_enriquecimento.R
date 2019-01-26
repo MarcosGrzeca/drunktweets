@@ -90,14 +90,14 @@ for (year in 1:10){
     auxiliary_input_types <- layer_input(shape = c(max_sequence_types))
     types_out <- auxiliary_input_types
 
-    main_output <- layer_concatenate(c(relu, entities_out, types_out)) %>%  
+    main_output <- layer_concatenate(c(relu)) %>%  
       layer_dense(units = 64, activation = 'relu') %>% 
       layer_dropout(0.2) %>%
       layer_dense(units = 32, activation = "relu") %>%
       layer_dense(units = 1, activation = 'sigmoid')
 
     model <- keras_model(
-      inputs = c(main_input, auxiliary_input, auxiliary_input_types),
+      inputs = c(main_input),
       outputs = main_output
     )
     
@@ -115,7 +115,7 @@ for (year in 1:10){
     # Training ----------------------------------------------------------------        
     history <- model %>%
       fit(
-        x = list(dados_train_sequence, train_sequences, train_sequences_types),
+        x = list(dados_train_sequence),
         y = array(dados_train$resposta),
         batch_size = 64,
         epochs = 3,
@@ -123,18 +123,9 @@ for (year in 1:10){
       )
 
     # history
-    predictions <- model %>% predict(list(dados_test_sequence, test_sequences, test_sequences_types))
+    predictions <- model %>% predict(list(dados_test_sequence))
     predictions2 <- round(predictions, 0)
-
-    if (save == 1) {
-      saveRDS(predictions2, file = paste0(baseResultsFiles, "neural", year, ".rds"))
-      saveRDS(predictions, file = paste0(baseResultsFiles, "neuralprob", year, ".rds"))
-    }
-
     matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
-    resultados <- addRowAdpater(resultados, "Network glove", matriz)
-    if (save == 1) {
-      save.image(file=imageFile)
-    }
+    resultados <- addRowAdpater(resultados, "Network glove sem enriquecimento", matriz)
   })
 }

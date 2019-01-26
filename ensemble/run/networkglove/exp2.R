@@ -19,6 +19,7 @@ dados <- getDadosBaselineByQ("q2")
 try({
 	maxlen <- 38
 	max_words <- 5000
+	save <- 0
 	source(file_path_as_absolute("ensemble/run/networkglove/ipmtrain_embedding.R"))
 })
 resultados$F1
