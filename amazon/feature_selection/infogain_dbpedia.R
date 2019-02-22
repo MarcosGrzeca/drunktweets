@@ -79,5 +79,5 @@ print(f)
 
 subset
 
-dump(subset, "amazon/feature_selection/amazon_infogain_dbpedia.csv")
+dump(weights, "amazon/feature_selection/amazon_infogain_dbpedia.csv")
 save.image(file="amazon/rdas/amazon_infogain_dbpedia.RData")
