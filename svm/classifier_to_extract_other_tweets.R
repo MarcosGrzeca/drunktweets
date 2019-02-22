@@ -7,7 +7,7 @@ library(doMC)
 library(mlbench)
 library(magrittr)
 
-CORES <- 2
+CORES <- 5
 registerDoMC(CORES)
 
 treinar <- function(data_train){
@@ -47,22 +47,19 @@ split=0.80
 
 load(file = "rdas/2gram-entidades-hora-erro-q2-teste-outro-classificador.Rda")
 maFinal$resposta <- as.factor(maFinal$resposta)
-str(maFinal$testador)
+data_train <- as.data.frame(unclass(maFinal[ which(maFinal$testador=='0'),]))
+data_train <- subset(data_train, select = -c(id, testador))
 
-newdata <- maFinal[ which(maFinal$testador=='0'), ]
-nrow(newdata)
+data_test  <- as.data.frame(unclass(maFinal[ which(maFinal$testador=='1'),]))
 
-  maFinal[ trainIndex,]
+gramEntidadesSemTexto <- treinar(data_train)
+gramEntidadesSemTexto
 
-#   newdata <- mydata[ which(mydata$gender=='F' 
-# & mydata$age > 65), ]
-	
- #  trainIndex <- createDataPartition(maFinal$resposta, p=split, list=FALSE)
-	# data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
-	# data_test <- maFinal[-trainIndex,]
+pred <- predict(gramEntidadesSemTexto, subset(data_test, select = -c(id, testador, resposta)))
 
-	# gramEntidadesSemTexto <- treinar(data_train)
-	# gramEntidadesSemTexto
-	# matrizGramSemTexto <- getMatriz(gramEntidadesSemTexto, data_test)
-	# resultados <- addRow(resultados, "2 GRAM - Entidades - Erro - Sem texto", matrizGramSemTexto)
-# })
+library(rowr)
+library(RWeka)
+all_data <- cbind.fill(subset(data_test, select = c(id)), pred)
+
+pos  <- as.data.frame(unclass(all_data[ which(all_data$object=='1'),]))
+save(pos, file = "pos2.Rda")
