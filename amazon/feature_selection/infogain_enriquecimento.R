@@ -9,15 +9,14 @@ source(file_path_as_absolute("utils/functions.R"))
 DATABASE <- "icwsm"
 clearConsole();
 
-dados <- query("SELECT t.id, drunk AS resposta,
+dados <- query("SELECT t.id, q2 AS resposta,
                   (SELECT GROUP_CONCAT(DISTINCT(tn.palavra))
-                   FROM chat_tweets_nlp tn
+                   FROM tweets_amazon_nlp tn
                    WHERE tn.idTweet = t.id
                    AND tn.tipo NOT IN ('language', 'socialTag')
                    GROUP BY t.id) AS entidades
-              FROM chat_tweets t
-              WHERE contabilizar = 1
-              AND drunk IN ('N', 'S')
+              FROM tweets_amazon t
+              WHERE q2 IN ('0', '1')
             ")
 
 dados$resposta[is.na(dados$resposta)] <- 0
@@ -69,6 +68,6 @@ subset <- cutoff.k(weights, 100)
 f <- as.simple.formula(subset, "resposta")
 print(f)
 
-dump(weights, "chat/feature_selection/infogain_enriquecimento_sem_keywords.csv")
+dump(weights, "amazon/feature_selection/amazon_infogain_enriquecimento.csv")
 
-save.image(file="chat/rdas/infogain_enriquecimento_sem_keywords.RData")
+save.image(file="amazon/rdas/amazon_infogain_enriquecimento.RData")
