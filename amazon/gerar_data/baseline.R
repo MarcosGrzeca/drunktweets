@@ -7,18 +7,19 @@ library(data.table)
 library(SnowballC)
 
 source(file_path_as_absolute("utils/getDados.R"))
+source(file_path_as_absolute("utils/getDadosAmazon.R"))
 source(file_path_as_absolute("utils/tokenizer.R"))
 
 #Configuracoes
 DATABASE <- "icwsm"
 
-dados <- getDadosChat()
+dados <- getDadosAmazon()
+nrow(dados)
 
 setDT(dados)
 setkey(dados, id)
 
 #Text
-
 it_train = itoken(dados$textParser, 
                   preprocessor = tolower,
                   tokenizer = word_tokenizer,
@@ -63,5 +64,4 @@ dataFrameHash <- as.data.frame(as.matrix(dtm_train_hash_tags))
 
 maFinal <- cbind.fill(subset(dados, select = -c(textParser, id, textOriginal, textEmbedding, numeroErros, entidades, types, hashtags)), dataFrameTexto)
 maFinal <- cbind.fill(maFinal, dataFrameHash)
-# save(maFinal, file = "chat/rdas/3gram-25-baseline.Rda")
-save(maFinal, file = "chat/rdas/3gram-25-new.Rda")
+save(maFinal, file = "amazon/rdas/3gram-25.Rda")

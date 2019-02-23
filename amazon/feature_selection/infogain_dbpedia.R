@@ -4,6 +4,7 @@ options(max.print = 99999999)
 
 library(tools)
 source(file_path_as_absolute("utils/functions.R"))
+source(file_path_as_absolute("utils/getDadosAmazon.R"))
 
 #Configuracoes
 DATABASE <- "icwsm"
@@ -11,7 +12,7 @@ clearConsole();
 
 dados <- query("SELECT t.id, q2 AS resposta,
                (
-                 SELECT GROUP_CONCAT(DISTINCT(REPLACE(type, 'http://dbpedia.org/class/', '')))
+                 SELECT GROUP_CONCAT(DISTINCT(type))
                  FROM
                  (
                     SELECT c.resource AS resource,
@@ -25,7 +26,32 @@ dados <- query("SELECT t.id, q2 AS resposta,
                WHERE louco.idTweet = t.id
                ) AS resources
                FROM tweets_amazon t
-               WHERE q2 IN ('0', '1');")
+               WHERE q2 IN ('0', '1')
+               UNION
+                SELECT id, q2 as resposta,
+                (
+                SELECT GROUP_CONCAT(DISTINCT(type))
+                  FROM
+                    ( SELECT c.resource AS resource,
+                        tn.idTweetInterno
+                    FROM tweets_nlp tn
+                    JOIN conceito c ON c.palavra = tn.palavra
+                    WHERE c.sucesso = 1
+                    UNION ALL SELECT c.resource AS resource,
+                             tn.idTweetInterno
+                    FROM tweets_gram tn
+                    JOIN conceito c ON c.palavra = tn.palavra
+                    WHERE c.sucesso = 1
+                    GROUP BY 1,
+                         2 ) AS louco
+                   JOIN resource_type ty ON ty.resource = louco.resource
+                   WHERE louco.idTweetInterno = t.idInterno
+                   ) AS resources
+                FROM tweets t
+                WHERE textparser <> ''
+                AND id <> 462478714693890048
+                AND q2 IS NOT NULL
+               ")
 
 save(dados, file = "amazon/rdas/amazon_cfs.Rda")
 

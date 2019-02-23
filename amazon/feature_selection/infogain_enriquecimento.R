@@ -1,5 +1,4 @@
 options(java.parameters = "-Xmx32g")
-#options(java.parameters = "-Xmx16g")
 options(max.print = 99999999)
 
 library(tools)
@@ -17,12 +16,23 @@ dados <- query("SELECT t.id, q2 AS resposta,
                    GROUP BY t.id) AS entidades
               FROM tweets_amazon t
               WHERE q2 IN ('0', '1')
+              UNION
+                SELECT id, q2 as resposta,
+                (
+                      SELECT GROUP_CONCAT(DISTINCT(tn.palavra))
+                      FROM tweets_nlp tn
+                      WHERE tn.idTweetInterno = t.idInterno
+                      GROUP BY tn.idTweetInterno
+                ) AS entidades
+                FROM tweets t
+                WHERE textparser <> ''
+                AND id <> 462478714693890048
+                AND q2 IS NOT NULL
             ")
 
 dados$resposta[is.na(dados$resposta)] <- 0
-dados$resposta[dados$resposta == "Y"] <- 1
-dados$resposta[dados$resposta == "N"] <- 0
-dados$resposta[dados$resposta == "S"] <- 1
+dados$resposta[dados$resposta == "1"] <- 1
+dados$resposta[dados$resposta == "0"] <- 0
 
 dados$resposta <- as.factor(dados$resposta)
 dados$entidades <- enc2utf8(dados$entidades)
