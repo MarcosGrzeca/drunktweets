@@ -17,6 +17,7 @@ getDadosAmazon <- function() {
                       emoticonNeg,
                       hora,
                       erros as numeroErros,
+                      textEmbedding as "textOriginal",
                       (
                         SELECT GROUP_CONCAT(DISTINCT(REPLACE(ty.type, "http://dbpedia.org/class/", "")))
                         FROM tweets_amazon_nlp tn
@@ -44,6 +45,7 @@ getDadosAmazon <- function() {
                       emoticonNeg,
                       hora,
                       erroParseado as numeroErros,
+                      textEmbedding as "textOriginal",
                       (
                       SELECT GROUP_CONCAT(DISTINCT(REPLACE(type, "http://dbpedia.org/class/", "")))
                       FROM

@@ -7,8 +7,9 @@ library(dplyr)
 library(tools)
 
 source(file_path_as_absolute("utils/getDados.R"))
+source(file_path_as_absolute("utils/getDadosAmazon.R"))
 source(file_path_as_absolute("utils/tokenizer.R"))
-dados <- getDadosChat()
+dados <- getDadosAmazon()
 
 tokenizer <- text_tokenizer(num_words = 1000) %>%
              fit_text_tokenizer(dados$entidades)
@@ -23,9 +24,6 @@ dados$sequences_types <- texts_to_sequences(tokenizer_types, dados$types)
 library(doMC)
 library(mlbench)
 
-CORES <- 4
-registerDoMC(CORES)
-
 #Separação teste e treinamento
 set.seed(10)
 split=0.80
@@ -38,13 +36,13 @@ dados_test <- dados[-trainIndex,]
 # Texto
 dadosTransformado <- dados_train %>%
   mutate(
-    textOriginal = map(textEmbedding, ~tokenize_words(.x))
+    textOriginal = map(textOriginal, ~tokenize_words(.x))
   ) %>%
   select(textOriginal)
 
 dadosTransformadoTest <- dados_test %>%
   mutate(
-    textOriginal = map(textEmbedding, ~tokenize_words(.x))
+    textOriginal = map(textOriginal, ~tokenize_words(.x))
   ) %>%
   select(textOriginal)
 
@@ -72,4 +70,5 @@ test_vec <- vectorize_stories(dadosTransformadoTest, vocab, maxlen)
 sequences_test <- vectorize_sequences(dados_test$sequences, dimension = max_sequence)
 sequences_test_types <- vectorize_sequences(dados_test$sequences_types, dimension = max_sequence_types)
 
-save.image(file="chat/rdas/sequencesexp5-semkw.RData")
+save.image(file="amazon/rdas/sequencesexp6.RData")
+
