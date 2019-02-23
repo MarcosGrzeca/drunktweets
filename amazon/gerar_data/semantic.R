@@ -7,12 +7,13 @@ library(data.table)
 library(SnowballC)
 
 source(file_path_as_absolute("utils/getDados.R"))
+source(file_path_as_absolute("utils/getDadosAmazon.R"))
 source(file_path_as_absolute("utils/tokenizer.R"))
 
 #Configuracoes
 DATABASE <- "icwsm"
 
-dados <- getDadosChat()
+dados <- getDadosAmazon()
 dados <- discretizarTurno(dados)
 clearConsole()
 
@@ -26,7 +27,7 @@ it_train = itoken(dados$textParser,
                   progressbar = TRUE)
 
 vocab = create_vocabulary(it_train, stopwords = tm::stopwords("en"), ngram = c(1L, 2L))
-vocab = prune_vocabulary(vocab, term_count_min = 3)
+#vocab = prune_vocabulary(vocab, term_count_min = 3)
 vectorizer = vocab_vectorizer(vocab)
 dtm_train_texto = create_dtm(it_train, vectorizer)
 
@@ -37,7 +38,7 @@ it_train_hash = itoken(dados$hashtags,
                        progressbar = TRUE)
 
 vocabHashTags = create_vocabulary(it_train_hash)
-vocabHashTags = prune_vocabulary(vocabHashTags, term_count_min = 2)
+#vocabHashTags = prune_vocabulary(vocabHashTags, term_count_min = 2)
 vectorizerHashTags = vocab_vectorizer(vocabHashTags)
 dtm_train_hash_tags = create_dtm(it_train_hash, vectorizerHashTags)
 
@@ -48,7 +49,7 @@ it_train = itoken(strsplit(dados$entidades, ","),
                   progressbar = TRUE)
 
 vocab = create_vocabulary(it_train)
-vocab = prune_vocabulary(vocab, term_count_min = 2)
+#vocab = prune_vocabulary(vocab, term_count_min = 2)
 vectorizer = vocab_vectorizer(vocab)
 dataFrameEntidades = create_dtm(it_train, vectorizer)
 
@@ -59,7 +60,7 @@ it_train = itoken(strsplit(dados$types, ","),
                   progressbar = TRUE)
 
 vocab = create_vocabulary(it_train)
-vocab = prune_vocabulary(vocab, term_count_min = 2)
+#vocab = prune_vocabulary(vocab, term_count_min = 2)
 vectorizer = vocab_vectorizer(vocab)
 dataFrameTypes = create_dtm(it_train, vectorizer)
 
@@ -69,8 +70,8 @@ dataFrameHash <- as.data.frame(as.matrix(dtm_train_hash_tags))
 dataFrameEntidades <- as.data.frame(as.matrix(dataFrameEntidades))
 dataFrameTypes <- as.data.frame(as.matrix(dataFrameTypes))
 
-maFinal <- cbind.fill(subset(dados, select = -c(textParser, textOriginal, textEmbedding, id, hashtags, entidades, types)), dataFrameTexto)
+maFinal <- cbind.fill(subset(dados, select = -c(textParser, id, hashtags, entidades, types)), dataFrameTexto)
 maFinal <- cbind.fill(maFinal, dataFrameHash)
 maFinal <- cbind.fill(maFinal, dataFrameEntidades)
 maFinal <- cbind.fill(maFinal, dataFrameTypes)
-save(maFinal, file = "chat/rdas/2gram-entidades-erro-sem-key-words.Rda")
+save(maFinal, file = "amazon/rdas/2gram-entidades-erro.Rda")

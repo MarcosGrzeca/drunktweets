@@ -1,0 +1,11 @@
+                                            Baseline        F1  Precisão	                           Revocação
+2 GRAM - Entidades - Erro  2 GRAM - Entidades - Erro 0.7947020 0.7584270	2 GRAM - Entidades - Erro  0.8346213
+2 GRAM - Entidades - Erro1 2 GRAM - Entidades - Erro 0.7968070 0.7510260	2 GRAM - Entidades - Erro1 0.8485317
+2 GRAM - Entidades - Erro2 2 GRAM - Entidades - Erro 0.8005780 0.7516961	2 GRAM - Entidades - Erro2 0.8562597
+2 GRAM - Entidades - Erro3 2 GRAM - Entidades - Erro 0.7976879 0.7489824	2 GRAM - Entidades - Erro3 0.8531685
+2 GRAM - Entidades - Erro4 2 GRAM - Entidades - Erro 0.8028881 0.7533875	2 GRAM - Entidades - Erro4 0.8593509
+2 GRAM - Entidades - Erro5 2 GRAM - Entidades - Erro 0.8011653 0.7575758	2 GRAM - Entidades - Erro5 0.8500773
+2 GRAM - Entidades - Erro6 2 GRAM - Entidades - Erro 0.8083573 0.7570850	2 GRAM - Entidades - Erro6 0.8670788
+2 GRAM - Entidades - Erro7 2 GRAM - Entidades - Erro 0.7860769 0.7404372	2 GRAM - Entidades - Erro7 0.8377125
+2 GRAM - Entidades - Erro8 2 GRAM - Entidades - Erro 0.8023256 0.7572016	2 GRAM - Entidades - Erro8 0.8531685
+2 GRAM - Entidades - Erro9 2 GRAM - Entidades - Erro 0.8037791 0.7585734	2 GRAM - Entidades - Erro9 0.8547141
