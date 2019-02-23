@@ -1,0 +1,12 @@
+/food and drink
+/food and drink/beverages/alcoholic beverages
+/food and drink/beverages/alcoholic beverages/cocktails and beer
+/food and drink/beverages/alcoholic beverages/wine
+/law, govt and politics/politics/elections/local elections
+/law, govt and politics/politics/political parties
+/religion and spirituality/buddhism
+/religion and spirituality/hinduism
+Hashtag
+mention
+Person
+#url

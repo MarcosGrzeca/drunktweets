@@ -14,7 +14,6 @@ source(file_path_as_absolute("utils/tokenizer.R"))
 DATABASE <- "icwsm"
 
 dados <- getDadosAmazon()
-nrow(dados)
 
 setDT(dados)
 setkey(dados, id)
@@ -62,6 +61,6 @@ vectorizerHashTags = vocab_vectorizer(vocabHashTags)
 dtm_train_hash_tags = create_dtm(it_train_hash, vectorizerHashTags)
 dataFrameHash <- as.data.frame(as.matrix(dtm_train_hash_tags))
 
-maFinal <- cbind.fill(subset(dados, select = -c(textParser, id, textOriginal, textEmbedding, numeroErros, entidades, types, hashtags)), dataFrameTexto)
+maFinal <- cbind.fill(subset(dados, select = -c(textParser, id, numeroErros, entidades, types, hashtags, hora)), dataFrameTexto)
 maFinal <- cbind.fill(maFinal, dataFrameHash)
 save(maFinal, file = "amazon/rdas/3gram-25.Rda")

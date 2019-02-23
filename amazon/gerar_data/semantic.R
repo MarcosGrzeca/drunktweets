@@ -13,6 +13,7 @@ source(file_path_as_absolute("utils/tokenizer.R"))
 DATABASE <- "icwsm"
 
 dados <- getDadosChat()
+dados <- discretizarTurno(dados)
 clearConsole()
 
 setDT(dados)

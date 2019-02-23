@@ -81,3 +81,5 @@ print(f)
 dump(weights, "amazon/feature_selection/amazon_infogain_enriquecimento.csv")
 
 save.image(file="amazon/rdas/amazon_infogain_enriquecimento.RData")
+
+subset <- cutoff.k(weights, 14)
