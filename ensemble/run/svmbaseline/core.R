@@ -46,8 +46,12 @@ for (year in 1:10){
 
 	load(file = datasetFile)
 	maFinal$resposta <- as.factor(maFinal$resposta)
-	trainIndex <- readRDS(file = paste0(baseResampleFiles, "trainIndex", year, ".rds"))
+	
+	# trainIndex <- readRDS(file = paste0(baseResampleFiles, "trainIndex", year, ".rds"))
+	# data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
+	# data_test <- maFinal[-trainIndex,]
 
+	trainIndex <- createDataPartition(maFinal$resposta, p=split, list=FALSE)
 	data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
 	data_test <- maFinal[-trainIndex,]
 
