@@ -595,10 +595,11 @@ getDadosWordEmbeddings <- function() {
                       SELECT textEmbedding 
                       FROM tweets t
                       WHERE LENGTH(textEmbedding) > 5
+                      UNION ALL
+                      SELECT textEmbedding
+                      FROM tweets_amazon t
+                      WHERE LENGTH(textEmbedding) > 5
                       ")
-
-  # dados$textEmbedding <- enc2utf8(dados$textEmbedding)
-  # dados$textEmbedding <- iconv(dados$textEmbedding, to='ASCII//TRANSLIT')
   dados$textEmbedding <- stringi::stri_enc_toutf8(dados$textEmbedding)
   dados$textEmbedding = gsub("'", "", dados$textEmbedding, ignore.case=T)
   return (dados)

@@ -1,10 +1,5 @@
 library(tools)
 library(text2vec)
-
-library(text2vec)
-
-library(tools)
-library(text2vec)
 library(data.table)
 library(SnowballC)
 library(keras)
@@ -20,7 +15,8 @@ wiki <- dadosTreinarEmbeddings$textEmbedding
 tokens <- space_tokenizer(wiki)
 it = itoken(tokens)
 stop_words <- tm::stopwords("en")
-vocab <- create_vocabulary(it, stopwords = stop_words)
+#vocab <- create_vocabulary(it, stopwords = stop_words)
+vocab <- create_vocabulary(it)
 #vocab <- prune_vocabulary(vocab)
 
 #vectorizer = vocab_vectorizer(vocab, grow_dtm = F, skip_grams_window = 5)
@@ -32,7 +28,8 @@ glove <- GlobalVectors$new(word_vectors_size = 100, vocabulary = vocab, x_max = 
 wv_main <- fit_transform(tcm, glove, n_iter = 25)
 wv_context <- glove$components
 word_vectors <- wv_main + t(wv_context)
-save(word_vectors, file = "ipm/embeddings/skipgram_glove_without_stopwords.Rda")
+#save(word_vectors, file = "ipm/embeddings/skipgram_glove_without_stopwords.Rda")
+save(word_vectors, file = "ipm/embeddings/skipgram_glove.Rda")
 
 library(Rtsne)
 library(ggplot2)
