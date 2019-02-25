@@ -1,7 +1,7 @@
 library(tools)
 
 imageFile <- "ensemble/resultados/exp6/imageFileRF.RData"
-datasetFile <- "amazon/rdas/2gram-entidades-erro.Rda"
+datasetFile <- "amazon/rdas/2gram-entidades-erro-pruning.Rda"
 
 baseResultsFiles <- "ensemble/resultados/exp6/"
 baseResampleFiles <- "ensemble/resample/exp6/"
