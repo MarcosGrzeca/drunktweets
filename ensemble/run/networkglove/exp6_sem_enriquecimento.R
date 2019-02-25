@@ -18,10 +18,10 @@ source(file_path_as_absolute("ipm/glove/load.R"))
 dados <- getDadosAmazon()
 
 try({
-	save <- 1
+	save <- 0
 	maxlen <- 45
 	max_words <- 10000
-	source(file_path_as_absolute("ensemble/run/networkglove/ipmtrain_embedding.R"))
+	source(file_path_as_absolute("ensemble/run/networkglove/ipmtrain_embedding_sem_enriquecimento.R"))
 })
 resultados$F1
 resultados$Precision
