@@ -2,6 +2,7 @@ library(tools)
 
 fileName <- "ipm/results_exp6_glove.Rdata"
 source(file_path_as_absolute("ipm/loads.R"))
+source(file_path_as_absolute("utils/getDadosAmazon.R"))
 
 DESC <- "Exp6 SkipGram- CNN + Semantic Enrichment + Word embeddings"
 
