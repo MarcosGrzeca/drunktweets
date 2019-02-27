@@ -43,7 +43,7 @@ registerDoMC(CORES)
 
 set.seed(10)
 split=0.80
-for (year in 1:5){
+for (year in 4:5){
 	load(file = datasetFile)
 	maFinal[] <- lapply(maFinal, as.factor)
 	trainIndex <- readRDS(file = paste0(baseResampleFiles, "trainIndex", year, ".rds"))
