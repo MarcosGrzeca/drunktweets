@@ -11,7 +11,7 @@ for (year in 1:10){
 		
 		FLAGS <- flags(
 			flag_integer("epochs", 2),
-			flag_integer("batch_size", 164)
+			flag_integer("batch_size", 200)
 		)
 
 		# Data Preparation --------------------------------------------------------

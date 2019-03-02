@@ -5,7 +5,7 @@ source(file_path_as_absolute("ipm/loads.R"))
 
 DESC <- "Exp1 - CNN + Semantic Enrichment + Word embeddings"
 
-enriquecimento <- 1
+enriquecimento <- 0
 
 for (year in 1:10){
   try({
@@ -89,8 +89,8 @@ for (year in 1:10){
 	    fit(
 	      x = list(train_vec$textEmbedding),
 	      y = array(dados_train$resposta),
-	      batch_size = 64,
-	      epochs = 3,
+	      batch_size = 32,
+	      epochs = 2,
 	      validation_split = 0.2
 	    )
 
