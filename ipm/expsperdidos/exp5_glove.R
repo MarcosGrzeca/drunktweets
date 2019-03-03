@@ -11,7 +11,7 @@ source(file_path_as_absolute("utils/getDados.R"))
 dados <- getDadosChat()
 
 try({
-	enriquecimento <- 0
+	enriquecimento <- 1
 	maxlen <- 50
 	max_words <- 40000
 	source(file_path_as_absolute("ipm/expsperdidos/ipmtrain_embedding.R"))
