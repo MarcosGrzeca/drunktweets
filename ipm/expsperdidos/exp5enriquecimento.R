@@ -9,7 +9,7 @@ for (epoch in epochs) {
 	for (batch in batchs) {
 		for (year in 1:10){
 		  try({
-		  	enriquecimento <- 1
+		  	enriquecimento <- 0
 		  	load("chat/rdas/sequencesexp5-semkw.RData")
 		    
 		    # Data Preparation --------------------------------------------------------
