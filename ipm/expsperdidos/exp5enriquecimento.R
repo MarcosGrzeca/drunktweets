@@ -35,39 +35,74 @@ for (epoch in epochs) {
 
 			auxiliary_input_types <- layer_input(shape = c(max_sequence_types))
 			types_out <- auxiliary_input_types
+			
+			if (enriquecimento == 1) {
+				main_output <- layer_concatenate(c(ccn_out, entities_out, types_out)) %>%  
+					layer_dense(units = 64, activation = 'relu') %>% 
+					layer_dropout(0.2) %>%
+					layer_dense(units = 32, activation = "relu") %>%
+					layer_dense(units = 1, activation = 'sigmoid')
 
-			main_output <- layer_concatenate(c(ccn_out, entities_out, types_out)) %>%  
-				layer_dense(units = 64, activation = 'relu') %>% 
-				layer_dropout(0.2) %>%
-				layer_dense(units = 32, activation = "relu") %>%
-				layer_dense(units = 1, activation = 'sigmoid')
-
-			model <- keras_model(
-				inputs = c(main_input, auxiliary_input, auxiliary_input_types),
-				outputs = main_output
-			)
-
-			# Compile model
-			model %>% compile(
-				loss = "binary_crossentropy",
-				optimizer = "adam",
-				metrics = "accuracy"
-			)
-
-			history <- model %>%
-				fit(
-				  x = list(train_vec$new_textParser, sequences, sequences_types),
-				  y = array(dados_train$resposta),
-				  batch_size = batch,
-				  epochs = epoch,
-				  validation_split = 0.2
+				model <- keras_model(
+					inputs = c(main_input, auxiliary_input, auxiliary_input_types),
+					outputs = main_output
 				)
 
-			predictions <- model %>% predict(list(test_vec$new_textParser, sequences_test, sequences_test_types))
+				# Compile model
+				model %>% compile(
+					loss = "binary_crossentropy",
+					optimizer = "adam",
+					metrics = "accuracy"
+				)
+
+				history <- model %>%
+					fit(
+					  x = list(train_vec$new_textParser, sequences, sequences_types),
+					  y = array(dados_train$resposta),
+					  batch_size = batch,
+					  epochs = epoch,
+					  validation_split = 0.2
+					)
+
+				predictions <- model %>% predict(list(test_vec$new_textParser, sequences_test, sequences_test_types))
+			} else {
+				main_output <- ccn_out %>%  
+					layer_dense(units = 64, activation = 'relu') %>% 
+					layer_dropout(0.2) %>%
+					layer_dense(units = 32, activation = "relu") %>%
+					layer_dense(units = 1, activation = 'sigmoid')
+
+				model <- keras_model(
+					inputs = main_input,
+					outputs = main_output
+				)
+
+				# Compile model
+				model %>% compile(
+					loss = "binary_crossentropy",
+					optimizer = "adam",
+					metrics = "accuracy"
+				)
+
+				history <- model %>%
+					fit(
+					  x = list(train_vec$new_textParser),
+					  y = array(dados_train$resposta),
+					  batch_size = batch,
+					  epochs = epoch,
+					  validation_split = 0.2
+					)
+
+				predictions <- model %>% predict(list(test_vec$new_textParser))
+			}
 			predictions2 <- round(predictions, 0)
 			matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
 			resultados <- addRowAdpater(resultados, paste0("Exp 5 - Hidden - Enr: ", enriquecimento, " Ep: ", epoch, " - Ba: ", " - ", batch), matriz)
-			saveRDS(resultados, file = "ipm/expsperdidos/resultadosautomatico/resultados_exp5_enriquecidos_2.rds")
+			if (enriquecimento == 1) {
+				saveRDS(resultados, file = "ipm/expsperdidos/resultadosautomatico/resultados_exp5_enriquecidos_1.rds")
+			} else {
+				saveRDS(resultados, file = "ipm/expsperdidos/resultadosautomatico/resultados_exp5_sem_enriquecidos_1.rds")
+			}
 		  })
 		}
 	}
