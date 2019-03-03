@@ -1,6 +1,5 @@
 library(tools)
 
-fileName <- "ipm/results_q2.Rdata"
 source(file_path_as_absolute("ipm/loads.R"))
 
 epochs <- c(2,3,4)
