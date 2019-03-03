@@ -67,7 +67,7 @@ for (epoch in epochs) {
 			predictions2 <- round(predictions, 0)
 			matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
 			resultados <- addRowAdpater(resultados, paste0("Exp 5 - Hidden - Enr: ", enriquecimento, " Ep: ", epoch, " - Ba: ", " - ", batch), matriz)
-			saveRDS(resultados, file = "ipm/expsperdidos/resultadosautomatico/resultados_exp5_enriquecidos_1.rds")
+			saveRDS(resultados, file = "ipm/expsperdidos/resultadosautomatico/resultados_exp5_enriquecidos_2.rds")
 		  })
 		}
 	}
