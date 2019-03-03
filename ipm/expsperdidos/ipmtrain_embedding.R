@@ -152,7 +152,6 @@ for (epoch in epochs) {
 			    
 			    predictions2 <- round(predictions, 0)
 			    matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
-			    resultados <- addRowAdpater(resultados, DESC, matriz)
 			    resultados <- addRowAdpater(resultados, paste0(expName, " - GloBe - Enr: ", enriquecimento, " Ep: ", epoch, " - Ba: ", " - ", batch), matriz)
 
 			    if (expName == "Exp5") {
