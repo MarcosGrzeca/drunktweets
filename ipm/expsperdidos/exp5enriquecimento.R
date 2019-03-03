@@ -58,8 +58,8 @@ for (epoch in epochs) {
 				fit(
 				  x = list(train_vec$new_textParser, sequences, sequences_types),
 				  y = array(dados_train$resposta),
-				  batch_size = FLAGS$batch_size,
-				  epochs = FLAGS$epochs,
+				  batch_size = batch,
+				  epochs = epoch,
 				  validation_split = 0.2
 				)
 
