@@ -158,7 +158,7 @@ for (epoch in epochs) {
 					if (enriquecimento == 1) {
 						saveRDS(resultados, file = "ipm/expsperdidos/resultadosautomatico/resultados_exp5_glove_enriquecidos_2.rds")
 					} else {
-						saveRDS(resultados, file = "ipm/expsperdidos/resultadosautomatico/resultados_exp5_glove_sem_enriquecidos_1.rds")
+						saveRDS(resultados, file = "ipm/expsperdidos/resultadosautomatico/resultados_exp5_glove_sem_enriquecidos_2.rds")
 					}
 				}
 		  })
