@@ -10,8 +10,8 @@ for (year in 1:10){
 		load("amazon/rdas/sequencesexp6.RData")
 		
 		FLAGS <- flags(
-			flag_integer("epochs", 2),
-			flag_integer("batch_size", 200)
+			flag_integer("epochs", 4),
+			flag_integer("batch_size", 32)
 		)
 
 		# Data Preparation --------------------------------------------------------

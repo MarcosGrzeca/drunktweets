@@ -90,7 +90,7 @@ for (year in 1:10){
 	      x = list(train_vec$textEmbedding),
 	      y = array(dados_train$resposta),
 	      batch_size = 64,
-	      epochs = 3,
+	      epochs = 4,
 	      validation_split = 0.2
 	    )
 

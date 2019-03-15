@@ -89,8 +89,8 @@ for (year in 1:10){
 	    fit(
 	      x = list(train_vec$textEmbedding),
 	      y = array(dados_train$resposta),
-	      batch_size = 164,
-	      epochs = 3,
+	      batch_size = 32,
+	      epochs = 4,
 	      validation_split = 0.2
 	    )
 
