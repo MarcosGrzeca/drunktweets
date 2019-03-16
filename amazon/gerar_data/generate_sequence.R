@@ -71,4 +71,3 @@ sequences_test <- vectorize_sequences(dados_test$sequences, dimension = max_sequ
 sequences_test_types <- vectorize_sequences(dados_test$sequences_types, dimension = max_sequence_types)
 
 save.image(file="amazon/rdas/sequencesexp6.RData")
-
