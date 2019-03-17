@@ -11,6 +11,7 @@ for (year in 1:20) {
 
 	callbacks_list <- list(
 		callback_early_stopping(
+			# monitor = "val_loss",
 			monitor = "acc",
 			patience = 1
 		),
@@ -22,7 +23,7 @@ for (year in 1:20) {
 	)
 
 	FLAGS <- flags(
-		flag_integer("epochs", 4),
+		flag_integer("epochs", 10),
 		flag_integer("batch_size", 64)
 	)
 
@@ -38,12 +39,10 @@ for (year in 1:20) {
 				 		layer_embedding(input_dim = vocab_size, output_dim = embedding_dims, input_length = maxlen)
 
 	auxiliary_input <- layer_input(shape = c(max_sequence))
-	entities_out <- auxiliary_input %>%
-                layer_dense(units = 2, activation = 'relu')
+	entities_out <- auxiliary_input
 
 	auxiliary_input_types <- layer_input(shape = c(max_sequence_types))
-	types_out <- auxiliary_input_types %>%
-                layer_dense(units = 2, activation = 'relu')
+	types_out <- auxiliary_input_types
 
 	ccn_out_3 <- embedding_input %>% 
 		layer_conv_1d(
@@ -66,31 +65,35 @@ for (year in 1:20) {
 		) %>%
 		layer_global_max_pooling_1d()
 
-	cnn_output <- layer_concatenate(c(ccn_out_3, ccn_out_4, ccn_out_5)) %>% 
-									layer_dropout(0.2) %>%
-									layer_dense(units = 8, activation = "relu")
+	if (enriquecimento == 1) {
+		cnn_output <- layer_concatenate(c(ccn_out_3, ccn_out_4, ccn_out_5)) %>% 
+										layer_dropout(0.2) %>%
+										layer_dense(units = 4, activation = "relu", kernel_regularizer = regularizer_l2(0.001))
 
-	# enriquecimento_output <- layer_concatenate(c(entities_out, types_out)) %>% 
-	# 								layer_dropout(0.2) %>%
-	# 								layer_dense(units = 2, activation = "relu")
+		enriquecimento_output <- layer_concatenate(c(entities_out, types_out)) %>% 
+										layer_dense(units = 2, activation = "relu", kernel_regularizer = regularizer_l2(0.001))
 
-	# main_output <- layer_concatenate(c(cnn_output, enriquecimento_output)) %>% 
-	# 		layer_dense(units = 1, activation = 'sigmoid')
+		main_output <- layer_concatenate(c(cnn_output, enriquecimento_output)) %>% 
+										layer_dropout(0.1) %>%
+										layer_dense(units = 1, activation = 'sigmoid')
+		model <- keras_model(
+			inputs = c(main_input, auxiliary_input, auxiliary_input_types),
+			outputs = main_output
+		)
+	} else {
+		cnn_output <- layer_concatenate(c(ccn_out_3, ccn_out_4, ccn_out_5)) %>% 
+										layer_dropout(0.2) %>%
+										layer_dense(units = 4, activation = "relu")
 
-	# model <- keras_model(
-	# 	inputs = c(main_input, auxiliary_input, auxiliary_input_types),
-	# 	outputs = main_output
-	# )
+		main_output <- cnn_output %>%
+						layer_dropout(0.1) %>%
+						layer_dense(units = 1, activation = 'sigmoid')
 
-	main_output <- layer_concatenate(c(ccn_out_3, ccn_out_4, ccn_out_5)) %>% 
-									layer_dropout(0.2) %>%
-									layer_dense(units = 8, activation = "relu") %>%
-									layer_dense(units = 1, activation = 'sigmoid')
-
-	model <- keras_model(
-		inputs = c(main_input),
-		outputs = main_output
-	)
+		model <- keras_model(
+			inputs = c(main_input),
+			outputs = main_output
+		)
+	}
 
 	# Compile model
 	model %>% compile(
@@ -99,20 +102,30 @@ for (year in 1:20) {
 		metrics = "accuracy"
 	)
 
-	history <- model %>%
-		fit(
-		  # x = list(train_vec$new_textParser, sequences, sequences_types),
-		  x = list(train_vec$new_textParser),
-		  y = array(dados_train$resposta),
-		  batch_size = FLAGS$batch_size,
-		  epochs = FLAGS$epochs,
-		  callbacks = callbacks_list,
-		  validation_split = 0.2
-		)
-		
-	# predictions <- model %>% predict(test_vec$new_textParser)
-	predictions <- model %>% predict(list(test_vec$new_textParser))
-	# predictions <- model %>% predict(list(test_vec$new_textParser, sequences_test, sequences_test_types))
+	if (enriquecimento == 1) {
+		history <- model %>%
+			fit(
+			  x = list(train_vec$new_textParser, sequences, sequences_types),
+			  y = array(dados_train$resposta),
+			  batch_size = FLAGS$batch_size,
+			  epochs = FLAGS$epochs,
+			  callbacks = callbacks_list,
+			  validation_split = 0.2
+			)	
+		predictions <- model %>% predict(list(test_vec$new_textParser, sequences_test, sequences_test_types))
+	} else {
+		history <- model %>%
+			fit(
+			  x = list(train_vec$new_textParser),
+			  y = array(dados_train$resposta),
+			  batch_size = FLAGS$batch_size,
+			  epochs = FLAGS$epochs,
+			  callbacks = callbacks_list,
+			  validation_split = 0.2
+			)
+			
+		predictions <- model %>% predict(list(test_vec$new_textParser))
+	}
 	predictions2 <- round(predictions, 0)
 	matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
 	resultados <- addRowAdpater(resultados, paste0("Enriquecimento: ", enriquecimento, " - Early: ", early_stop), matriz)

@@ -1,7 +1,7 @@
 library(tools)
 source(file_path_as_absolute("ipm/loads.R"))
 
-enriquecimento <- 1
+enriquecimento <- 0
 early_stop <- 1
 
 for (year in 1:20) {
@@ -22,7 +22,7 @@ for (year in 1:20) {
 	)
 
 	FLAGS <- flags(
-		flag_integer("epochs", 3),
+		flag_integer("epochs", 4),
 		flag_integer("batch_size", 64)
 	)
 
@@ -64,15 +64,27 @@ for (year in 1:20) {
 		) %>%
 		layer_global_max_pooling_1d()
 
-	main_output <- layer_concatenate(c(ccn_out_3, ccn_out_4, ccn_out_5, entities_out, types_out)) %>% 
-			layer_dropout(0.2) %>%
-#			layer_dense(units = 32, activation = "relu") %>%
-			layer_dense(units = 1, activation = 'sigmoid')
+	if (enriquecimento == 1) {
+		main_output <- layer_concatenate(c(ccn_out_3, ccn_out_4, ccn_out_5, entities_out, types_out)) %>% 
+				layer_dropout(0.2) %>%
+				layer_dense(units = 32, activation = "relu", name = "ReluPosConcat", kernel_regularizer = regularizer_l2(0.001)) %>%
+				layer_dense(units = 1, activation = 'sigmoid')
 
-	model <- keras_model(
-		inputs = c(main_input, auxiliary_input, auxiliary_input_types),
-		outputs = main_output
-	)
+		model <- keras_model(
+			inputs = c(main_input, auxiliary_input, auxiliary_input_types),
+			outputs = main_output
+		)
+	} else {
+		main_output <- layer_concatenate(c(ccn_out_3, ccn_out_4, ccn_out_5)) %>% 
+				layer_dropout(0.2) %>%
+				layer_dense(units = 32, activation = "relu", name = "ReluPosConcat", kernel_regularizer = regularizer_l2(0.001)) %>%
+				layer_dense(units = 1, activation = 'sigmoid')
+
+		model <- keras_model(
+			inputs = c(main_input),
+			outputs = main_output
+		)
+	}
 
 	# Compile model
 	model %>% compile(
@@ -81,18 +93,33 @@ for (year in 1:20) {
 		metrics = "accuracy"
 	)
 
-	history <- model %>%
-		fit(
-		  x = list(train_vec$new_textParser, sequences, sequences_types),
-		  y = array(dados_train$resposta),
-		  batch_size = FLAGS$batch_size,
-		  epochs = FLAGS$epochs,
-		  callbacks = callbacks_list,
-		  validation_split = 0.2
-		)
-		
-	# predictions <- model %>% predict(test_vec$new_textParser)
-	predictions <- model %>% predict(list(test_vec$new_textParser, sequences_test, sequences_test_types))
+	if (enriquecimento == 1) {
+		history <- model %>%
+			fit(
+			  x = list(train_vec$new_textParser, sequences, sequences_types),
+			  y = array(dados_train$resposta),
+			  batch_size = FLAGS$batch_size,
+			  epochs = FLAGS$epochs,
+			  callbacks = callbacks_list,
+			  validation_split = 0.2
+			)
+			
+		predictions <- model %>% predict(list(test_vec$new_textParser, sequences_test, sequences_test_types))
+		# predictions <- model %>% predict(test_vec$new_textParser)
+	} else {
+		history <- model %>%
+			fit(
+			  x = list(train_vec$new_textParser),
+			  y = array(dados_train$resposta),
+			  batch_size = FLAGS$batch_size,
+			  epochs = FLAGS$epochs,
+			  callbacks = callbacks_list,
+			  validation_split = 0.2
+			)
+			
+		# predictions <- model %>% predict(test_vec$new_textParser)
+		predictions <- model %>% predict(list(test_vec$new_textParser))
+	}
 	predictions2 <- round(predictions, 0)
 	matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
 	resultados <- addRowAdpater(resultados, paste0("Enriquecimento: ", enriquecimento, " - Early: ", early_stop), matriz)
