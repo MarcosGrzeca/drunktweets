@@ -1,18 +1,18 @@
-library(tools)
-source(file_path_as_absolute("ipm/loads.R"))
+# library(tools)
+# source(file_path_as_absolute("ipm/loads.R"))
 
-enriquecimento <- 1
-early_stop <- 1
+# enriquecimento <- 1
+# early_stop <- 1
 
 # for (year in 1:20) {
-for (year in 1:2) {
+for (year in 1:20) {
 	load("amazon/rdas/sequencesexp6.RData")
 
 	library(keras)
 
 	callbacks_list <- list(
 		callback_early_stopping(
-			monitor = "acc",
+			monitor = metrica,
 			patience = 1
 		),
 		callback_model_checkpoint(
@@ -22,16 +22,15 @@ for (year in 1:2) {
 		)
 	)
 
-	FLAGS <- flags(
-		flag_integer("epochs", 3),
-		flag_integer("batch_size", 64)
-	)
+	# FLAGS <- flags(
+	# 	flag_integer("epochs", 3),
+	# 	flag_integer("batch_size", 64)
+	# )
 
 	# Data Preparation --------------------------------------------------------
 	# Parameters --------------------------------------------------------------
 	embedding_dims <- 100
 	filters <- 20
-	hidden_dims <- 10
 
 	main_input <- layer_input(shape = c(maxlen), dtype = "int32")
 
@@ -67,15 +66,27 @@ for (year in 1:2) {
 		) %>%
 		layer_global_max_pooling_1d()
 
-	main_output <- layer_concatenate(c(ccn_out_3, ccn_out_4, ccn_out_5, entities_out, types_out)) %>% 
-			layer_dropout(0.2) %>%
-			#layer_dense(units = 14, activation = "relu") %>%
-			layer_dense(units = 1, activation = 'sigmoid')
+	if (enriquecimento == 1) {
+		main_output <- layer_concatenate(c(ccn_out_3, ccn_out_4, ccn_out_5, entities_out, types_out)) %>% 
+				layer_dropout(0.2) %>%
+				#layer_dense(units = 14, activation = "relu") %>%
+				layer_dense(units = 1, activation = 'sigmoid')
 
-	model <- keras_model(
-		inputs = c(main_input, auxiliary_input, auxiliary_input_types),
-		outputs = main_output
-	)
+		model <- keras_model(
+			inputs = c(main_input, auxiliary_input, auxiliary_input_types),
+			outputs = main_output
+		)
+	} else {
+		main_output <- layer_concatenate(c(ccn_out_3, ccn_out_4, ccn_out_5)) %>% 
+				layer_dropout(0.2) %>%
+				#layer_dense(units = 14, activation = "relu") %>%
+				layer_dense(units = 1, activation = 'sigmoid')
+
+		model <- keras_model(
+			inputs = c(main_input),
+			outputs = main_output
+		)
+	}
 
 	# Compile model
 	model %>% compile(
@@ -84,18 +95,33 @@ for (year in 1:2) {
 		metrics = "accuracy"
 	)
 
-	history <- model %>%
-		fit(
-		  x = list(train_vec$new_textParser, sequences, sequences_types),
-		  y = array(dados_train$resposta),
-		  batch_size = FLAGS$batch_size,
-		  epochs = FLAGS$epochs,
-		  callbacks = callbacks_list,
-		  validation_split = 0.2
-		)
-		
-	# predictions <- model %>% predict(test_vec$new_textParser)
-	predictions <- model %>% predict(list(test_vec$new_textParser, sequences_test, sequences_test_types))
+	if (enriquecimento == 1) {
+		history <- model %>%
+			fit(
+			  x = list(train_vec$new_textParser, sequences, sequences_types),
+			  y = array(dados_train$resposta),
+			  batch_size = 64,
+			  epochs = epoca,
+			  callbacks = callbacks_list,
+			  validation_split = 0.2
+			)
+			
+		# predictions <- model %>% predict(test_vec$new_textParser)
+		predictions <- model %>% predict(list(test_vec$new_textParser, sequences_test, sequences_test_types))
+	} else {
+		history <- model %>%
+			fit(
+			  x = list(train_vec$new_textParser),
+			  y = array(dados_train$resposta),
+			  batch_size = 64,
+			  epochs = epoca,
+			  callbacks = callbacks_list,
+			  validation_split = 0.2
+			)
+			
+		# predictions <- model %>% predict(test_vec$new_textParser)
+		predictions <- model %>% predict(list(test_vec$new_textParser))
+	}
 	predictions2 <- round(predictions, 0)
 	matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
 	resultados <- addRowAdpater(resultados, paste0("Enriquecimento: ", enriquecimento, " - Early: ", early_stop), matriz)
@@ -103,5 +129,3 @@ for (year in 1:2) {
 resultados$F1
 resultados$Precision
 resultados$Recall
-
-logar("DS3", "Hidden", FLAGS$epochs, 1, "val_loss", enriquecimento, resultados, model_to_json(model))
