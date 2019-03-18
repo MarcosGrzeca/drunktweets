@@ -21,4 +21,5 @@ for (file in files) {
 				logar("DS3", "Hidden", epoca, 1, metrica, enriquecimento, resultados, model_to_json(model), redeDesc)
 			}
 		}
-	}}
+	}
+	}
