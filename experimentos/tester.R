@@ -8,7 +8,7 @@ early_stop <- 1
 
 filesFeitos <- c("experimentos/early_stop_3_janelas_enriquecimento_droput_reduzido.R")
 
-files <- c("experimentos/early_stop_3_janelas_enriquecimento_droput_reduzido_outra.R", "experimentos/early_stop_3_janelas_enriquecimentov_sem_denses.R")
+files <- c("experimentos/early_stop_3_janelas_enriquecimento_droput_reduzido.R", "experimentos/early_stop_3_janelas_enriquecimento_droput_reduzido_outra.R", "experimentos/early_stop_3_janelas_enriquecimentov_sem_denses.R")
 
 for (file in files) {
 	redeDesc <- generateHash()
@@ -22,4 +22,4 @@ for (file in files) {
 			}
 		}
 	}
-	}
+}
