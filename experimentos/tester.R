@@ -11,7 +11,7 @@ filesFeitos <- c("experimentos/early_stop_3_janelas_enriquecimento_droput_reduzi
 files <- c("experimentos/early_stop_3_janelas_enriquecimento_droput_reduzido.R", "experimentos/early_stop_3_janelas_enriquecimento_droput_reduzido_outra.R", "experimentos/early_stop_3_janelas_enriquecimentov_sem_denses.R")
 
 for (file in files) {
-	redeDesc <- generateHash()
+	redeDesc <- generateHash(1)
 	for (epoca in epocas) {
 		for (metrica in metricas) {
 			for (enriquecimento in enriquecimentos) {
