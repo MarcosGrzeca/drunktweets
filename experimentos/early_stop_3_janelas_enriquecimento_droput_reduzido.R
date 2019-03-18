@@ -4,7 +4,8 @@ source(file_path_as_absolute("ipm/loads.R"))
 enriquecimento <- 1
 early_stop <- 1
 
-for (year in 1:20) {
+# for (year in 1:20) {
+for (year in 1:2) {
 	load("amazon/rdas/sequencesexp6.RData")
 
 	library(keras)
@@ -102,3 +103,5 @@ for (year in 1:20) {
 resultados$F1
 resultados$Precision
 resultados$Recall
+
+logar("DS3", "Hidden", FLAGS$epochs, 1, "val_loss", enriquecimento, resultados, model_to_json(model))

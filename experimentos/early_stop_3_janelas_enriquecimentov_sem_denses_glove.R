@@ -86,7 +86,7 @@ for (year in 1:20) {
 	)
 
 	FLAGS <- flags(
-		flag_integer("epochs", 5),
+		flag_integer("epochs", 3),
 		flag_integer("batch_size", 64)
 	)
 
@@ -199,3 +199,7 @@ for (year in 1:20) {
 resultados$F1
 resultados$Precision
 resultados$Recall
+
+mean(resultados$F1)
+mean(resultados$Precision)
+mean(resultados$Recall)
