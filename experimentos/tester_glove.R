@@ -13,7 +13,7 @@ files <- c("experimentos/early_stop_3_janelas_enriquecimentov_sem_denses_glove.R
 source(file_path_as_absolute("ipm/glove/load.R"))
 
 for (file in files) {
-	redeDesc <- generateHash()
+	redeDesc <- generateHash(1)
 	for (epoca in epocas) {
 		for (metrica in metricas) {
 			for (enriquecimento in enriquecimentos) {
