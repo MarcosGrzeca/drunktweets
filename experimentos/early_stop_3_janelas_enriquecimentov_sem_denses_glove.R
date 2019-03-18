@@ -1,7 +1,4 @@
 library(tools)
-
-source(file_path_as_absolute("ipm/loads.R"))
-source(file_path_as_absolute("ipm/glove/load.R"))
 source(file_path_as_absolute("utils/getDadosAmazon.R"))
 source(file_path_as_absolute("utils/getDados.R"))
 
@@ -68,18 +65,18 @@ library(tools)
 
 resultados <- data.frame(matrix(ncol = 4, nrow = 0))
 names(resultados) <- c("Baseline", "F1", "Precisão", "Revocação")
-enriquecimento <- 1
-early_stop <- 1
+# enriquecimento <- 1
+# early_stop <- 1
 
 library(keras)
 for (year in 1:20) {
 	callbacks_list <- list(
 		callback_early_stopping(
-			monitor = "val_loss",
+			monitor = metrica,
 			patience = 1
 		),
 		callback_model_checkpoint(
-			filepath = paste0(enriquecimento, "", early_stop, "", "test_models.h5"),
+			filepath = paste0(redeDesc, "", enriquecimento, "", early_stop, "", "test_models.h5"),
 			monitor = "val_loss",
 			save_best_only = TRUE
 		)
@@ -170,7 +167,7 @@ for (year in 1:20) {
 			  x = list(dados_train_sequence, train_sequences, train_sequences_types),
 			  y = array(dados_train$resposta),
 			  batch_size = FLAGS$batch_size,
-			  epochs = FLAGS$epochs,
+			  epochs = epoca,
 			  callbacks = callbacks_list,
 			  validation_split = 0.2
 			)
@@ -185,7 +182,7 @@ for (year in 1:20) {
 			  x = list(dados_train_sequence),
 			  y = array(dados_train$resposta),
 			  batch_size = FLAGS$batch_size,
-			  epochs = FLAGS$epochs,
+			  epochs = epoca,
 			  callbacks = callbacks_list,
 			  validation_split = 0.2
 			)
@@ -199,7 +196,3 @@ for (year in 1:20) {
 resultados$F1
 resultados$Precision
 resultados$Recall
-
-mean(resultados$F1)
-mean(resultados$Precision)
-mean(resultados$Recall)
