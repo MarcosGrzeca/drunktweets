@@ -6,3 +6,8 @@ addRowAdpater <- function(resultados, baseline, matriz, ...) {
   newdf <- rbind(resultados, newRes)
   return (newdf)
 }
+
+generateHash <- function(n = 5000) {
+  a <- do.call(paste0, replicate(5, sample(LETTERS, n, TRUE), FALSE))
+  paste0(a, sprintf("%04d", sample(9999, n, TRUE)), sample(LETTERS, n, TRUE))
+}
