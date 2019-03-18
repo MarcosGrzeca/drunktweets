@@ -1,8 +1,8 @@
-library(tools)
-source(file_path_as_absolute("ipm/loads.R"))
+# library(tools)
+# source(file_path_as_absolute("ipm/loads.R"))
 
-enriquecimento <- 0
-early_stop <- 1
+# enriquecimento <- 0
+# early_stop <- 1
 
 for (year in 1:20) {
 	load("amazon/rdas/sequencesexp6.RData")
@@ -11,11 +11,11 @@ for (year in 1:20) {
 
 	callbacks_list <- list(
 		callback_early_stopping(
-			monitor = "acc",
+			monitor = metrica,
 			patience = 1
 		),
 		callback_model_checkpoint(
-			filepath = paste0(enriquecimento, "", early_stop, "", "test_models.h5"),
+			filepath = paste0(redeDesc, "", enriquecimento, "", early_stop, "", "test_models.h5"),
 			monitor = "val_loss",
 			save_best_only = TRUE
 		)
@@ -99,7 +99,7 @@ for (year in 1:20) {
 			  x = list(train_vec$new_textParser, sequences, sequences_types),
 			  y = array(dados_train$resposta),
 			  batch_size = FLAGS$batch_size,
-			  epochs = FLAGS$epochs,
+			  epochs = epoca,
 			  callbacks = callbacks_list,
 			  validation_split = 0.2
 			)
@@ -112,7 +112,7 @@ for (year in 1:20) {
 			  x = list(train_vec$new_textParser),
 			  y = array(dados_train$resposta),
 			  batch_size = FLAGS$batch_size,
-			  epochs = FLAGS$epochs,
+			  epochs = epoca,
 			  callbacks = callbacks_list,
 			  validation_split = 0.2
 			)
