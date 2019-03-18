@@ -13,8 +13,8 @@ files <- c("experimentos/early_stop_3_janelas_enriquecimento_droput_reduzido.R",
 for (file in files) {
 	redeDesc <- generateHash()
 	for (epoca in epocas) {
-		for (enriquecimento in enriquecimentos) {
-			for (metrica in metricas) {
+		for (metrica in metricas) {
+			for (enriquecimento in enriquecimentos) {
 				resultados <- data.frame(matrix(ncol = 4, nrow = 0))
 				names(resultados) <- c("Baseline", "F1", "Precisão", "Revocação")
 				source(file_path_as_absolute(file))
