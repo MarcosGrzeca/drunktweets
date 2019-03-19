@@ -9,6 +9,7 @@ early_stop <- 1
 filesFeitos <- c()
 
 files <- c("experimentos/lstm/teste1.R")
+files <- c("experimentos/lstm/teste2.R", "experimentos/lstm/teste3.R")
 
 for (file in files) {
 	redeDesc <- generateHash(1)
