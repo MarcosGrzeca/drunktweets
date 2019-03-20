@@ -23,4 +23,4 @@ for (file in files) {
 	}
 }
 
-#system("init 0")
+system("init 0")
