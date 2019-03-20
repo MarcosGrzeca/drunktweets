@@ -1,7 +1,7 @@
 library(tools)
 source(file_path_as_absolute("ipm/loads.R"))
 
-epocas <- c(3,5,10,20)
+epocas <- c(3,5,10)
 enriquecimentos <- c(0, 1)
 metricas <- c("acc", "val_loss")
 early_stop <- 1
@@ -9,7 +9,8 @@ early_stop <- 1
 filesFeitos <- c()
 
 files <- c("experimentos/lstm/teste1.R")
-files <- c("experimentos/lstm/teste2.R", "experimentos/lstm/teste3.R")
+files <- c("experimentos/lstm/teste2.R")
+files <- c("experimentos/lstm/teste3.R")
 
 for (file in files) {
 	redeDesc <- generateHash(1)
@@ -24,3 +25,5 @@ for (file in files) {
 		}
 	}
 }
+
+system("init 0")

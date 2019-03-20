@@ -7,7 +7,7 @@
 
 # for (year in 1:20) {
 for (year in 1:20) {
-	load("amazon/rdas/sequencesexp6.RData")
+	load("amazon/rdas/sequencesexp6_sem_pontuacao.RData")
 
 	library(keras)
 

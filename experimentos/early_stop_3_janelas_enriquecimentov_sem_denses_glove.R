@@ -1,3 +1,4 @@
+#ODNKV8377C
 library(tools)
 source(file_path_as_absolute("utils/getDadosAmazon.R"))
 source(file_path_as_absolute("utils/getDados.R"))

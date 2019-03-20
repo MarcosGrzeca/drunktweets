@@ -1,3 +1,5 @@
+#FEITO
+
 library(tools)
 source(file_path_as_absolute("ipm/loads.R"))
 
@@ -25,3 +27,5 @@ for (file in files) {
 		}
 	}
 }
+
+system("init 0")

@@ -1,14 +1,15 @@
 library(tools)
 source(file_path_as_absolute("ipm/loads.R"))
 
-epocas <- c(3,5,10,20)
+epocas <- c(3,5,10)
 enriquecimentos <- c(0, 1)
 metricas <- c("acc", "val_loss")
 early_stop <- 1
 
 filesFeitos <- c()
 
-files <- c("experimentos/lstm/glove.R", "experimentos/lstm/glove_sem_dense.R")
+filesFeitos <- c("experimentos/lstm/glove.R")
+files <- c("experimentos/lstm/glove_sem_dense.R")
 
 source(file_path_as_absolute("ipm/glove/load.R"))
 
@@ -25,3 +26,5 @@ for (file in files) {
 		}
 	}
 }
+
+system("init 0")

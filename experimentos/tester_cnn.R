@@ -1,17 +1,19 @@
 library(tools)
 source(file_path_as_absolute("ipm/loads.R"))
 
-epocas <- c(3,5,10,20)
+epocas <- c(3,5,10)
 enriquecimentos <- c(0, 1)
 metricas <- c("acc", "val_loss")
 early_stop <- 1
 
-filesFeitos <- c("experimentos/early_stop_3_janelas_enriquecimento_droput_reduzido.R")
+filesFeitos <- c("experimentos/early_stop_3_janelas_enriquecimento_droput_reduzido.R", "experimentos/early_stop_3_janelas_enriquecimento_droput_reduzido.R")
+files <- c("experimentos/early_stop_3_janelas_enriquecimento_droput_reduzido_outra.R", "experimentos/early_stop_3_janelas_enriquecimentov_sem_denses.R")
 
-files <- c("experimentos/early_stop_3_janelas_enriquecimento_droput_reduzido.R", "experimentos/early_stop_3_janelas_enriquecimento_droput_reduzido_outra.R", "experimentos/early_stop_3_janelas_enriquecimentov_sem_denses.R")
+files <- c("experimentos/early_stop_3_janelas_enriquecimento_droput_reduzido_sem_pontuacao.R")
 
 for (file in files) {
-	redeDesc <- generateHash(1)
+	# redeDesc <- generateHash(1)
+	redeDesc <- "SEM_PONTUACAO"
 	for (epoca in epocas) {
 		for (metrica in metricas) {
 			for (enriquecimento in enriquecimentos) {
@@ -23,3 +25,5 @@ for (file in files) {
 		}
 	}
 }
+
+system("init 0")

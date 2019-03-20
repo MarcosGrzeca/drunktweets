@@ -11,6 +11,9 @@ source(file_path_as_absolute("utils/getDadosAmazon.R"))
 source(file_path_as_absolute("utils/tokenizer.R"))
 dados <- getDadosAmazon()
 
+#library(tm)
+#dados$textOriginal <- removePunctuation(dados$textOriginal)
+
 tokenizer <- text_tokenizer(num_words = 1000) %>%
              fit_text_tokenizer(dados$entidades)
 vocabEntitiesLenght <- length(tokenizer$word_index)
@@ -70,4 +73,4 @@ test_vec <- vectorize_stories(dadosTransformadoTest, vocab, maxlen)
 sequences_test <- vectorize_sequences(dados_test$sequences, dimension = max_sequence)
 sequences_test_types <- vectorize_sequences(dados_test$sequences_types, dimension = max_sequence_types)
 
-save.image(file="amazon/rdas/sequencesexp6.RData")
+save.image(file="amazon/rdas/sequencesexp6_sem_pontuacao.RData")
