@@ -10,7 +10,8 @@ early_stop <- 1
 
 filesFeitos <- c()
 
-files <- c("experimentos/early_stop_3_janelas_enriquecimentov_sem_denses_glove.R")
+# files <- c("experimentos/early_stop_3_janelas_enriquecimentov_sem_denses_glove.R")
+files <- c("experimentos/glove_bow.R")
 
 source(file_path_as_absolute("ipm/glove/load.R"))
 
@@ -28,4 +29,4 @@ for (file in files) {
 	}
 }
 
-system("init 0")
+#system("init 0")
