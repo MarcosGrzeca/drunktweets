@@ -73,4 +73,10 @@ test_vec <- vectorize_stories(dadosTransformadoTest, vocab, maxlen)
 sequences_test <- vectorize_sequences(dados_test$sequences, dimension = max_sequence)
 sequences_test_types <- vectorize_sequences(dados_test$sequences_types, dimension = max_sequence_types)
 
-save.image(file="amazon/rdas/sequencesexp6.RData")
+#Generate Bow
+tokenizerBow <- text_tokenizer(num_words = 8000) %>%
+  fit_text_tokenizer(dados$textParser)
+
+dataframebow_train <- texts_to_matrix(tokenizerBow, dados_train$textParser, mode = "binary")
+dataframebow_test  <- texts_to_matrix(tokenizerBow, dados_test$textParser,  mode = "binary")
+save.image(file="amazon/rdas/sequencesexp6_bow.RData")
