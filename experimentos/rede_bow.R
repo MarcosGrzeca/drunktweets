@@ -36,7 +36,7 @@ for (year in 1:20) {
 	embedding_input <- 	main_input %>% 
 				 		layer_embedding(input_dim = vocab_size, output_dim = embedding_dims, input_length = maxlen)
 
-	auxiliary_input_bow <- layer_input(shape = c(length(tokenizerBow$word_index)))
+	auxiliary_input_bow <- layer_input(shape = c(8000))
 	bow_out <- auxiliary_input_bow
 
 	auxiliary_input_entidades <- layer_input(shape = c(max_sequence))
