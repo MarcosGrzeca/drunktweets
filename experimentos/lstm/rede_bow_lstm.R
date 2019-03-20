@@ -1,0 +1,118 @@
+# library(tools)
+# source(file_path_as_absolute("ipm/loads.R"))
+
+# enriquecimento <- 1
+# early_stop <- 1
+
+for (year in 1:20) {
+	load("amazon/rdas/sequencesexp6_bow.RData")
+
+	library(keras)
+
+	callbacks_list <- list(
+		callback_early_stopping(
+			monitor = metrica,
+			patience = 1
+		),
+		callback_model_checkpoint(
+			filepath = paste0(redeDesc, "", enriquecimento, "", early_stop, "", "test_models.h5"),
+			monitor = "val_loss",
+			save_best_only = TRUE
+		)
+	)
+
+	# FLAGS <- flags(
+	# 	flag_integer("epochs", 10),
+	# 	flag_integer("batch_size", 64)
+	# )
+
+	# Data Preparation --------------------------------------------------------
+	# Parameters --------------------------------------------------------------
+	embedding_dims <- 100
+	filters <- 20
+
+	main_input <- layer_input(shape = c(maxlen), dtype = "int32")
+
+	embedding_input <- 	main_input %>% 
+				 		layer_embedding(input_dim = vocab_size, output_dim = embedding_dims, input_length = maxlen)
+
+	auxiliary_input_bow <- layer_input(shape = c(8000))
+	bow_out <- auxiliary_input_bow
+
+	auxiliary_input_entidades <- layer_input(shape = c(max_sequence))
+	entities_out <- auxiliary_input_entidades
+
+	auxiliary_input_types <- layer_input(shape = c(max_sequence_types))
+	types_out <- auxiliary_input_types
+
+    lstm_out <- embedding_input %>% 
+		layer_lstm(units = 16, return_sequences = TRUE) %>%
+		layer_lstm(units = 16, return_sequences = TRUE, recurrent_dropout = 0.2) %>%
+		layer_lstm(units = 16)
+
+	if (enriquecimento == 1) {
+		enriquecimento_output <- layer_concatenate(c(bow_out, entities_out, types_out)) %>% 
+										layer_dense(units = 16, activation = "relu") %>% 
+										layer_dropout(0.2) %>%
+										layer_dense(units = 2, activation = "relu", kernel_regularizer = regularizer_l2(0.001))
+
+		main_output <- layer_concatenate(c(lstm_out, enriquecimento_output)) %>% 
+										layer_dropout(0.1) %>%
+										layer_dense(units = 1, activation = 'sigmoid')
+		model <- keras_model(
+			inputs = c(main_input, auxiliary_input_bow, auxiliary_input_entidades, auxiliary_input_types),
+			outputs = main_output
+		)
+	} else {
+		enriquecimento_output <- bow_out %>% 
+									layer_dense(units = 16, activation = "relu") %>% 
+									layer_dropout(0.2) %>%
+									layer_dense(units = 2, activation = "relu", kernel_regularizer = regularizer_l2(0.001))
+
+		main_output <- layer_concatenate(c(lstm_out, enriquecimento_output)) %>% 
+										layer_dropout(0.1) %>%
+										layer_dense(units = 1, activation = 'sigmoid')
+		model <- keras_model(
+			inputs = c(main_input, auxiliary_input_bow),
+			outputs = main_output
+		)
+	}
+
+	# Compile model
+	model %>% compile(
+		loss = "binary_crossentropy",
+		optimizer = "adam",
+		metrics = "accuracy"
+	)
+
+	if (enriquecimento == 1) {
+		history <- model %>%
+			fit(
+			  x = list(train_vec$new_textParser, dataframebow_train, sequences, sequences_types),
+			  y = array(dados_train$resposta),
+			  batch_size = 64,
+			  epochs = epoca,
+			  callbacks = callbacks_list,
+			  validation_split = 0.2
+			)	
+		predictions <- model %>% predict(list(test_vec$new_textParser, dataframebow_test, sequences_test, sequences_test_types))
+	} else {
+		history <- model %>%
+			fit(
+			  x = list(train_vec$new_textParser, dataframebow_train),
+			  y = array(dados_train$resposta),
+			  batch_size = 64,
+			  epochs = epoca,
+			  callbacks = callbacks_list,
+			  validation_split = 0.2
+			)
+			
+		predictions <- model %>% predict(list(test_vec$new_textParser, dataframebow_test))
+	}
+	predictions2 <- round(predictions, 0)
+	matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
+	resultados <- addRowAdpater(resultados, paste0("Enriquecimento: ", enriquecimento, " - Early: ", early_stop), matriz)
+}
+resultados$F1
+resultados$Precision
+resultados$Recall

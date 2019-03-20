@@ -8,12 +8,14 @@ early_stop <- 1
 
 filesFeitos <- c()
 
-files <- c("experimentos/lstm/teste1.R")
-files <- c("experimentos/lstm/teste2.R")
-files <- c("experimentos/lstm/teste3.R")
+# files <- c("experimentos/lstm/teste1.R")
+# files <- c("experimentos/lstm/teste2.R")
+# files <- c("experimentos/lstm/teste3.R")
+files <- c("experimentos/lstm/rede_bow_lstm.R")
 
 for (file in files) {
-	redeDesc <- generateHash(1)
+	# redeDesc <- generateHash(1)
+	redeDesc <- "BoWLSTM"
 	for (epoca in epocas) {
 		for (metrica in metricas) {
 			for (enriquecimento in enriquecimentos) {
