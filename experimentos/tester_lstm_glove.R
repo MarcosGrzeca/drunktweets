@@ -6,15 +6,14 @@ enriquecimentos <- c(0, 1)
 metricas <- c("acc", "val_loss")
 early_stop <- 1
 
-filesFeitos <- c()
-
-filesFeitos <- c("experimentos/lstm/glove.R")
-files <- c("experimentos/lstm/glove_sem_dense.R")
+filesFeitos <- c("experimentos/lstm/glove.R", "experimentos/lstm/glove_sem_dense.R")
+files <- c("experimentos/lstm/glove_bow.R")
 
 source(file_path_as_absolute("ipm/glove/load.R"))
 
 for (file in files) {
-	redeDesc <- generateHash(1)
+	# redeDesc <- generateHash(1)
+	redeDesc <- "LSTMGloVeBow"
 	for (epoca in epocas) {
 		for (metrica in metricas) {
 			for (enriquecimento in enriquecimentos) {

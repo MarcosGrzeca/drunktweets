@@ -16,7 +16,8 @@ files <- c("experimentos/glove_bow.R")
 source(file_path_as_absolute("ipm/glove/load.R"))
 
 for (file in files) {
-	redeDesc <- generateHash(1)
+	# redeDesc <- generateHash(1)
+	redeDesc <- "CNNGloveBow"
 	for (epoca in epocas) {
 		for (metrica in metricas) {
 			for (enriquecimento in enriquecimentos) {
@@ -29,4 +30,4 @@ for (file in files) {
 	}
 }
 
-#system("init 0")
+system("init 0")
