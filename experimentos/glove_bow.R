@@ -139,15 +139,15 @@ for (year in 1:20) {
 	if (enriquecimento == 1) {
 		cnn_output <- layer_concatenate(c(ccn_out_3, ccn_out_4, ccn_out_5)) %>% 
 						layer_dropout(0.2) %>%
-						layer_dense(units = 8, activation = "relu", name = "ReluPosConcat", kernel_regularizer = regularizer_l2(0.001))
+						layer_dense(units = 8, activation = "relu", kernel_regularizer = regularizer_l2(0.001))
 
 		auxilary_output <- layer_concatenate(c(bow_out, entities_out, types_out)) %>% 
 						layer_dropout(0.2) %>%
-						layer_dense(units = 8, activation = "relu", name = "ReluPosConcat", kernel_regularizer = regularizer_l2(0.001))
+						layer_dense(units = 8, activation = "relu", kernel_regularizer = regularizer_l2(0.001))
 		
 		main_output <- layer_concatenate(c(cnn_output, auxilary_output)) %>% 
 				# layer_dropout(0.2) %>%
-				layer_dense(units = 2, activation = "relu", name = "ReluPosConcat", kernel_regularizer = regularizer_l2(0.001)) %>%
+				layer_dense(units = 2, activation = "relu", kernel_regularizer = regularizer_l2(0.001)) %>%
 				layer_dense(units = 1, activation = 'sigmoid')
 
 		model <- keras_model(
@@ -157,14 +157,14 @@ for (year in 1:20) {
 	} else {
 		cnn_output <- layer_concatenate(c(ccn_out_3, ccn_out_4, ccn_out_5)) %>% 
 						layer_dropout(0.2) %>%
-						layer_dense(units = 8, activation = "relu", name = "ReluPosConcat", kernel_regularizer = regularizer_l2(0.001))
+						layer_dense(units = 8, activation = "relu", kernel_regularizer = regularizer_l2(0.001))
 
 		auxilary_output <- bow_out	%>% 
 						layer_dropout(0.2) %>%
-						layer_dense(units = 8, activation = "relu", name = "ReluPosConcat", kernel_regularizer = regularizer_l2(0.001))
+						layer_dense(units = 8, activation = "relu", kernel_regularizer = regularizer_l2(0.001))
 		
 		main_output <- layer_concatenate(c(cnn_output, auxilary_output)) %>% 
-				layer_dense(units = 2, activation = "relu", name = "ReluPosConcat", kernel_regularizer = regularizer_l2(0.001)) %>%
+				layer_dense(units = 2, activation = "relu", kernel_regularizer = regularizer_l2(0.001)) %>%
 				layer_dense(units = 1, activation = 'sigmoid')
 
 		model <- keras_model(
