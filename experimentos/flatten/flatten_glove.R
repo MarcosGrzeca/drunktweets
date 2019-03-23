@@ -119,7 +119,7 @@ for (year in 1:20) {
 			outputs = main_output
 		)
 	} else {
-		main_output <- lstm_out %>% 
+		main_output <- flatten_out %>% 
 				layer_dropout(0.2) %>%
 				layer_dense(units = 4, activation = "relu") %>%
 				layer_dense(units = 1, activation = 'sigmoid')
