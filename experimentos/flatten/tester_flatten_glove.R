@@ -8,7 +8,7 @@ early_stop <- 1
 
 source(file_path_as_absolute("ipm/glove/load.R"))
 
-files <- c("experimentos/flatten_glove.R")
+files <- c("experimentos/flatten/flatten_glove.R")
 
 for (file in files) {
 	redeDesc <- "FlattenGloVe"
