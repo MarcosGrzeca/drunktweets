@@ -1,0 +1,9 @@
+BoW - experimentos/rede_bow.R
+BoWLSTM - experimentos/lstm/rede_bow_lstm.R
+CNNGloveBow - experimentos/glove_bow.R
+FlattenGloVe - experimentos/flatten/flatten_glove.R
+LSTMGloVeBow - experimentos/lstm/glove_bow.R
+QXXRZ7757U - experimentos/ds3/lstm/teste2.R
+TTVYS0458Y
+VNDSX7504H
+WUDNO6374Y

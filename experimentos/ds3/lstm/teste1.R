@@ -1,3 +1,4 @@
+#RedeId ANUIM2550Q
 for (year in 1:20) {
 	load("amazon/rdas/sequencesexp6.RData")
 

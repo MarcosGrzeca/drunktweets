@@ -1,3 +1,4 @@
+#TDLNZ6997T - QXXRZ7757U São as mesmas
 for (year in 1:20) {
 	load("amazon/rdas/sequencesexp6.RData")
 

@@ -1,11 +1,3 @@
-#WUDNO6374Y
-# library(tools)
-# source(file_path_as_absolute("ipm/loads.R"))
-
-# enriquecimento <- 1
-# early_stop <- 1
-
-# for (year in 1:20) {
 for (year in 1:20) {
 	load("amazon/rdas/sequencesexp6_sem_pontuacao.RData")
 

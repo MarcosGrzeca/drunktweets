@@ -1,0 +1,9 @@
+-- SQLs de criação
+CREATE TABLE tweets_amazon LIKE semantic_tweets_alcolic; 
+INSERT tweets_amazon SELECT * FROM semantic_tweets_alcolic WHERE classificado = 1;
+
+CREATE TABLE tweets_amazon_npl LIKE chat_tweets_nlp;
+
+SELECT count(*)
+FROM tweets_amazon
+WHERE q2 IN (0,1);
