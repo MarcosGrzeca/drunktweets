@@ -1,12 +1,7 @@
 library(tools)
-# library(tools)
-# library(keras)
-# library(dplyr)
 source(file_path_as_absolute("baseline/dados.R"))
 source(file_path_as_absolute("utils/getDados.R"))
 
-maxlen <- 38
-max_words <- 7000
 dados <- getDadosBaselineByQ(questionAval)
 
 try({
