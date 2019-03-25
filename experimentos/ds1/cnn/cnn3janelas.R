@@ -1,8 +1,6 @@
 #BAYFB9644C_DS1Q1
 library("tools")
 
-source(file_path_as_absolute("experimentos/ds1/getDadosQ1.R"))
-
 for (year in 1:20) {
 	library(keras)
 
