@@ -1,7 +1,9 @@
-VNDSX7504H
-for (year in 1:20) {
-	load("amazon/rdas/sequencesexp6.RData")
+#BAYFB9644C_DS1Q1
+library("tools")
 
+source(file_path_as_absolute("experimentos/ds1/getDadosQ1.R"))
+
+for (year in 1:20) {
 	library(keras)
 
 	callbacks_list <- list(
@@ -27,20 +29,38 @@ for (year in 1:20) {
 				 		layer_embedding(input_dim = vocab_size, output_dim = embedding_dims, input_length = maxlen)
 
 	auxiliary_input <- layer_input(shape = c(max_sequence))
-	entities_out <- auxiliary_input
+	entities_out <- auxiliary_input %>%
+                layer_dense(units = 8, activation = 'relu')
 
 	auxiliary_input_types <- layer_input(shape = c(max_sequence_types))
-	types_out <- auxiliary_input_types
+	types_out <- auxiliary_input_types %>%
+                layer_dense(units = 8, activation = 'relu')
 
-    lstm_out <- embedding_input %>% 
-    		layer_lstm(units = 16, return_sequences = TRUE) %>%
-  			layer_lstm(units = 16, return_sequences = TRUE, recurrent_dropout = 0.2) %>%
-  			layer_lstm(units = 16)
+	ccn_out_3 <- embedding_input %>% 
+		layer_conv_1d(
+			filters, 3,
+		 	padding = "valid", activation = "relu", strides = 1
+		) %>%
+		layer_global_max_pooling_1d()
+
+	ccn_out_4 <- embedding_input %>% 
+		layer_conv_1d(
+		  filters, 4, 
+		  padding = "valid", activation = "relu", strides = 1
+		) %>%
+		layer_global_max_pooling_1d()
+
+	ccn_out_5 <- embedding_input %>% 
+		layer_conv_1d(
+		  filters, 5, 
+		  padding = "valid", activation = "relu", strides = 1
+		) %>%
+		layer_global_max_pooling_1d()
 
 	if (enriquecimento == 1) {
-		main_output <- layer_concatenate(c(lstm_out, entities_out, types_out)) %>% 
+		main_output <- layer_concatenate(c(ccn_out_3, ccn_out_4, ccn_out_5, entities_out, types_out)) %>% 
 				layer_dropout(0.2) %>%
-				layer_dense(units = 4, activation = "relu") %>%
+				layer_dense(units = 6, activation = "relu") %>%
 				layer_dense(units = 1, activation = 'sigmoid')
 
 		model <- keras_model(
@@ -48,9 +68,9 @@ for (year in 1:20) {
 			outputs = main_output
 		)
 	} else {
-		main_output <- lstm_out %>% 
+		main_output <- layer_concatenate(c(ccn_out_3, ccn_out_4, ccn_out_5)) %>% 
 				layer_dropout(0.2) %>%
-				layer_dense(units = 4, activation = "relu") %>%
+				layer_dense(units = 6, activation = "relu") %>%
 				layer_dense(units = 1, activation = 'sigmoid')
 
 		model <- keras_model(

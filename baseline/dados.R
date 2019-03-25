@@ -139,13 +139,13 @@ getDadosBaselineByQ <- function(var) {
 	dados$entidades <- iconv(dados$entidades, to='ASCII//TRANSLIT')
 	dados$entidades = gsub(" ", "eee", dados$entidades, ignore.case=T)
 	dados$entidades = gsub("[^A-Za-z0-9,_ ]","",dados$entidades, ignore.case=T)
-	dados$entidades[is.na(dados$entidades)] <- "SEMENTIDADES"
+	# dados$entidades[is.na(dados$entidades)] <- "SEMENTIDADES"
 
 	dados$types <- enc2utf8(dados$types)
 	dados$types <- iconv(dados$types, to='ASCII//TRANSLIT')
 	dados$types = gsub(" ", "eee", dados$types, ignore.case=T)
 	dados$types = gsub("[^A-Za-z0-9,_ ]","",dados$types, ignore.case=T)
-	dados$types[is.na(dados$types)] <- "SEMENTIDADES"
+	# dados$types[is.na(dados$types)] <- "SEMENTIDADES"
 
 	return (dados)
 }
