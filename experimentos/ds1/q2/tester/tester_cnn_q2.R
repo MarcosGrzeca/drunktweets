@@ -9,7 +9,6 @@ early_stop <- 1
 files <- c("experimentos/ds1/q2/cnn/cnn3janelas_q2.R")
 
 for (file in files) {
-	# redeDesc <- generateHash(1)
 	redeDesc <- "BAYFB9644C_DS1Q2"
 	for (epoca in epocas) {
 		for (metrica in metricas) {
@@ -17,7 +16,7 @@ for (file in files) {
 				resultados <- data.frame(matrix(ncol = 4, nrow = 0))
 				names(resultados) <- c("Baseline", "F1", "Precisão", "Revocação")
 				source(file_path_as_absolute(file))
-				logar("DS1-Q1", "Hidden", "CNN", epoca, 1, metrica, enriquecimento, resultados, model_to_json(model), redeDesc, file)
+				logar("DS1-Q2", "Hidden", "CNN", epoca, 1, metrica, enriquecimento, resultados, model_to_json(model), redeDesc, file)
 			}
 		}
 	}
