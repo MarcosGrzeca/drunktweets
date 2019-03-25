@@ -89,29 +89,25 @@ for (year in 1:20) {
 	if (enriquecimento == 1) {
 		history <- model %>%
 			fit(
-			  x = list(train_vec$new_textParser, sequences, sequences_types),
+			  x = list(dados_train_sequence, sequences, sequences_types),
 			  y = array(dados_train$resposta),
 			  batch_size = 64,
 			  epochs = epoca,
 			  callbacks = callbacks_list,
 			  validation_split = 0.2
 			)
-			
-		# predictions <- model %>% predict(test_vec$new_textParser)
-		predictions <- model %>% predict(list(test_vec$new_textParser, sequences_test, sequences_test_types))
+		predictions <- model %>% predict(list(dados_test_sequence, sequences_test, sequences_test_types))
 	} else {
 		history <- model %>%
 			fit(
-			  x = list(train_vec$new_textParser),
+			  x = list(dados_train_sequence),
 			  y = array(dados_train$resposta),
 			  batch_size = 64,
 			  epochs = epoca,
 			  callbacks = callbacks_list,
 			  validation_split = 0.2
 			)
-			
-		# predictions <- model %>% predict(test_vec$new_textParser)
-		predictions <- model %>% predict(list(test_vec$new_textParser))
+		predictions <- model %>% predict(list(dados_test_sequence))
 	}
 	predictions2 <- round(predictions, 0)
 	matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
