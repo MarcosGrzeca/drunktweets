@@ -6,11 +6,11 @@ enriquecimentos <- c(0, 1)
 metricas <- c("acc", "val_loss")
 early_stop <- 1
 
-files <- c("experimentos/ds1/q3/cnn/cnn3janelas_q3.R")
+#files <- c("experimentos/ds1/q3/cnn/cnn3janelas_q3.R") redeDesc <- "BAYFB9644C_DS1Q3"
+files <- c("experimentos/ds1/q1/cnn/bow_q3.R")
 
 for (file in files) {
-	# redeDesc <- generateHash(1)
-	redeDesc <- "BAYFB9644C_DS1Q3"
+	redeDesc <- "BoW_DS1Q3"
 	for (epoca in epocas) {
 		for (metrica in metricas) {
 			for (enriquecimento in enriquecimentos) {
