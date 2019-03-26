@@ -19,12 +19,12 @@ for (year in 1:20) {
 	embedding_dims <- 100
 	filters <- 20
 
-	main_input <- layer_input(shape = c(max_words), dtype = "int32")
+	main_input <- layer_input(shape = c(maxlen), dtype = "int32")
 
 	embedding_input <- 	main_input %>% 
 				 		layer_embedding(input_dim = vocab_size, output_dim = embedding_dims, input_length = maxlen)
 
-	auxiliary_input_bow <- layer_input(shape = c(maxlen))
+	auxiliary_input_bow <- layer_input(shape = c(max_words))
 	bow_out <- auxiliary_input_bow
 
 	auxiliary_input_entidades <- layer_input(shape = c(max_sequence))
