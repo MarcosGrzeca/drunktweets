@@ -7,10 +7,10 @@ metricas <- c("acc", "val_loss")
 early_stop <- 1
 
 # files <- c("experimentos/ds1/cnn/cnn3janelas.R")
-files <- c("experimentos/ds1/cnn/bow_q1.R")
+files <- c("experimentos/ds1/q1/cnn/bow_q1.R")
 
+# redeDesc <- generateHash(1)
 for (file in files) {
-	# redeDesc <- generateHash(1)
 	# redeDesc <- "BAYFB9644C_DS1Q1"
 	redeDesc <- "BoW_DS1Q1"
 	for (epoca in epocas) {
