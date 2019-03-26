@@ -6,7 +6,7 @@ enriquecimentos <- c(0, 1)
 metricas <- c("acc", "val_loss")
 early_stop <- 1
 
-files <- c("experimentos/ds1/q1/lstm/bow_q1.R")
+files <- c("experimentos/ds1/q1/lstm/lstm_bow_q1.R")
 
 for (file in files) {
 	redeDesc <- "BoWLSTM_DS1Q1"
@@ -22,7 +22,11 @@ for (file in files) {
 	}
 }
 
-files <- c("experimentos/ds1/q2/lstm/bow_q2.R")
+epocas <- c(3,5,10)
+enriquecimentos <- c(0, 1)
+metricas <- c("acc", "val_loss")
+
+files <- c("experimentos/ds1/q2/lstm/lstm_bow_q2.R")
 
 for (file in files) {
 	redeDesc <- "BoWLSTM_DS1Q2"
@@ -38,7 +42,11 @@ for (file in files) {
 	}
 }
 
-files <- c("experimentos/ds1/q2/lstm/bow_q3.R")
+epocas <- c(3,5,10)
+enriquecimentos <- c(0, 1)
+metricas <- c("acc", "val_loss")
+
+files <- c("experimentos/ds1/q3/lstm/lstm_bow_q3.R")
 
 for (file in files) {
 	redeDesc <- "BoWLSTM_DS1Q3"
