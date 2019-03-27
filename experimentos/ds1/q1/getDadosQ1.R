@@ -1,7 +1,7 @@
 library("tools")
 
 maxlen <- 38
-max_words <- 7000
+max_words <- 7574
 questionAval <- "q1"
 
 if (bow == 1) {
