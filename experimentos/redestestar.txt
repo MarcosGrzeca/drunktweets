@@ -1,5 +1,5 @@
 BoW - experimentos/rede_bow.R - Feito
-BoWLSTM - experimentos/lstm/rede_bow_lstm.R - Feito (falta Q3)
+BoWLSTM - experimentos/lstm/rede_bow_lstm.R - Feito
 CNNGloveBow - experimentos/glove_bow.R
 FlattenGloVe - experimentos/flatten/flatten_glove.R
 LSTMGloVeBow - experimentos/lstm/glove_bow.R
