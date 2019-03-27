@@ -27,7 +27,7 @@ epocas <- c(3,5,10,20)
 enriquecimentos <- c(0, 1)
 metricas <- c("acc", "val_loss")
 
-files <- c("experimentos/glove_bow.R")
+files <- c("experimentos/ds1/q2/cnn/glove_bow_q2.R")
 
 for (file in files) {
 	redeDesc <- "CNNGloveBowDS1Q2"
@@ -47,7 +47,7 @@ epocas <- c(3,5,10,20)
 enriquecimentos <- c(0, 1)
 metricas <- c("acc", "val_loss")
 
-files <- c("experimentos/glove_bow.R")
+files <- c("experimentos/ds1/q3/cnn/glove_bow_q3.R")
 
 for (file in files) {
 	redeDesc <- "CNNGloveBowDS1Q3"
