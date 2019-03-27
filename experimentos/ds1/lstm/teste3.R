@@ -23,12 +23,10 @@ for (year in 1:20) {
 				 		layer_embedding(input_dim = vocab_size, output_dim = embedding_dims, input_length = maxlen)
 
 	auxiliary_input <- layer_input(shape = c(max_sequence))
-	entities_out <- auxiliary_input %>%
-                layer_dense(units = 2, activation = 'relu')
+	entities_out <- auxiliary_input
 
 	auxiliary_input_types <- layer_input(shape = c(max_sequence_types))
-	types_out <- auxiliary_input_types %>%
-                layer_dense(units = 2, activation = 'relu')
+	types_out <- auxiliary_input_types
 
     lstm_out <- embedding_input %>% 
     		layer_lstm(units = 16, return_sequences = TRUE) %>%
