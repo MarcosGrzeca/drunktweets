@@ -3,8 +3,8 @@ BoWLSTM - experimentos/lstm/rede_bow_lstm.R - Feito
 CNNGloveBow - experimentos/glove_bow.R - Feito
 FlattenGloVe - experimentos/flatten/flatten_glove.R
 LSTMGloVeBow - experimentos/lstm/glove_bow.R - Feito
-QXXRZ7757U - experimentos/ds3/lstm/teste2.R - Em andamento
+QXXRZ7757U - experimentos/ds3/lstm/teste2.R - Feito
+VNDSX7504H - experimentos/ds3/lstm/teste3.R - Feito
 TTVYS0458Y - experimentos/ds3/lstm/glove_sem_dense.R
-VNDSX7504H - experimentos/ds3/lstm/teste3.R
 WUDNO6374Y - CNN Tres, sem relu nas entidades, com droput 2.0. Sem relu pos dropout
 BAYFB9644C - Feito
