@@ -21,3 +21,5 @@ for (file in files) {
 		}
 	}
 }
+
+system("init 0")
