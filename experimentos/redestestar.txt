@@ -6,5 +6,5 @@ LSTMGloVeBow - experimentos/lstm/glove_bow.R - Feito
 QXXRZ7757U - experimentos/ds3/lstm/teste2.R - Feito
 VNDSX7504H - experimentos/ds3/lstm/teste3.R - Feito
 TTVYS0458Y - experimentos/ds3/lstm/glove_sem_dense.R - Feito
-WUDNO6374Y - CNN Tres, com relu nas entidades, com droput 2.0. Sem relu pos dropout
+WUDNO6374Y - CNN Tres, com relu nas entidades, com droput 2.0. Sem relu pos dropout - Feito
 BAYFB9644C - Feito
