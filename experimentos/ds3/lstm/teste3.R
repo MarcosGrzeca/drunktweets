@@ -10,7 +10,7 @@ for (year in 1:20) {
 			patience = 1
 		),
 		callback_model_checkpoint(
-			filepath = paste0(enriquecimento, "", early_stop, "", "test_models.h5"),
+			filepath = paste0(redeDesc, "", enriquecimento, "", early_stop, "", "test_models.h5"),
 			monitor = "val_loss",
 			save_best_only = TRUE
 		)
