@@ -30,6 +30,9 @@ hist <- model %>% fit(x = as.matrix(df$weekday), y= as.matrix(df$ScaledUsers), e
 layer <- get_layer(model, "embedding")
  
 embeddings <- data.frame(layer$get_weights()[[1]])
-embeddings$name <- c("none", levels(wday(df$date, label = T)) )
+embeddings
+embeddings$name <- c("none", levels(df$date) )
  
+library(ggplot2)
+
 ggplot(embeddings, aes(X1, X2, color=name))+ geom_point() +geom_text(aes(label=name),hjust=0, vjust=0) + theme_bw() + xlab("Embedding Dimension 1") +ylab("Embedding Dimension 2")
