@@ -2,7 +2,7 @@ library(tools)
 source(file_path_as_absolute("ipm/loads.R"))
 
 epocas <- c(3,5,10,20)
-enriquecimentos <- c(0, 1)
+enriquecimentos <- c(0,1)
 metricas <- c("acc", "val_loss")
 early_stop <- 1
 
@@ -22,4 +22,4 @@ for (file in files) {
 	}
 }
 
-system("init 0")
+#system("init 0")

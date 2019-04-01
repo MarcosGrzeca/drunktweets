@@ -84,7 +84,7 @@ for (year in 1:20) {
 										layer_dropout(0.2) %>%
 										layer_dense(units = 4, activation = "relu")
 
-		main_output <- layer_concatenate(cnn_output, lstm_out) %>%
+		main_output <- layer_concatenate(c(cnn_output, lstm_out)) %>%
 						layer_dense(units = 2, activation = "relu") %>% 
 						layer_dropout(0.1) %>%
 						layer_dense(units = 1, activation = 'sigmoid')
