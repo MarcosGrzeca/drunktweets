@@ -165,7 +165,7 @@ for (year in 1:20) {
 						layer_dense(units = 1, activation = 'sigmoid')
 
 		model <- keras_model(
-			inputs = c(main_input, input_bow),
+			inputs = c(main_input),
 			outputs = main_output
 		)
 	}
