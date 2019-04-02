@@ -7,7 +7,7 @@ enriquecimentos <- c(0,1)
 metricas <- c("acc", "val_loss")
 early_stop <- 1
 
-files <- c("experimentos/ds3/cnnlstm/dupla_glove")
+files <- c("experimentos/ds3/cnnlstm/dupla_glove.R")
 
 for (file in files) {
 	redeDesc <- "CNNLSTMGlove"
