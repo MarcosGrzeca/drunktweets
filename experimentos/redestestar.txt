@@ -8,3 +8,14 @@ VNDSX7504H - experimentos/ds3/lstm/teste3.R - Feito  - OK
 TTVYS0458Y - experimentos/ds3/lstm/glove_sem_dense.R - Feito
 WUDNO6374Y - CNN Tres, com relu nas entidades, com droput 2.0. Sem relu pos dropout - Feito   - OK
 BAYFB9644C - Feito   - OK
+
+
+===== Novas =====
+TDLNZ6997T outros
+TTVYS0458Y_SEM_DENSE outros experimentos
+CNNLSTMGlove outros experimentos
+VGZMN6521J outros experimentos
+CNNLSTM outros experimentos
+CNNLSTMGlove outros experimentos, apesar de não estar legal
+FlattenGloVe outros experimentos
+FlattenBoW outros experimentos
