@@ -14,7 +14,7 @@ source(file_path_as_absolute("utils/getDadosAmazon.R"))
 DATABASE <- "icwsm"
 dados <- getDadosAmazon()
 
-fbcorpus <- corpus(dados$text_parser)
+fbcorpus <- corpus(dados$textParser)
 fbdfm <- dfm(fbcorpus, remove=stopwords("english"), verbose=TRUE)
 fbdfm <- dfm_trim(fbdfm, min_docfreq = 2, verbose=TRUE)
 
