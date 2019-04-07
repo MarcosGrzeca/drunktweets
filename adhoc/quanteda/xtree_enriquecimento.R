@@ -23,6 +23,14 @@ fbcorpus <- corpus(dados$textParser)
 fbdfm <- dfm(fbcorpus, remove=stopwords("english"), verbose=TRUE, remove_punct = TRUE)
 fbdfm <- dfm_trim(fbdfm, min_docfreq = 2, verbose=TRUE)
 
+dados$entidades = gsub(",", " ", dados$entidades)
+entidades <- corpus(dados$entidades)
+entidadesdfm <- dfm(entidades, verbose=TRUE)
+
+dados$types = gsub(",", " ", dados$types)
+types <- corpus(dados$types)
+typesdfm <- dfm(types, verbose=TRUE)
+
 #dfm(x, verbose = TRUE, toLower = TRUE,
 #    removeNumbers = TRUE, removePunct = TRUE, removeSeparators = TRUE,
 #    removeTwitter = FALSE, stem = FALSE, ignoredFeatures = NULL,
@@ -59,12 +67,11 @@ test <- (1:nrow(dados))[1:nrow(dados) %in% training == FALSE]
 
 library(xgboost)
 # converting matrix object
-#X <- as(cbind(fbdfm, embed), "dgCMatrix")
-X <- as(embed, "dgCMatrix")
+X <- as(cbind(fbdfm, embed, entidadesdfm, typesdfm), "dgCMatrix")
 
 # parameters to explore
-tryEta <- c(1,2)
-tryDepths <- c(1,2,4)
+tryEta <- c(1,2,3,4)
+tryDepths <- c(1,2,4,6,8)
 # placeholders for now
 bestEta=NA
 bestDepth=NA
