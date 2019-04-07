@@ -59,7 +59,9 @@ test <- (1:nrow(dados))[1:nrow(dados) %in% training == FALSE]
 
 library(xgboost)
 # converting matrix object
-X <- as(cbind(fbdfm, embed), "dgCMatrix")
+#X <- as(cbind(fbdfm, embed), "dgCMatrix")
+X <- as(embed, "dgCMatrix")
+
 # parameters to explore
 tryEta <- c(1,2)
 tryDepths <- c(1,2,4)
