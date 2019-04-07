@@ -64,15 +64,13 @@ set.seed(10)
 training <- sample(1:nrow(dados), floor(.80 * nrow(dados)))
 test <- (1:nrow(dados))[1:nrow(dados) %in% training == FALSE]
 
-#View(fbdfm[1,])
-
 library(xgboost)
 # converting matrix object
-X <- as(cbind(fbdfm, embed), "dgCMatrix")
+X <- as(cbind(embed), "dgCMatrix")
 
 # parameters to explore
-tryEta <- c(1,2)
-tryDepths <- c(1,2,4)
+tryEta <- c(1,2,3)
+tryDepths <- c(1,2,4,6)
 # placeholders for now
 bestEta=NA
 bestDepth=NA
@@ -109,8 +107,8 @@ rf <- xgboost(data = X[training,],
               max.depth = bestDepth,
               eta = bestEta, 
               nthread = 4,
-              nround = 1000,
-              print_every_n=100L,
+              nround = 500,
+              print_every_n=20L,
               objective = "binary:logistic")
 
 # out-of-sample accuracy
