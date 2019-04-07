@@ -12,6 +12,7 @@ source(file_path_as_absolute("baseline/dados.R"))
 source(file_path_as_absolute("utils/tokenizer.R"))
 source(file_path_as_absolute("utils/resultadoshelper.R"))
 source(file_path_as_absolute("utils/getDadosAmazon.R"))
+source(file_path_as_absolute("adhoc/quanteda/metrics.R"))
 
 #Configuracoes
 DATABASE <- "icwsm"
@@ -54,7 +55,7 @@ set.seed(10)
 training <- sample(1:nrow(dados), floor(.80 * nrow(dados)))
 test <- (1:nrow(dados))[1:nrow(dados) %in% training == FALSE]
 
-View(fbdfm[1,])
+#View(fbdfm[1,])
 
 library(xgboost)
 # converting matrix object
@@ -105,5 +106,12 @@ rf <- xgboost(data = X[training,],
 # out-of-sample accuracy
 preds <- predict(rf, X[test,])
 
+cat("\nAccuracy on test set=", round(accuracy(preds>.50, dados$resposta[test]),3))
+cat("\nPrecision(1) on test set=", round(precision(preds>.50, dados$resposta[test]),3))
+cat("\nRecall(1) on test set=", round(recall(preds>.50, dados$resposta[test]),3))
 
-cat("\nAccuracy on test set=", round(accuracy(preds>.50, fb$attacks[test]),3))
+#cat("\nPrecision(0) on test set=", round(precision(preds<.50, fb$attacks[test]==0),3))
+#cat("\nRecall(0) on test set=", round(recall(preds<.50, fb$attacks[test]==0),3))
+
+
+
