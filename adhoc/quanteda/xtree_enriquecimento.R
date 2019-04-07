@@ -67,7 +67,7 @@ test <- (1:nrow(dados))[1:nrow(dados) %in% training == FALSE]
 
 library(xgboost)
 # converting matrix object
-X <- as(cbind(fbdfm, embed, entidadesdfm, typesdfm), "dgCMatrix")
+X <- as(cbind(fbdfm, embed), "dgCMatrix")
 
 # parameters to explore
 tryEta <- c(1,2)
@@ -101,7 +101,6 @@ for(eta in tryEta){
 }
 
 cat("Best model has eta=",bestEta," and depth=", bestDepth, " : ", bestAcc," accuracy.\n",sep="")
-
 
 # running best model
 rf <- xgboost(data = X[training,], 
