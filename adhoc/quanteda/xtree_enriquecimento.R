@@ -70,8 +70,8 @@ library(xgboost)
 X <- as(cbind(fbdfm, embed, entidadesdfm, typesdfm), "dgCMatrix")
 
 # parameters to explore
-tryEta <- c(1,2,3,4)
-tryDepths <- c(1,2,4,6,8)
+tryEta <- c(1,2)
+tryDepths <- c(1,2,4)
 # placeholders for now
 bestEta=NA
 bestDepth=NA
@@ -102,6 +102,7 @@ for(eta in tryEta){
 
 cat("Best model has eta=",bestEta," and depth=", bestDepth, " : ", bestAcc," accuracy.\n",sep="")
 
+
 # running best model
 rf <- xgboost(data = X[training,], 
               label = dados$resposta[training], 
@@ -121,6 +122,3 @@ cat("\nRecall(1) on test set=", round(recall(preds>.50, dados$resposta[test]),3)
 
 #cat("\nPrecision(0) on test set=", round(precision(preds<.50, fb$attacks[test]==0),3))
 #cat("\nRecall(0) on test set=", round(recall(preds<.50, fb$attacks[test]==0),3))
-
-
-
