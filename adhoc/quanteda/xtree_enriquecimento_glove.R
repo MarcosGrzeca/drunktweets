@@ -66,7 +66,7 @@ test <- (1:nrow(dados))[1:nrow(dados) %in% training == FALSE]
 
 library(xgboost)
 # converting matrix object
-X <- as(cbind(embed), "dgCMatrix")
+X <- as(cbind(embed,typesdfm,entidadesdfm), "dgCMatrix")
 
 # parameters to explore
 tryEta <- c(1,2,3)
@@ -114,9 +114,9 @@ rf <- xgboost(data = X[training,],
 # out-of-sample accuracy
 preds <- predict(rf, X[test,])
 
-cat("\nAccuracy on test set=", round(accuracy(preds>.50, dados$resposta[test]),3))
-cat("\nPrecision(1) on test set=", round(precision(preds>.50, dados$resposta[test]),3))
-cat("\nRecall(1) on test set=", round(recall(preds>.50, dados$resposta[test]),3))
+cat("\nAccuracy on test set=", round(accuracy(preds>.50, dados$resposta[test]),6))
+cat("\nPrecision(1) on test set=", round(precision(preds>.50, dados$resposta[test]),6))
+cat("\nRecall(1) on test set=", round(recall(preds>.50, dados$resposta[test]),6))
 
 #cat("\nPrecision(0) on test set=", round(precision(preds<.50, fb$attacks[test]==0),3))
 #cat("\nRecall(0) on test set=", round(recall(preds<.50, fb$attacks[test]==0),3))
