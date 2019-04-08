@@ -1,0 +1,4 @@
+layer_output <- get_layer(model, layer_name)$output
+weights = model.layers[0].get_weights()[0]
+
+https://blogs.rstudio.com/tensorflow/posts/2017-12-22-word-embeddings-with-keras/
