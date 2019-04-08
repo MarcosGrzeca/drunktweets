@@ -19,6 +19,7 @@ getDadosAmazon <- function() {
                       erros as numeroErros,
                       textEmbedding as "textOriginal",
                       textEmbedding,
+                      textOriginal as "verdade",
                       (
                         SELECT GROUP_CONCAT(DISTINCT(REPLACE(CONCAT("type", ty.type), "http://dbpedia.org/class/", "")))
                         FROM tweets_amazon_nlp tn
@@ -48,6 +49,7 @@ getDadosAmazon <- function() {
                       erroParseado as numeroErros,
                       textEmbedding as "textOriginal",
                       textEmbedding,
+                      textoParserEmoticom as "verdade",
                       (
                       SELECT GROUP_CONCAT(DISTINCT(REPLACE(CONCAT("type", type), "http://dbpedia.org/class/", "")))
                       FROM
