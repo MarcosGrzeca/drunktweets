@@ -9,7 +9,7 @@ dados <- getDadosBaseline()
 
 #Preparação dos dados
 maxlen <- 38
-max_words <- 7500
+max_words <- 7574
 
 tokenizer <-  text_tokenizer(num_words = max_words) %>%
               fit_text_tokenizer(dados$textEmbedding)
@@ -56,7 +56,7 @@ word_index <- tokenizer$word_index
 
 # Data Preparation --------------------------------------------------------
 # Parameters --------------------------------------------------------------
-embedding_dims <- 75
+embedding_dims <- 100
 
 # Parameters --------------------------------------------------------------
 filters <- 200
@@ -65,7 +65,7 @@ hidden_dims <- 200
 
 main_input <- layer_input(shape = c(maxlen), dtype = "int32")
 relu <- main_input %>% 
-  layer_embedding(vocab_size, embedding_dims, input_length = maxlen) %>%
+  layer_embedding(vocab_size, embedding_dims, input_length = maxlen, name = "embedding") %>%
   layer_dropout(0.1) %>%
   layer_conv_1d(
     filters, kernel_size,
@@ -119,6 +119,9 @@ resultados <- addRowAdpater(resultados, DESC, matriz)
 library(dplyr)
 
 embedding_matrixTwo <- get_weights(model)[[1]]
+View(embedding_matrixTwo)
+
+nrow(embedding_matrixTwo)
 
 words <- data_frame(
   word = names(tokenizer$word_index), 
@@ -130,6 +133,10 @@ words <- words %>%
   arrange(id)
 
 row.names(embedding_matrixTwo) <- c("UNK", words$word)
+
+dump(embedding_matrixTwo, "teste.txt")
+write.table(embedding_matrixTwo,"teste.txt",sep=" ",row.names=TRUE)
+
 
 library(text2vec)
 
