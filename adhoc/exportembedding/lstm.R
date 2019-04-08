@@ -1,13 +1,17 @@
 library(tools)
+library(tm)
+
 source(file_path_as_absolute("ipm/loads.R"))
 source(file_path_as_absolute("utils/getDadosAmazon.R"))
 
 #Section: Dados classificar
 dados <- getDadosAmazon()
 
+#dados$textEmbedding <- removePunctuation(dados$textEmbedding)
+
 #Preparação dos dados
 maxlen <- 38
-max_words <- 15000
+max_words <- 9322
 
 tokenizer <-  text_tokenizer(num_words = max_words) %>%
               fit_text_tokenizer(dados$textEmbedding)
@@ -17,6 +21,7 @@ word_index = tokenizer$word_index
 
 vocab_size <- length(word_index)
 vocab_size <- vocab_size + 1
+vocab_size
 
 cat("Found", length(word_index), "unique tokens.\n")
 data <- pad_sequences(sequences, maxlen = maxlen)
@@ -62,12 +67,13 @@ kernel_size <- 10
 hidden_dims <- 200
 
 main_input <- layer_input(shape = c(maxlen), dtype = "int32")
-relu <- main_input %>% 
+main_output <- main_input %>% 
   layer_embedding(vocab_size, embedding_dims, input_length = maxlen, name = "embedding") %>%
   layer_lstm(units = 16, return_sequences = TRUE) %>%
   layer_lstm(units = 16, return_sequences = TRUE, recurrent_dropout = 0.2) %>%
   layer_lstm(units = 16) %>%
   layer_dense(units = 1, activation = 'sigmoid')
+
 
 model <- keras_model(
   inputs = c(main_input),
@@ -91,7 +97,7 @@ history <- model %>%
     validation_split = 0.2
   )
 
-# history
+history
 # predictions <- model %>% predict(list(dados_test_sequence))
 # predictions2 <- round(predictions, 0
 # matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
@@ -101,7 +107,6 @@ history <- model %>%
 library(dplyr)
 
 embedding_matrixTwo <- get_weights(model)[[1]]
-nrow(embedding_matrixTwo)
 words <- data_frame(
   word = names(tokenizer$word_index), 
   id = as.integer(unlist(tokenizer$word_index))
@@ -113,4 +118,4 @@ words <- words %>%
 
 row.names(embedding_matrixTwo) <- c("UNK", words$word)
 
-write.table(embedding_matrixTwo, "adhoc/exportembedding/lstm.txt",sep=" ",row.names=TRUE)
+write.table(embedding_matrixTwo, "adhoc/exportembedding/lstm_epocas.txt",sep=" ",row.names=TRUE)
