@@ -5,7 +5,7 @@ library(readr)
 library(quanteda)
 
 library(doMC)
-registerDoMC(cores=4)
+registerDoMC(cores=8)
 
 source(file_path_as_absolute("utils/getDados.R"))
 source(file_path_as_absolute("baseline/dados.R"))
@@ -73,7 +73,7 @@ addRowSimple <- function(resultados, rowName, precision, recall) {
 set.seed(10)
 library(xgboost)
 
-for (iteracao in 1:3) {
+for (iteracao in 1:10) {
   training <- sample(1:nrow(dados), floor(.80 * nrow(dados)))
   test <- (1:nrow(dados))[1:nrow(dados) %in% training == FALSE]
 
