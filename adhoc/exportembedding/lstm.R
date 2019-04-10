@@ -1,3 +1,5 @@
+#sed -i 's/\"//g' adhoc/exportembedding/lstm_10_epocas.txt
+
 library(tools)
 library(tm)
 
