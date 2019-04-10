@@ -7,7 +7,7 @@ source(file_path_as_absolute("utils/getDadosAmazon.R"))
 #Section: Dados classificar
 dados <- getDadosAmazon()
 
-#dados$textEmbedding <- removePunctuation(dados$textEmbedding)
+dados$textEmbedding <- removePunctuation(dados$textEmbedding)
 
 #Preparação dos dados
 maxlen <- 38
@@ -118,4 +118,4 @@ words <- words %>%
 
 row.names(embedding_matrixTwo) <- c("UNK", words$word)
 
-write.table(embedding_matrixTwo, "adhoc/exportembedding/lstm_epocas.txt",sep=" ",row.names=TRUE)
+write.table(embedding_matrixTwo, "adhoc/exportembedding/lstm_5_epocas.txt",sep=" ",row.names=TRUE)
