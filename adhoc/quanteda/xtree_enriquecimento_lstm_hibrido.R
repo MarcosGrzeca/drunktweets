@@ -77,8 +77,12 @@ set.seed(10)
 library(xgboost)
 
 for (iteracao in 1:10) {
-  training <- sample(1:nrow(dados), floor(.80 * nrow(dados)))
-  test <- (1:nrow(dados))[1:nrow(dados) %in% training == FALSE]
+  trainIndex <- createDataPartition(dados$resposta, p=0.8, list=FALSE)
+  training <- dados[ trainIndex,]
+  test <- dados[-trainIndex,]
+
+  # training <- sample(1:nrow(dados), floor(.80 * nrow(dados)))
+  # test <- (1:nrow(dados))[1:nrow(dados) %in% training == FALSE]
 
   # converting matrix object
   # X <- as(cbind(embed,typesdfm,entidadesdfm), "dgCMatrix")
@@ -173,5 +177,3 @@ for (iteracao in 1:10) {
   resultados <- addRowSimple(resultados, "Com", round(precision(preds>.50, dados$resposta[test]) * 100,6), round(recall(preds>.50, dados$resposta[test]) * 100,6))
   cat("Iteracao = ",iteracao, "\n",sep="")
 }
-
-View(resultados)
