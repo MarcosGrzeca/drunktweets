@@ -40,7 +40,7 @@ typesdfm <- dfm(types, verbose=TRUE)
 #    keptFeatures = NULL, language = "english", thesaurus = NULL,
 #    dictionary = NULL, valuetype = c("glob", "regex", "fixed"), ..
 
-w2v <- readr::read_delim("adhoc/exportembedding/lstm_5_epocas.txt", 
+w2v <- readr::read_delim("adhoc/exportembedding/lstm_epocas.txt", 
                          skip=1, delim=" ", quote="",
                          col_names=c("word", paste0("V", 1:100)))
 
@@ -172,4 +172,5 @@ for (iteracao in 1:10) {
   preds <- predict(rf, X[test,])
   resultados <- addRowSimple(resultados, "Com", round(precision(preds>.50, dados$resposta[test]) * 100,6), round(recall(preds>.50, dados$resposta[test]) * 100,6))
   cat("Iteracao = ",iteracao, "\n",sep="")
+  View(resultados)
 }
