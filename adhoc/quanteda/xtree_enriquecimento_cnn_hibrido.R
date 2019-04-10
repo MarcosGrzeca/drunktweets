@@ -4,8 +4,11 @@ library(lsa)
 library(readr)
 library(quanteda)
 
+
+Cores <- 8
+
 library(doMC)
-registerDoMC(cores=8)
+registerDoMC(cores=Cores)
 
 source(file_path_as_absolute("utils/getDados.R"))
 source(file_path_as_absolute("baseline/dados.R"))
@@ -95,7 +98,7 @@ for (iteracao in 1:10) {
                     label =  dados$resposta[training], 
                     max.depth = dp,
                     eta = eta, 
-                    nthread = 4,
+                    nthread = Cores,
                     nround = 500,
                     nfold=5,
                     print_every_n = 500L,
@@ -115,7 +118,7 @@ for (iteracao in 1:10) {
                 label = dados$resposta[training], 
                 max.depth = bestDepth,
                 eta = bestEta, 
-                nthread = 4,
+                nthread = Cores,
                 nround = 500,
                 print_every_n=500L,
                 objective = "binary:logistic")
@@ -140,7 +143,7 @@ for (iteracao in 1:10) {
                     label =  dados$resposta[training], 
                     max.depth = dp,
                     eta = eta, 
-                    nthread = 4,
+                    nthread = Cores,
                     nround = 500,
                     nfold=5,
                     print_every_n = 500L,
@@ -160,7 +163,7 @@ for (iteracao in 1:10) {
                 label = dados$resposta[training], 
                 max.depth = bestDepth,
                 eta = bestEta, 
-                nthread = 4,
+                nthread = Cores,
                 nround = 500,
                 print_every_n=500L,
                 objective = "binary:logistic")
