@@ -4,7 +4,6 @@ library(lsa)
 library(readr)
 library(quanteda)
 
-
 Cores <- 8
 
 library(doMC)
@@ -24,7 +23,7 @@ dados <- getDadosAmazon()
 fbcorpus <- corpus(dados$textEmbedding)
 #fbdfm <- dfm(fbcorpus, remove=stopwords("english"), verbose=TRUE, stem = TRUE, remove_punct = TRUE)
 fbdfm <- dfm(fbcorpus, remove=stopwords("english"), verbose=TRUE, remove_punct = TRUE)
-#fbdfm <- dfm_trim(fbdfm, min_docfreq = 2, verbose=TRUE)
+fbdfm <- dfm_trim(fbdfm, min_docfreq = 2, verbose=TRUE)
 
 dados$entidades = gsub(",", " ", dados$entidades)
 entidades <- corpus(dados$entidades)
@@ -40,9 +39,9 @@ typesdfm <- dfm(types, verbose=TRUE)
 #    keptFeatures = NULL, language = "english", thesaurus = NULL,
 #    dictionary = NULL, valuetype = c("glob", "regex", "fixed"), ..
 
-w2v <- readr::read_delim("adhoc/exportembedding/lstm_5_epocas.txt", 
-                  skip=1, delim=" ", quote="",
-                  col_names=c("word", paste0("V", 1:100)))
+w2v <- readr::read_delim("adhoc/exportembedding/lstm_10_epocas.txt", 
+                         skip=1, delim=" ", quote="",
+                         col_names=c("word", paste0("V", 1:100)))
 
 w2v <- w2v[w2v$word %in% featnames(fbdfm),]
 
@@ -77,13 +76,9 @@ set.seed(10)
 library(xgboost)
 
 for (iteracao in 1:10) {
-  trainIndex <- createDataPartition(dados$resposta, p=0.8, list=FALSE)
-  training <- dados[ trainIndex,]
-  test <- dados[-trainIndex,]
-
-  # training <- sample(1:nrow(dados), floor(.80 * nrow(dados)))
-  # test <- (1:nrow(dados))[1:nrow(dados) %in% training == FALSE]
-
+  training <- sample(1:nrow(dados), floor(.80 * nrow(dados)))
+  test <- (1:nrow(dados))[1:nrow(dados) %in% training == FALSE]
+  
   # converting matrix object
   # X <- as(cbind(embed,typesdfm,entidadesdfm), "dgCMatrix")
   X <- as(embed, "dgCMatrix")
@@ -130,7 +125,7 @@ for (iteracao in 1:10) {
   # out-of-sample accuracy
   preds <- predict(rf, X[test,])
   resultados <- addRowSimple(resultados, "Sem", round(precision(preds>.50, dados$resposta[test]) * 100,6), round(recall(preds>.50, dados$resposta[test]) * 100,6))
-
+  
   X <- as(cbind(embed, typesdfm, entidadesdfm), "dgCMatrix")
   
   # parameters to explore
@@ -176,4 +171,7 @@ for (iteracao in 1:10) {
   preds <- predict(rf, X[test,])
   resultados <- addRowSimple(resultados, "Com", round(precision(preds>.50, dados$resposta[test]) * 100,6), round(recall(preds>.50, dados$resposta[test]) * 100,6))
   cat("Iteracao = ",iteracao, "\n",sep="")
+  View(resultados)
 }
+
+resultados

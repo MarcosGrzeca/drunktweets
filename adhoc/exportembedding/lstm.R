@@ -1,3 +1,5 @@
+#sed -i 's/\"//g' adhoc/exportembedding/lstm_10_epocas.txt
+
 library(tools)
 library(tm)
 
@@ -7,11 +9,12 @@ source(file_path_as_absolute("utils/getDadosAmazon.R"))
 #Section: Dados classificar
 dados <- getDadosAmazon()
 
-#dados$textEmbedding <- removePunctuation(dados$textEmbedding)
+dados$textEmbedding <- removePunctuation(dados$textEmbedding)
 
 #Preparação dos dados
 maxlen <- 38
-max_words <- 9322
+#max_words <- 9322
+max_words <- 9444
 
 tokenizer <-  text_tokenizer(num_words = max_words) %>%
               fit_text_tokenizer(dados$textEmbedding)
@@ -118,4 +121,4 @@ words <- words %>%
 
 row.names(embedding_matrixTwo) <- c("UNK", words$word)
 
-write.table(embedding_matrixTwo, "adhoc/exportembedding/lstm_epocas.txt",sep=" ",row.names=TRUE)
+write.table(embedding_matrixTwo, "adhoc/exportembedding/lstm_5_epocas.txt",sep=" ",row.names=TRUE)
