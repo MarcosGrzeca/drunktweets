@@ -1,19 +1,16 @@
-#sed -i 's/\"//g' adhoc/exportembedding/lstm_10_epocas.txt
-
 library(tools)
 library(tm)
 
-source(file_path_as_absolute("ipm/loads.R"))
-source(file_path_as_absolute("utils/getDadosAmazon.R"))
+source(file_path_as_absolute("ipm/experimenters.R"))
+source(file_path_as_absolute("utils/getDados.R"))
+source(file_path_as_absolute("baseline/dados.R"))
+source(file_path_as_absolute("utils/tokenizer.R"))
 
-#Section: Dados classificar
-dados <- getDadosAmazon()
+dados <- getDadosBaselineByQ("q2")
 dados$textEmbedding <- removePunctuation(dados$textEmbedding)
 
-#Preparação dos dados
 maxlen <- 38
-#max_words <- 9322
-max_words <- 9444
+max_words <- 5000
 
 tokenizer <-  text_tokenizer(num_words = max_words) %>%
               fit_text_tokenizer(dados$textEmbedding)
@@ -28,17 +25,6 @@ vocab_size
 cat("Found", length(word_index), "unique tokens.\n")
 data <- pad_sequences(sequences, maxlen = maxlen)
 
-tokenizer_entities <- text_tokenizer(num_words = 1000) %>%
-  fit_text_tokenizer(dados$entidades)
-
-vocabEntitiesLenght <- length(tokenizer_entities$word_index)
-dados$sequences <- texts_to_sequences(tokenizer_entities, dados$entidades)
-
-tokenizer_types <- text_tokenizer(num_words = 1000) %>%
-  fit_text_tokenizer(dados$types)
-vocabTypesLenght <- length(tokenizer_types$word_index)
-dados$sequences_types <- texts_to_sequences(tokenizer_types, dados$types)
-
 library(caret)
 trainIndex <- createDataPartition(dados$resposta, p=0.8, list=FALSE)
 dados_train <- dados[ trainIndex,]
@@ -46,15 +32,6 @@ dados_test <- dados[-trainIndex,]
 
 dados_train_sequence <- data[ trainIndex,]
 dados_test_sequence <- data[-trainIndex,]
-
-max_sequence <- max(sapply(dados_train$sequences, max))
-max_sequence_types <- max(sapply(dados_train$sequences_types, max))
-
-train_sequences <- vectorize_sequences(dados_train$sequences, dimension = max_sequence)
-train_sequences_types <- vectorize_sequences(dados_train$sequences_types, dimension = max_sequence_types)
-
-test_sequences <- vectorize_sequences(dados_test$sequences, dimension = max_sequence)
-test_sequences_types <- vectorize_sequences(dados_test$sequences_types, dimension = max_sequence_types)
 
 max_words <- vocab_size
 word_index <- tokenizer$word_index
@@ -69,11 +46,34 @@ kernel_size <- 10
 hidden_dims <- 200
 
 main_input <- layer_input(shape = c(maxlen), dtype = "int32")
-main_output <- main_input %>% 
-  layer_embedding(vocab_size, embedding_dims, input_length = maxlen, name = "embedding") %>%
-  layer_lstm(units = 16, return_sequences = TRUE) %>%
-  layer_lstm(units = 16, return_sequences = TRUE, recurrent_dropout = 0.2) %>%
-  layer_lstm(units = 16) %>%
+
+embedding_input <- 	main_input %>% 
+                    layer_embedding(input_dim = vocab_size, output_dim = embedding_dims, input_length = maxlen, name = "embedding")
+
+ccn_out_3 <- embedding_input %>% 
+  layer_conv_1d(
+    filters, 3,
+    padding = "valid", activation = "relu", strides = 1
+  ) %>%
+  layer_global_max_pooling_1d()
+
+ccn_out_4 <- embedding_input %>% 
+  layer_conv_1d(
+    filters, 4, 
+    padding = "valid", activation = "relu", strides = 1
+  ) %>%
+  layer_global_max_pooling_1d()
+
+ccn_out_5 <- embedding_input %>% 
+  layer_conv_1d(
+    filters, 5, 
+    padding = "valid", activation = "relu", strides = 1
+  ) %>%
+  layer_global_max_pooling_1d()
+
+main_output <- layer_concatenate(c(ccn_out_3, ccn_out_4, ccn_out_5)) %>% 
+  layer_dropout(0.2) %>%
+  layer_dense(units = 4, activation = "relu") %>%
   layer_dense(units = 1, activation = 'sigmoid')
 
 
@@ -95,11 +95,10 @@ history <- model %>%
     x = list(dados_train_sequence),
     y = array(dados_train$resposta),
     batch_size = 64,
-    epochs = 5,
+    epochs = 10,
     validation_split = 0.2
   )
 
-history
 # predictions <- model %>% predict(list(dados_test_sequence))
 # predictions2 <- round(predictions, 0
 # matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
@@ -120,4 +119,4 @@ words <- words %>%
 
 row.names(embedding_matrixTwo) <- c("UNK", words$word)
 
-write.table(embedding_matrixTwo, "adhoc/exportembedding/lstm_5_epocas.txt",sep=" ",row.names=TRUE)
+write.table(embedding_matrixTwo, "adhoc/exportembedding/ds1/q2/cnn_20_epocas.txt",sep=" ",row.names=TRUE)
