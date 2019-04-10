@@ -21,7 +21,7 @@ dados <- getDadosAmazon()
 fbcorpus <- corpus(dados$textEmbedding)
 #fbdfm <- dfm(fbcorpus, remove=stopwords("english"), verbose=TRUE, stem = TRUE, remove_punct = TRUE)
 fbdfm <- dfm(fbcorpus, remove=stopwords("english"), verbose=TRUE, remove_punct = TRUE)
-fbdfm <- dfm_trim(fbdfm, min_docfreq = 2, verbose=TRUE)
+#fbdfm <- dfm_trim(fbdfm, min_docfreq = 2, verbose=TRUE)
 
 dados$entidades = gsub(",", " ", dados$entidades)
 entidades <- corpus(dados$entidades)
@@ -64,6 +64,8 @@ training <- sample(1:nrow(dados), floor(.80 * nrow(dados)))
 test <- (1:nrow(dados))[1:nrow(dados) %in% training == FALSE]
 
 library(xgboost)
+
+#Com enriquecimento
 
 for (iteracao in 1:3) {
   # converting matrix object
