@@ -5,7 +5,7 @@ library(readr)
 library(quanteda)
 
 library(doMC)
-registerDoMC(cores=16)
+registerDoMC(cores=8)
 
 source(file_path_as_absolute("utils/getDados.R"))
 source(file_path_as_absolute("baseline/dados.R"))
