@@ -173,3 +173,5 @@ for (iteracao in 1:10) {
   cat("Iteracao = ",iteracao, "\n",sep="")
   View(resultados)
 }
+
+resultados
