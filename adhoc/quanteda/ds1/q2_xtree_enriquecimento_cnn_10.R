@@ -5,7 +5,8 @@ library(readr)
 library(quanteda)
 
 library(doMC)
-registerDoMC(cores=8)
+Cores <- 8
+registerDoMC(cores=Cores)
 
 source(file_path_as_absolute("utils/getDados.R"))
 source(file_path_as_absolute("baseline/dados.R"))
@@ -58,12 +59,20 @@ for (i in 1:ndoc(fbdfm)){
 }
 
 set.seed(10)
-training <- sample(1:nrow(dados), floor(.80 * nrow(dados)))
-test <- (1:nrow(dados))[1:nrow(dados) %in% training == FALSE]
-
 library(xgboost)
 
 #Com enriquecimento
+
+resultados <- data.frame(matrix(ncol = 4, nrow = 0))
+names(resultados) <- c("Name", "Precision", "Recall")
+
+addRowSimple <- function(resultados, rowName, precision, recall) {
+  newRes <- data.frame(rowName, precision, recall)
+  rownames(newRes) <- rowName
+  names(newRes) <- c("Name", "Precision", "Recall")
+  newdf <- rbind(resultados, newRes)
+  return (newdf)
+}
 
 for (iteracao in 1:10) {
   training <- sample(1:nrow(dados), floor(.80 * nrow(dados)))
