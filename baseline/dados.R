@@ -132,8 +132,9 @@ getDadosBaselineByQ <- function(var) {
 	dados$resposta <- as.numeric(dados$resposta)
 	dados$textEmbedding <- enc2utf8(dados$textEmbedding)
 	dados$textEmbedding <- iconv(dados$textEmbedding, to='ASCII//TRANSLIT')
-
 	dados$textEmbedding = gsub("'", "", dados$textEmbedding, ignore.case=T)
+	dados$textEmbedding = gsub("“", "", dados$textEmbedding)
+  	dados$textEmbedding = gsub("”", "", dados$textEmbedding)
 
 	dados$entidades <- enc2utf8(dados$entidades)
 	dados$entidades <- iconv(dados$entidades, to='ASCII//TRANSLIT')
