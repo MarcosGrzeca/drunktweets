@@ -10,7 +10,7 @@ dados <- getDadosBaselineByQ("q2")
 dados$textEmbedding <- removePunctuation(dados$textEmbedding)
 
 maxlen <- 38
-max_words <- 5000
+max_words <- 4405
 
 tokenizer <-  text_tokenizer(num_words = max_words) %>%
               fit_text_tokenizer(dados$textEmbedding)
@@ -119,4 +119,4 @@ words <- words %>%
 
 row.names(embedding_matrixTwo) <- c("UNK", words$word)
 
-write.table(embedding_matrixTwo, "adhoc/exportembedding/ds1/q2/cnn_20_epocas.txt",sep=" ",row.names=TRUE)
+write.table(embedding_matrixTwo, "adhoc/exportembedding/ds1/q2/cnn_10_epocas.txt",sep=" ",row.names=TRUE)
