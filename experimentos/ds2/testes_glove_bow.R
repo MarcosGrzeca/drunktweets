@@ -18,10 +18,9 @@ for (file in files) {
 				names(resultados) <- c("Baseline", "F1", "Precisão", "Revocação")
 				source(file_path_as_absolute(file))
 				logar("DS2", "GloVe", "CNN", epoca, 1, metrica, enriquecimento, resultados, model_to_json(model), redeDesc, file)
-				View(resultados)
 			}
 		}
 	}
 }
 
-#system("init 0")
+system("init 0")

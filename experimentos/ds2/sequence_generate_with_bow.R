@@ -12,6 +12,7 @@ try({
 	word_index = tokenizer$word_index
 
 	vocab_size <- length(word_index) + 1
+	max_words <- vocab_size
 
 	data <- pad_sequences(sequences, maxlen = maxlen)
 
