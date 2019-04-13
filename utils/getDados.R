@@ -645,6 +645,9 @@ getDadosChat <- function() {
   
   dados$textEmbedding <- enc2utf8(dados$textEmbedding)
   dados$textEmbedding <- iconv(dados$textEmbedding, to='ASCII//TRANSLIT')
+  dados$textEmbedding = gsub("'", "", dados$textEmbedding, ignore.case=T)
+  dados$textEmbedding = gsub("“", "", dados$textEmbedding)
+  dados$textEmbedding = gsub("”", "", dados$textEmbedding)
   
   dados$textParser <- enc2utf8(dados$textParser)
   dados$textParser <- iconv(dados$textParser, to='ASCII//TRANSLIT')
