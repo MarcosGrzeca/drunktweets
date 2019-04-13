@@ -11,7 +11,7 @@ dados <- getDadosChat()
 dados$textEmbedding <- removePunctuation(dados$textEmbedding)
 
 maxlen <- 38
-max_words <- 40000
+max_words <- 18391
 
 tokenizer <-  text_tokenizer(num_words = max_words) %>%
               fit_text_tokenizer(dados$textEmbedding)
@@ -96,7 +96,7 @@ history <- model %>%
     x = list(dados_train_sequence),
     y = array(dados_train$resposta),
     batch_size = 64,
-    epochs = 10,
+    epochs = 5,
     validation_split = 0.2
   )
 
@@ -120,4 +120,4 @@ words <- words %>%
 
 row.names(embedding_matrixTwo) <- c("UNK", words$word)
 
-write.table(embedding_matrixTwo, "adhoc/exportembedding/ds2/cnn_10_epocas.txt",sep=" ",row.names=TRUE)
+write.table(embedding_matrixTwo, "adhoc/exportembedding/ds2/cnn_5_epocas.txt",sep=" ",row.names=TRUE)
