@@ -119,4 +119,4 @@ words <- words %>%
 
 row.names(embedding_matrixTwo) <- c("UNK", words$word)
 
-write.table(embedding_matrixTwo, "adhoc/exportembedding/ds1/q2/cnn_10_epocas.txt",sep=" ",row.names=TRUE)
+write.table(embedding_matrixTwo, "adhoc/exportembedding/ds1/q3/cnn_10_epocas.txt",sep=" ",row.names=TRUE)
