@@ -5,7 +5,7 @@ library(readr)
 library(quanteda)
 
 library(doMC)
-Cores <- 4
+Cores <- 8
 registerDoMC(cores=Cores)
 
 source(file_path_as_absolute("utils/getDados.R"))
@@ -37,8 +37,7 @@ typesdfm <- dfm(types, verbose=TRUE)
 #    dictionary = NULL, valuetype = c("glob", "regex", "fixed"), ..
 
 
-#w2v <- readr::read_delim("adhoc/exportembedding/ds1/q2/cnn_10_epocas.txt", 
-w2v <- readr::read_delim("adhoc/exportembedding/ds3/cnn_10_epocas.txt", 
+w2v <- readr::read_delim("adhoc/exportembedding/ds2/cnn_10_epocas.txt", 
                   skip=1, delim=" ", quote="",
                   col_names=c("word", paste0("V", 1:100)))
 
