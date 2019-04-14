@@ -179,10 +179,8 @@ try({
             matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
             resultados <- addRowAdpater(resultados, paste0("Enriquecimento: ", enriquecimento, " - Early: ", early_stop), matriz)
           }
-          resultados$F1
-          resultados$Precision
-          resultados$Recall
-  				#logar("DS2", "GloVe", "CNN", epoca, 1, metrica, enriquecimento, resultados, model_to_json(model), redeDesc, "experimentos/ds2/cnn/glove_bow.R")
+          View(resultados)
+  				logar("DS2", "GloVe", "CNN", epoca, 1, metrica, enriquecimento, resultados, model_to_json(model), redeDesc, "experimentos/ds2/cnn/glove_bow.R")
   			}
   		}
   	}
