@@ -1,53 +1,6 @@
 library(tools)
-source(file_path_as_absolute("utils/getDadosAmazon.R"))
-source(file_path_as_absolute("utils/getDados.R"))
 
-dados <- getDadosAmazon()
- 
-maxlen <- 40
-max_words <- 15000
-
-tokenizer <-  text_tokenizer(num_words = max_words) %>%
-              fit_text_tokenizer(dados$textEmbedding)
-
-sequences <- texts_to_sequences(tokenizer, dados$textEmbedding)
-word_index = tokenizer$word_index
-
-vocab_size <- length(word_index)
-vocab_size <- vocab_size + 1
-
-cat("Found", length(word_index), "unique tokens.\n")
-data <- pad_sequences(sequences, maxlen = maxlen)
-
-tokenizer_entities <- text_tokenizer(num_words = 1000) %>%
-  fit_text_tokenizer(dados$entidades)
-
-vocabEntitiesLenght <- length(tokenizer_entities$word_index)
-dados$sequences <- texts_to_sequences(tokenizer_entities, dados$entidades)
-
-tokenizer_types <- text_tokenizer(num_words = 1000) %>%
-  fit_text_tokenizer(dados$types)
-vocabTypesLenght <- length(tokenizer_types$word_index)
-dados$sequences_types <- texts_to_sequences(tokenizer_types, dados$types)
-
-library(caret)
-trainIndex <- createDataPartition(dados$resposta, p=0.8, list=FALSE)
-dados_train <- dados[ trainIndex,]
-dados_test <- dados[-trainIndex,]
-
-dados_train_sequence <- data[ trainIndex,]
-dados_test_sequence <- data[-trainIndex,]
-
-max_sequence <- max(sapply(dados_train$sequences, max))
-max_sequence_types <- max(sapply(dados_train$sequences_types, max))
-
-train_sequences <- vectorize_sequences(dados_train$sequences, dimension = max_sequence)
-train_sequences_types <- vectorize_sequences(dados_train$sequences_types, dimension = max_sequence_types)
-
-test_sequences <- vectorize_sequences(dados_test$sequences, dimension = max_sequence)
-test_sequences_types <- vectorize_sequences(dados_test$sequences_types, dimension = max_sequence_types)
-
-max_words <- vocab_size
+#max_words <- vocab_size
 word_index <- tokenizer$word_index
 embedding_dims <- 100
 embedding_matrix <- array(0, c(max_words, embedding_dims))
@@ -61,12 +14,8 @@ for (word in names(word_index)) {
   }
 }
 
-library(tools)
-
 resultados <- data.frame(matrix(ncol = 4, nrow = 0))
 names(resultados) <- c("Baseline", "F1", "Precisão", "Revocação")
-# enriquecimento <- 1
-# early_stop <- 1
 
 library(keras)
 for (year in 1:20) {
@@ -80,11 +29,6 @@ for (year in 1:20) {
 			monitor = "val_loss",
 			save_best_only = TRUE
 		)
-	)
-
-	FLAGS <- flags(
-		flag_integer("epochs", 3),
-		flag_integer("batch_size", 64)
 	)
 
 	# Data Preparation --------------------------------------------------------
@@ -105,9 +49,9 @@ for (year in 1:20) {
 	types_out <- auxiliary_input_types
 
     lstm_out <- embedding_input %>% 
-    			bidirectional(
-					layer_lstm(units = 32)
-				)
+    		layer_lstm(units = 16, return_sequences = TRUE) %>%
+  			layer_lstm(units = 16, return_sequences = TRUE, recurrent_dropout = 0.2) %>%
+  			layer_lstm(units = 16)
 
 	if (enriquecimento == 1) {
 		main_output <- layer_concatenate(c(lstm_out, entities_out, types_out)) %>% 
@@ -145,21 +89,17 @@ for (year in 1:20) {
 	if (enriquecimento == 1) {
 		history <- model %>%
 			fit(
-			  x = list(dados_train_sequence, train_sequences, train_sequences_types),
+			  x = list(dados_train_sequence, sequences, sequences_types),
 			  y = array(dados_train$resposta),
 			  batch_size = FLAGS$batch_size,
 			  epochs = epoca,
 			  callbacks = callbacks_list,
 			  validation_split = 0.2
 			)
-			
-		# predictions <- model %>% predict(test_vec$new_textParser)
-		# predictions <- model %>% predict(list(test_vec$new_textParser, sequences_test, sequences_test_types))
-		predictions <- model %>% predict(list(dados_test_sequence, test_sequences, test_sequences_types))
+		predictions <- model %>% predict(list(dados_test_sequence, sequences_test, sequences_test_types))
 	} else {
 		history <- model %>%
 			fit(
-			  # x = list(train_vec$new_textParser, sequences, sequences_types),
 			  x = list(dados_train_sequence),
 			  y = array(dados_train$resposta),
 			  batch_size = FLAGS$batch_size,

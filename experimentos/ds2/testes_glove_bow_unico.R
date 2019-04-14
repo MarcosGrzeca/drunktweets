@@ -5,7 +5,7 @@ early_stop <- 1
 
 epocas <- c(5)
 enriquecimentos <- c(0, 1)
-metricas <- c("acc")
+metricas <- c("val_loss")
 
 files <- c("experimentos/ds2/cnn/glove_bow.R")
 
@@ -179,7 +179,6 @@ try({
             matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
             resultados <- addRowAdpater(resultados, paste0("Enriquecimento: ", enriquecimento, " - Early: ", early_stop), matriz)
           }
-          View(resultados)
   				logar("DS2", "GloVe", "CNN", epoca, 1, metrica, enriquecimento, resultados, model_to_json(model), redeDesc, "experimentos/ds2/cnn/glove_bow.R")
   			}
   		}
