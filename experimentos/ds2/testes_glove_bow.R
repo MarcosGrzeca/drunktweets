@@ -4,6 +4,7 @@ source(file_path_as_absolute("ipm/glove/load.R"))
 early_stop <- 1
 
 epocas <- c(3,5,10,20)
+epocas <- c(3)
 enriquecimentos <- c(0, 1)
 metricas <- c("acc", "val_loss")
 
@@ -23,4 +24,4 @@ for (file in files) {
 	}
 }
 
-system("init 0")
+#system("init 0")
