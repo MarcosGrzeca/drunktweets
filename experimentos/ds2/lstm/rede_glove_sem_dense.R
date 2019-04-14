@@ -91,7 +91,7 @@ for (year in 1:20) {
 			fit(
 			  x = list(dados_train_sequence, sequences, sequences_types),
 			  y = array(dados_train$resposta),
-			  batch_size = FLAGS$batch_size,
+			  batch_size = 64,
 			  epochs = epoca,
 			  callbacks = callbacks_list,
 			  validation_split = 0.2
@@ -102,7 +102,7 @@ for (year in 1:20) {
 			fit(
 			  x = list(dados_train_sequence),
 			  y = array(dados_train$resposta),
-			  batch_size = FLAGS$batch_size,
+			  batch_size = 64,
 			  epochs = epoca,
 			  callbacks = callbacks_list,
 			  validation_split = 0.2
