@@ -44,7 +44,9 @@ try({
           # early_stop <- 1
 
           library(keras)
-          for (year in 1:1) {
+
+          iteracoes <- 0
+          while (iteracoes < 20) {
             callbacks_list <- list(
               callback_early_stopping(
                 monitor = metrica,
@@ -177,7 +179,11 @@ try({
 
             predictions2 <- round(predictions, 0)
             matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
-            resultados <- addRowAdpater(resultados, paste0("Enriquecimento: ", enriquecimento, " - Early: ", early_stop), matriz)
+
+            if (matriz$byClass["Recall"] * 100 > 0) {
+              iteracoes <- iteracoes + 1
+              resultados <- addRowAdpater(resultados, paste0("Enriquecimento: ", enriquecimento, " - Early: ", early_stop), matriz)
+            }
           }
   				logar("DS2", "GloVe", "CNN", epoca, 1, metrica, enriquecimento, resultados, model_to_json(model), redeDesc, "experimentos/ds2/cnn/glove_bow.R")
   			}
