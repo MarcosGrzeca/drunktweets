@@ -190,5 +190,5 @@ try({
   		}
   	}
   }
-  #system("init 0")
+  system("init 0")
 })
