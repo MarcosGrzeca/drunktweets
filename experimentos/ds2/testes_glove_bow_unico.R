@@ -44,7 +44,7 @@ try({
           # early_stop <- 1
 
           library(keras)
-          for (year in 1:20) {
+          for (year in 1:1) {
             callbacks_list <- list(
               callback_early_stopping(
                 monitor = metrica,
