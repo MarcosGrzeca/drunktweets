@@ -180,7 +180,7 @@ try({
             predictions2 <- round(predictions, 0)
             matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
 
-            if (matriz$byClass["Recall"] * 100 > 0) {
+            if (matriz$byClass["Recall"] * 100 > 10) {
               iteracoes <- iteracoes + 1
               resultados <- addRowAdpater(resultados, paste0("Enriquecimento: ", enriquecimento, " - Early: ", early_stop), matriz)
             }
