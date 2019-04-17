@@ -1,5 +1,8 @@
 # https://rpubs.com/Minxing2046/396053
 library(caret)
+library(tools)
+
+source(file_path_as_absolute("utils/functions.R"))
 
 treinarPoly <- function(data_train){
 	fit <- train(x = subset(data_train, select = -c(resposta)),
