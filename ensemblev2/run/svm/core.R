@@ -29,12 +29,12 @@ for (year in 1:5) {
   try({
 	load(file = datasetFile)
 	levels(maFinal$resposta) <- make.names(levels(factor(maFinal$resposta)))
-	if (datasetFile == "amazon/rdas/2gram-entidades-erro.Rda") {
-		trainIndex <- createDataPartition(maFinal$resposta, p=split, list=FALSE)
-		saveRDS(trainIndex, file = paste0(baseResampleFiles, "trainIndex", year, ".rds"))
-	} else {
-		trainIndex <- readRDS(file = paste0(baseResampleFiles, "trainIndex", year, ".rds"))
-	}
+	# if (datasetFile == "amazon/rdas/2gram-entidades-erro.Rda") {
+	# 	trainIndex <- createDataPartition(maFinal$resposta, p=split, list=FALSE)
+	# 	saveRDS(trainIndex, file = paste0(baseResampleFiles, "trainIndex", year, ".rds"))
+	# } else {
+	trainIndex <- readRDS(file = paste0(baseResampleFiles, "trainIndex", year, ".rds"))
+	# }
 	data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
 	data_test <- maFinal[-trainIndex,]
 	treegram25NotNull <- treinarPoly(data_train)
