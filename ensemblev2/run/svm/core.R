@@ -4,7 +4,8 @@ library(caret)
 treinarPoly <- function(data_train){
 	fit <- train(x = subset(data_train, select = -c(resposta)),
 			y = data_train$resposta, 
-			method = "svmPoly", 
+			# method = "svmPoly", 
+			method = "svmLinear", 
 			trControl = trainControl(method = "cv", number = 5, savePred=T, classProbs = TRUE))
 	return (fit)
 }
