@@ -1,4 +1,3 @@
-
 library(tools)
 
 source(file_path_as_absolute("ipm/experimenters.R"))
@@ -13,7 +12,6 @@ embeddingFile <- "adhoc/exportembedding/ds1/q3/cnn_10_epocas.txt"
 dados <- getDadosBaselineByQ("q3")
 
 try({
-	save <- 1
 	maxlen <- 38
 	max_words <- 3080
 	source(file_path_as_absolute("ensemblev2/run/xgboost/xgboost_core.R"))
