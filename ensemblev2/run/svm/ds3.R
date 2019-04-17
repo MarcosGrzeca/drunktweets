@@ -1,8 +1,8 @@
 library(tools)
 
 datasetFile <- "amazon/rdas/2gram-entidades-erro.Rda"
-baseResultsFiles <- "ensemblev2/resultados/exp6/"
-baseResampleFiles <- "ensemblev2/resample/exp6/"
+baseResultsFiles <- "ensemblev2/resultados/ds3/"
+baseResampleFiles <- "ensemblev2/resample/ds3/"
 
 try({
 	coreCustomizado <- 2
