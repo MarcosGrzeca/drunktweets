@@ -153,16 +153,14 @@ for (year in 1:1) {
 
 	history <- model %>%
 	fit(
-		x = list(dados_train_sequence, dataframebow_train, sequences, sequences_types),
+		x = list(dados_train_sequence, dataframebow_train, train_sequences, train_sequences_types),
 		y = array(dados_train$resposta),
 		batch_size = FLAGS$batch_size,
 		epochs = 5,
 		callbacks = callbacks_list,
 		validation_split = 0.2
 		)
-	predictions <- model %>% predict(list(dados_test_sequence, dataframebow_test, sequences_test, sequences_test_types))
-
-	predictions <- model %>% predict(list(dados_test_sequence, dataframebow_test))
+	predictions <- model %>% predict(list(dados_test_sequence, dataframebow_test, test_sequences, test_sequences_types))
 	if (save == 1) {
 		saveRDS(predictions2, file = paste0(baseResultsFiles, "neural", year, ".rds"))
 		saveRDS(predictions, file = paste0(baseResultsFiles, "neuralprob", year, ".rds"))
