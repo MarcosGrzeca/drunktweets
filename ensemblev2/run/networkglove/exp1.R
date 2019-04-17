@@ -15,7 +15,7 @@ source(file_path_as_absolute("ipm/glove/load.R"))
 dados <- getDadosBaselineByQ("q1")
 try({
 	maxlen <- 38
-	max_words <- 7000
-	source(file_path_as_absolute("ensemblev2/run/networkglove/ipmtrain_embedding.R"))
+	max_words <- 7574
+	source(file_path_as_absolute("ensemblev2/run/networkglove/ipmtrain_cnn_glove.R"))
 	#source(file_path_as_absolute("ensemblev2/git.R"))
 })

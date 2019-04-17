@@ -1,3 +1,4 @@
+# https://rpubs.com/Minxing2046/396053
 library(caret)
 
 treinarPoly <- function(data_train){
