@@ -148,3 +148,9 @@ convertSimilaridadeToTibble <- function(dados) {
   dfFinal <- as_data_frame(dadosDFRename)
   return (dfFinal);
 }
+
+isset <- function(x) {
+  is_variable <- make.names(name <- deparse(substitute(x))) == name
+  if (is_variable && !exists(name)) return(FALSE)
+  !is.null(x) && (length(x) != 1L || !is.na(x))
+}

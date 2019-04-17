@@ -14,7 +14,11 @@ library(doMC)
 library(mlbench)
 library(magrittr)
 
-CORES <- 5
+if (isset(coreCustomizado)) {
+	CORES <- coreCustomizado
+} else {
+	CORES <- 5
+}
 registerDoMC(CORES)
 
 set.seed(10)
