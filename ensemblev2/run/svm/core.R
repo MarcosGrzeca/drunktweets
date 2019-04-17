@@ -1,6 +1,10 @@
 # https://rpubs.com/Minxing2046/396053
 library(caret)
 library(tools)
+library(doMC)
+library(mlbench)
+library(magrittr)
+library(dplyr)
 
 source(file_path_as_absolute("utils/functions.R"))
 
@@ -12,12 +16,6 @@ treinarPoly <- function(data_train){
 			trControl = trainControl(method = "cv", number = 5, savePred=T, classProbs = TRUE))
 	return (fit)
 }
-
-library(tools)
-library(caret)
-library(doMC)
-library(mlbench)
-library(magrittr)
 
 if (isset(coreCustomizado)) {
 	CORES <- coreCustomizado
