@@ -52,6 +52,10 @@ for (year in 1:1) {
 	# parameters to explore
 	tryEta <- c(1,2,3)
 	tryDepths <- c(1,2,4,6)
+
+	tryEta <- c(1)
+	tryDepths <- c(1)
+
 	# placeholders for now
 	bestEta=NA
 	bestDepth=NA
