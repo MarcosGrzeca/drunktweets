@@ -50,7 +50,7 @@ for (year in 1:5) {
 	trainFile <- readRDS(file = paste0(baseResampleFiles, "trainIndex", year, ".rds"))
 	trainIndex <- as.data.frame(trainFile)$Resample1
 	
-	X <- as(embed, "dgCMatrix")
+	X <- as(cbind(embed, typesdfm, entidadesdfm), "dgCMatrix")
   
 	# parameters to explore
 	tryEta <- c(1,2,3)
