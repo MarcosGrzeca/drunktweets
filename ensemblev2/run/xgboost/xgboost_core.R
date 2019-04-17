@@ -43,7 +43,10 @@ for (i in 1:ndoc(fbdfm)){
   if (nrow(embed_vec)==0) embed[i,] <- 0
 }
 
-for (year in 1:1) {
+set.seed(10)
+library(xgboost)
+
+for (year in 1:5) {
 	trainFile <- readRDS(file = paste0(baseResampleFiles, "trainIndex", year, ".rds"))
 	trainIndex <- as.data.frame(trainFile)$Resample1
 	
@@ -52,9 +55,6 @@ for (year in 1:1) {
 	# parameters to explore
 	tryEta <- c(1,2,3)
 	tryDepths <- c(1,2,4,6)
-
-	tryEta <- c(1)
-	tryDepths <- c(1)
 
 	# placeholders for now
 	bestEta=NA
@@ -94,5 +94,5 @@ for (year in 1:1) {
 
 	# out-of-sample accuracy
 	preds <- predict(rf, X[-trainIndex,])
-	# resultados <- addRowSimple(resultados, "Sem", round(precision(preds>.50, dados$resposta[-trainIndex]) * 100,6), round(recall(preds>.50, dados$resposta[-trainIndex]) * 100,6))
+	saveRDS(preds, file = paste0(baseResultsFiles, "xgboost", year, ".rds"))	
 }
