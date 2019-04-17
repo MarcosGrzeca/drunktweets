@@ -28,7 +28,7 @@ library(keras)
 
 redeDesc <- generateHash(1)
 
-for (year in 1:1) {
+for (year in 1:5) {
 	trainIndex <- readRDS(file = paste0(baseResampleFiles, "trainIndex", year, ".rds"))
 	dados_train <- dados[ trainIndex,]
 	dados_test <- dados[-trainIndex,]
