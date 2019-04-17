@@ -161,6 +161,7 @@ for (year in 1:1) {
 		validation_split = 0.2
 		)
 	predictions <- model %>% predict(list(dados_test_sequence, dataframebow_test, test_sequences, test_sequences_types))
+	predictions2 <- round(predictions, 0)
 	if (save == 1) {
 		saveRDS(predictions2, file = paste0(baseResultsFiles, "neural", year, ".rds"))
 		saveRDS(predictions, file = paste0(baseResultsFiles, "neuralprob", year, ".rds"))
