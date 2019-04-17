@@ -22,41 +22,6 @@ dados$sequences_types <- texts_to_sequences(tokenizer_types, dados$types)
 
 library(caret)
 #trainIndex <- createDataPartition(dados$resposta, p=0.8, list=FALSE)
-trainIndex <- readRDS(file = paste0(baseResampleFiles, "trainIndex", year, ".rds"))
-dados_train <- dados[ trainIndex,]
-dados_test <- dados[-trainIndex,]
-
-dados_train_sequence <- data[ trainIndex,]
-dados_test_sequence <- data[-trainIndex,]
-
-max_sequence <- max(sapply(dados_train$sequences, max))
-max_sequence_types <- max(sapply(dados_train$sequences_types, max))
-
-train_sequences <- vectorize_sequences(dados_train$sequences, dimension = max_sequence)
-train_sequences_types <- vectorize_sequences(dados_train$sequences_types, dimension = max_sequence_types)
-
-test_sequences <- vectorize_sequences(dados_test$sequences, dimension = max_sequence)
-test_sequences_types <- vectorize_sequences(dados_test$sequences_types, dimension = max_sequence_types)
-
-tokenizerBow <- text_tokenizer(num_words = max_words) %>%
-				fit_text_tokenizer(dados$textParser)
-
-dataframebow_train <- texts_to_matrix(tokenizerBow, dados_train$textParser, mode = "binary")
-dataframebow_test  <- texts_to_matrix(tokenizerBow, dados_test$textParser,  mode = "binary")
-
-#max_words <- vocab_size
-word_index <- tokenizer$word_index
-embedding_dims <- 100
-embedding_matrix <- array(0, c(max_words, embedding_dims))
-
-for (word in names(word_index)) {
-	index <- word_index[[word]]
-	if (index < max_words) {
-		embedding_vector <- embeddings_index[[word]]
-		if (!is.null(embedding_vector))
-		embedding_matrix[index+1,] <- embedding_vector
-	}
-}
 
 library(tools)
 library(keras)
@@ -64,6 +29,42 @@ library(keras)
 redeDesc <- generateHash(1)
 
 for (year in 1:1) {
+	trainIndex <- readRDS(file = paste0(baseResampleFiles, "trainIndex", year, ".rds"))
+	dados_train <- dados[ trainIndex,]
+	dados_test <- dados[-trainIndex,]
+
+	dados_train_sequence <- data[ trainIndex,]
+	dados_test_sequence <- data[-trainIndex,]
+
+	max_sequence <- max(sapply(dados_train$sequences, max))
+	max_sequence_types <- max(sapply(dados_train$sequences_types, max))
+
+	train_sequences <- vectorize_sequences(dados_train$sequences, dimension = max_sequence)
+	train_sequences_types <- vectorize_sequences(dados_train$sequences_types, dimension = max_sequence_types)
+
+	test_sequences <- vectorize_sequences(dados_test$sequences, dimension = max_sequence)
+	test_sequences_types <- vectorize_sequences(dados_test$sequences_types, dimension = max_sequence_types)
+
+	tokenizerBow <- text_tokenizer(num_words = max_words) %>%
+					fit_text_tokenizer(dados$textParser)
+
+	dataframebow_train <- texts_to_matrix(tokenizerBow, dados_train$textParser, mode = "binary")
+	dataframebow_test  <- texts_to_matrix(tokenizerBow, dados_test$textParser,  mode = "binary")
+
+	#max_words <- vocab_size
+	word_index <- tokenizer$word_index
+	embedding_dims <- 100
+	embedding_matrix <- array(0, c(max_words, embedding_dims))
+
+	for (word in names(word_index)) {
+		index <- word_index[[word]]
+		if (index < max_words) {
+			embedding_vector <- embeddings_index[[word]]
+			if (!is.null(embedding_vector))
+			embedding_matrix[index+1,] <- embedding_vector
+		}
+	}
+
 	callbacks_list <- list(
 		callback_early_stopping(
 			monitor = "val_loss",
