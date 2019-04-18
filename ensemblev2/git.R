@@ -3,5 +3,5 @@ try({
 	system("git add *")
 	system("git commit -m 'Ensemble V2'")
 	system("git push")
-	system("init 0")
+	# system("init 0")
 })
