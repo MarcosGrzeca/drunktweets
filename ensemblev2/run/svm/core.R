@@ -11,8 +11,7 @@ source(file_path_as_absolute("utils/functions.R"))
 treinarPoly <- function(data_train){
 	fit <- train(x = subset(data_train, select = -c(resposta)),
 			y = data_train$resposta, 
-			# method = "svmPoly", 
-			method = "svmLinear", 
+			method = "svmPoly", 
 			trControl = trainControl(method = "cv", number = 5, savePred=T, classProbs = TRUE))
 	return (fit)
 }
@@ -26,10 +25,12 @@ registerDoMC(CORES)
 
 set.seed(10)
 split=0.80
-for (year in 1:1) {
+for (year in 1:5) {
   try({
 	load(file = datasetFile)
-	levels(maFinal$resposta) <- make.names(levels(factor(maFinal$resposta)))
+	#levels(maFinal$resposta) <- make.names(levels(factor(maFinal$resposta)))
+	maFinal$resposta <- as.factor(maFinal$resposta)
+	levels(maFinal$resposta) <- make.names(levels(maFinal$resposta))
 	# if (datasetFile == "amazon/rdas/2gram-entidades-erro.Rda") {
 	# 	trainIndex <- createDataPartition(maFinal$resposta, p=split, list=FALSE)
 	# 	saveRDS(trainIndex, file = paste0(baseResampleFiles, "trainIndex", year, ".rds"))

@@ -3,5 +3,6 @@ try({
 	system("git add *")
 	system("git commit -m 'Ensemble V2'")
 	system("git push")
-	# system("init 0")
+	Sys.sleep(900)
+	system("init 0")
 })
