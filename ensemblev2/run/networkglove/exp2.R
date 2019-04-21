@@ -14,7 +14,7 @@ dados <- getDadosBaselineByQ("q2")
 try({
 	save <- 1
 	maxlen <- 38
-	max_words <- 4405
+	max_words <- 4315
 	source(file_path_as_absolute("ensemblev2/run/networkglove/ipmtrain_cnn_glove.R"))
 	#source(file_path_as_absolute("ensemblev2/git.R"))
 })
