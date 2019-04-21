@@ -5,6 +5,7 @@ sequences <- texts_to_sequences(tokenizer, dados$textEmbedding)
 word_index = tokenizer$word_index
 
 vocab_size <- length(word_index) + 1
+max_words <- vocab_size
 
 cat("Found", length(word_index), "unique tokens.\n")
 data <- pad_sequences(sequences, maxlen = maxlen)
@@ -51,7 +52,7 @@ for (year in 1:5) {
 	dataframebow_train <- texts_to_matrix(tokenizerBow, dados_train$textParser, mode = "binary")
 	dataframebow_test  <- texts_to_matrix(tokenizerBow, dados_test$textParser,  mode = "binary")
 
-	max_words <- vocab_size
+	#max_words <- vocab_size
 	word_index <- tokenizer$word_index
 	embedding_dims <- 100
 	embedding_matrix <- array(0, c(max_words, embedding_dims))
