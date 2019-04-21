@@ -1,7 +1,7 @@
 library(tools)
 
-baseResultsFiles <- "ensemblev2/resultados/exp1/"
-baseResampleFiles <- "ensemblev2/resample/exp1/"
+baseResultsFiles <- "ensemblev2/resultados/exp2/"
+baseResampleFiles <- "ensemblev2/resample/exp2/"
 
 source(file_path_as_absolute("ipm/experimenters.R"))
 source(file_path_as_absolute("utils/getDados.R"))
