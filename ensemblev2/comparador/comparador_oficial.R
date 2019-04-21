@@ -1,7 +1,7 @@
 library(caret)
 library(dplyr)
 
-expName <- "exp1"
+expName <- "exp2"
 
 for (year in 1:1) {
   year <- 1
@@ -21,6 +21,10 @@ for (year in 1:1) {
 	trainIndex <- readRDS(file = paste0("ensemblev2/resample/", expName, "/", "trainIndex", year, ".rds"))
 	data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
 	data_test <- maFinal[-trainIndex,]
+	
+	str(svmResults)
+	str(nnResults)
+	str(xgboost)
 	
 	bigDataFrame <- bind_cols(list(as.numeric(as.character(svmResults)), as.numeric(as.character(nnResults)), as.numeric(as.character(xgboost))))
 	View(bigDataFrameSum)
