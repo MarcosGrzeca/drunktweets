@@ -79,6 +79,7 @@ getDadosAmazon <- function() {
                  WHERE textparser <> ""
                  AND id <> 462478714693890048
                  AND q2 IS NOT NULL
+                 ORDER by 1
                  ')
   dados$resposta[dados$resposta == "0"] <- 0
   dados$resposta[dados$resposta == "1"] <- 1
