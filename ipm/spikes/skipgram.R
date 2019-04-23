@@ -87,7 +87,7 @@ model %>% compile(loss = "binary_crossentropy", optimizer = "adam")
 model %>%
   fit_generator(
     skipgrams_generator(reviews, tokenizer, skip_window, negative_samples), 
-    steps_per_epoch = 6000, epochs = 5
+    steps_per_epoch = 6000, epochs = 10
     )
 
 embedding_matrix <- get_weights(model)[[1]]
@@ -107,15 +107,4 @@ words <- words %>%
 
 row.names(embedding_matrix) <- c("UNK", words$word)
 
-save(embedding_matrix, file = "ipm/embeddings/skipgram.Rda")
-save.image(file="ipm/embeddings/skipgram.RData")
-
-library(text2vec)
-
-find_similar_words <- function(word, embedding_matrix, n = 5) {
-  similarities <- embedding_matrix[word, , drop = FALSE] %>%
-    sim2(embedding_matrix, y = ., method = "cosine")
-  
-  similarities[,1] %>% sort(decreasing = TRUE) %>% head(n)
-}
-find_similar_words("2", embedding_matrix)
+write.table(embedding_matrixTwo, "adhoc/exportembedding/skipgrams_10_epocas.txt",sep=" ",row.names=TRUE)
