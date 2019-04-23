@@ -607,6 +607,33 @@ getDadosWordEmbeddings <- function() {
   return (dados)
 }
 
+getDadosWordEmbeddingsV2 <- function() {
+      dados <- query("SELECT textEmbedding 
+                      FROM tweets t
+                      WHERE LENGTH(textEmbedding) > 5
+
+                      UNION ALL
+
+                      SELECT textSemPalavrasControle as textEmbedding
+                      FROM chat_tweets t
+                      WHERE contabilizar = 1
+                      AND drunk IN ('N', 'S')
+                      
+                      UNION ALL
+                      
+                      SELECT textEmbedding
+                      FROM tweets_amazon t
+                      WHERE q2 IN ('0', '1')
+                      WHERE LENGTH(textEmbedding) > 5
+                      ")
+
+  dados$textEmbedding <- enc2utf8(dados$textEmbedding)
+  dados$textEmbedding <- iconv(dados$textEmbedding, to='ASCII//TRANSLIT')
+  dados$textEmbedding <- stringi::stri_enc_toutf8(dados$textEmbedding)
+  dados$textEmbedding = gsub("'", "", dados$textEmbedding, ignore.case=T)
+  return (dados)
+}
+
 getDadosChat <- function() {
 
   dados <- query('SELECT id,
