@@ -9,19 +9,65 @@ source(file_path_as_absolute("baseline/dados.R"))
 source(file_path_as_absolute("utils/tokenizer.R"))
 
 # dadosTreinarEmbeddings <- getDadosWordEmbeddings()
+getDadosWordEmbeddingsV2 <- function() {
+      # dados <- query("SELECT textEmbedding 
+      #                 FROM tweets t
+      #                 WHERE LENGTH(textEmbedding) > 5
+      #                 UNION ALL
+      #                 SELECT textSemPalavrasControle as textEmbedding
+      #                 FROM chat_tweets t
+      #                 WHERE contabilizar = 1
+      #                 AND drunk IN ('N', 'S')
+      #                 AND LENGTH(textEmbedding) > 5
+      #                 UNION ALL
+      #                 SELECT textEmbedding
+      #                 FROM tweets_amazon t
+      #                 WHERE q2 IN ('0', '1')
+      #                 AND LENGTH(textEmbedding) > 5
+      #                 ")
+
+    dados <- query("SELECT textSemPalavrasControle as textEmbedding
+                      FROM chat_tweets t
+                      WHERE contabilizar = 1
+                      AND drunk IN ('N', 'S')
+                      AND LENGTH(textEmbedding) > 10
+                    ")
+
+  dados$textEmbedding <- enc2utf8(dados$textEmbedding)
+  dados$textEmbedding <- iconv(dados$textEmbedding, to='ASCII//TRANSLIT')
+  dados$textEmbedding <- stringi::stri_enc_toutf8(dados$textEmbedding)
+  dados$textEmbedding = gsub("'", "", dados$textEmbedding, ignore.case=T)
+  return (dados)
+}
+
 dadosTreinarEmbeddings <- getDadosWordEmbeddingsV2()
 
 library(doMC)
 library(mlbench)
+library(tm)
 CORES <- 5
 registerDoMC(CORES)
 
-library(keras)
-tokenizer <- text_tokenizer(num_words = 40000)
-tokenizer %>% fit_text_tokenizer(dadosTreinarEmbeddings$textEmbedding)
+# reviews = gsub("&amp", "", reviews)
+# reviews = gsub("(RT|via)((?:\\b\\W*@\\w+)+)", "", reviews)
+# reviews = gsub("@\\w+", "", reviews)
+# reviews = gsub("[[:punct:]]", "", reviews)
+# reviews = gsub("[[:digit:]]", "", reviews)
+# reviews = gsub("http\\w+", "", reviews)
+# reviews = gsub("[ \t]{2,}", "", reviews)
+# reviews = gsub("^\\s+|\\s+$", "", reviews) 
 
-reviews_check <- dadosTreinarEmbeddings$textEmbedding %>% texts_to_sequences(tokenizer,.) %>% lapply(., function(x) length(x) > 1) %>% unlist(.)
-reviews <- dadosTreinarEmbeddings$textEmbedding[reviews_check]
+reviews <- dados$textEmbedding
+
+word_count <- str_count(reviews, "\\S+" )
+reviews <- reviews[word_count > 5]
+
+library(keras)
+tokenizer <- text_tokenizer(num_words = 20000)
+tokenizer %>% fit_text_tokenizer(reviews)
+
+reviews_check <- reviews %>% texts_to_sequences(tokenizer,.) %>% lapply(., function(x) length(x) > 1) %>% unlist(.)
+reviews <- reviews[reviews_check]
 
 library(reticulate)
 library(purrr)
@@ -85,10 +131,9 @@ model %>% compile(loss = "binary_crossentropy", optimizer = "adam")
 model %>%
   fit_generator(
     skipgrams_generator(reviews, tokenizer, skip_window, negative_samples), 
+    # steps_per_epoch = 100000, epochs = 10
     steps_per_epoch = 6000, epochs = 10
     )
-
-embedding_matrix <- get_weights(model)[[1]]
 
 library(dplyr)
 
@@ -105,4 +150,4 @@ words <- words %>%
 
 row.names(embedding_matrix) <- c("UNK", words$word)
 
-write.table(embedding_matrixTwo, "adhoc/exportembedding/skipgrams_10_epocas.txt",sep=" ",row.names=TRUE)
+#write.table(embedding_matrixTwo, "adhoc/exportembedding/skipgrams_10_epocas.txt",sep=" ",row.names=TRUE)
