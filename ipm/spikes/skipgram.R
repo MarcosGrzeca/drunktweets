@@ -68,8 +68,6 @@ embedding <- layer_embedding(
   name = "embedding"
 )
 
-#layer_embedding(vocab_size, embedding_dims, input_length = maxlen) %>%
-
 target_vector <- input_target %>% 
   embedding() %>% 
   layer_flatten()
