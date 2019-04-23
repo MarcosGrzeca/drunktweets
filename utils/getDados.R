@@ -618,13 +618,14 @@ getDadosWordEmbeddingsV2 <- function() {
                       FROM chat_tweets t
                       WHERE contabilizar = 1
                       AND drunk IN ('N', 'S')
+                      WHERE LENGTH(textEmbedding) > 5
                       
                       UNION ALL
                       
                       SELECT textEmbedding
                       FROM tweets_amazon t
                       WHERE q2 IN ('0', '1')
-                      WHERE LENGTH(textEmbedding) > 5
+                      AND LENGTH(textEmbedding) > 5
                       ")
 
   dados$textEmbedding <- enc2utf8(dados$textEmbedding)
