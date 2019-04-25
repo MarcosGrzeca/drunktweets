@@ -57,10 +57,10 @@ registerDoMC(CORES)
 # reviews = gsub("[ \t]{2,}", "", reviews)
 # reviews = gsub("^\\s+|\\s+$", "", reviews) 
 
-reviews <- dados$textEmbedding
+reviews <- dadosTreinarEmbeddings$textEmbedding
 
-word_count <- str_count(reviews, "\\S+" )
-reviews <- reviews[word_count > 5]
+# word_count <- str_count(reviews, "\\S+" )
+# reviews <- reviews[word_count > 5]
 
 library(keras)
 tokenizer <- text_tokenizer(num_words = 20000)

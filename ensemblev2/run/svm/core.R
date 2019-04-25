@@ -35,8 +35,13 @@ for (year in 1:5) {
 	# 	trainIndex <- createDataPartition(maFinal$resposta, p=split, list=FALSE)
 	# 	saveRDS(trainIndex, file = paste0(baseResampleFiles, "trainIndex", year, ".rds"))
 	# } else {
-	trainIndex <- readRDS(file = paste0(baseResampleFiles, "trainIndex", year, ".rds"))
-	# }
+
+	if (datasetFile == "chat/rdas/2gram-entidades-erro-sem-key-words_orderbyid.Rda") {
+		trainIndex <- createDataPartition(maFinal$resposta, p=split, list=FALSE)
+		saveRDS(trainIndex, file = paste0(baseResampleFiles, "trainIndex", year, ".rds"))
+	} else {
+		trainIndex <- readRDS(file = paste0(baseResampleFiles, "trainIndex", year, ".rds"))
+	}
 	data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
 	data_test <- maFinal[-trainIndex,]
 	treegram25NotNull <- treinarPoly(data_train)

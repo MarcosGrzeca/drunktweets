@@ -659,6 +659,7 @@ getDadosChat <- function() {
                       FROM chat_tweets t
                       WHERE contabilizar = 1
                       AND drunk IN ("N", "S")
+                      ORDER by id
                       ')
 
   dados$resposta[dados$resposta == "N"] <- 0

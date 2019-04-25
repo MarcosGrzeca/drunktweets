@@ -1,7 +1,7 @@
 library(caret)
 library(dplyr)
 
-expName <- "ds3"
+expName <- "ds2"
 
 for (year in 1:5) {
 	svmResults <- readRDS(file = paste0("ensemblev2/resultados/", expName, "/svm", year, ".rds"))
@@ -23,13 +23,15 @@ for (year in 1:5) {
 	load(datasetFile)
 
 	trainIndex <- readRDS(file = paste0("ensemblev2/resample/", expName, "/", "trainIndex", year, ".rds"))
+	
+	str(trainIndex)
 	data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
 	data_test <- maFinal[-trainIndex,]
 	
 	#bigDataFrame <- bind_cols(list(as.numeric(as.character(svmResults)), as.numeric(as.character(nnResults)), as.numeric(as.character(xgboost))))
 	#pred <- round(rowMeans(bigDataFrame),0)
 	
-	bigDataFrame <- as.numeric(as.character(xgboost))
+	bigDataFrame <- as.numeric(as.character(svmResults))
 	pred <- round(bigDataFrame,0)
 	
 	pred

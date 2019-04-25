@@ -72,4 +72,4 @@ maFinal <- cbind.fill(subset(dados, select = -c(textParser, textOriginal, textEm
 maFinal <- cbind.fill(maFinal, dataFrameHash)
 maFinal <- cbind.fill(maFinal, dataFrameEntidades)
 maFinal <- cbind.fill(maFinal, dataFrameTypes)
-save(maFinal, file = "chat/rdas/2gram-entidades-erro-sem-key-words.Rda")
+save(maFinal, file = "chat/rdas/2gram-entidades-erro-sem-key-words_orderbyid.Rda")
