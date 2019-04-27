@@ -67,7 +67,7 @@ library(xgboost)
 
 #Com enriquecimento
 
-for (iteracao in 1:3) {
+for (iteracao in 1:10) {
   # converting matrix object
   X <- as(cbind(embed,typesdfm,entidadesdfm), "dgCMatrix")
   
