@@ -15,7 +15,7 @@ for (year in 1:5) {
   } else if (expName == "exp3") {
     datasetFile <-"ensemble/datasets/exp3/2-Gram-dbpedia-types-enriquecimento-info-q3-not-null_info_entidades.Rda"
   } else if (expName == "ds2") {
-    datasetFile <-"chat/rdas/2gram-entidades-erro-sem-key-words.Rda"
+    datasetFile <-"chat/rdas/2gram-entidades-erro-sem-key-words_orderbyid.Rda"
 	} else if (expName == "ds3") {
 	  datasetFile <-"amazon/rdas/2gram-entidades-erro.Rda"
 	}
@@ -24,15 +24,17 @@ for (year in 1:5) {
 
 	trainIndex <- readRDS(file = paste0("ensemblev2/resample/", expName, "/", "trainIndex", year, ".rds"))
 	
-	str(trainIndex)
 	data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
 	data_test <- maFinal[-trainIndex,]
 	
-	#bigDataFrame <- bind_cols(list(as.numeric(as.character(svmResults)), as.numeric(as.character(nnResults)), as.numeric(as.character(xgboost))))
+	bigDataFrame <- bind_cols(list(as.numeric(as.character(svmResults)), as.numeric(as.character(xgboost))))
+	pred <- round(rowMeans(bigDataFrame),0)
+	
+	#bigDataFrame <- bind_cols(list(as.numeric(as.character(svmResults)), as.numeric(as.character(xgboost))))
 	#pred <- round(rowMeans(bigDataFrame),0)
 	
-	bigDataFrame <- as.numeric(as.character(svmResults))
-	pred <- round(bigDataFrame,0)
+	# bigDataFrame <- as.numeric(as.character(svmResults))
+	# pred <- round(bigDataFrame,0)
 	
 	pred
 		
