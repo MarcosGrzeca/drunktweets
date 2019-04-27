@@ -641,14 +641,14 @@ getDadosChat <- function() {
                       hashtags,
                       erros as numeroErros,
                       (
-                        SELECT GROUP_CONCAT(DISTINCT(tn.palavra))
+                        SELECT GROUP_CONCAT(DISTINCT(CONCAT("entidade", tn.palavra)))
                         FROM chat_tweets_nlp tn
                         WHERE tn.idTweet = t.id
                         AND palavra IN ("mention", "Hashtag", "url", "/religion and spirituality/hinduism", "/religion and spirituality/buddhism", "Download  Pilot", "highest score", "Miley Cyrus", "giveaway", "Billy Ray Cyrus", "/technology and computing/mp3 and midi", "/art and entertainment/movies and tv/children\'s", "/technology and computing/software", "/food and drink", "media", "/religion and spirituality/christianity", "/technology and computing/internet technology/web search", "/health and fitness/addiction/alcoholism", "/food and drink/beverages/alcoholic beverages/cocktails and beer", "/sports/bowling", "/food and drink/beverages", "/sports/cricket", "/food and drink/beverages/alcoholic beverages", "/food and drink/beverages/alcoholic beverages/wine", "Saint Patrick\'s Day", "/food and drink/beverages/non alcoholic beverages/soft drinks", "/society/dating", "Quantity", "Saint Patrick", "/business and industrial/business operations/business plans", "/society/unrest and war", "#media", "/food and drink/beverages/non alcoholic beverages/bottled water", "bottle", "/health and fitness/drugs", "/family and parenting/children", "mention Thanks", "/technology and computing/internet technology/email", "/sports/table tennis and ping-pong", "drugs", "/health and fitness/addiction", "/health and fitness/addiction/smoking addiction", "/shopping/retail/outlet stores", "Shamrock", "/religion and spirituality/islam", "Irish folklore", "https", "/society/social institution/divorce", "/business and industrial/advertising and marketing/advertising", "store", "/automotive and vehicles/minivan", "/automotive and vehicles/boats and watercraft", "/art and entertainment/movies and tv/movies/reviews", "gt", "last night", "/art and entertainment/books and literature", "Person", "shots", "/food and drink/food", "/technology and computing/programming languages/javascript", "Drug", "wine", "#mention #media", "Starbucks", "/law, govt and politics/politics/elections/presidential elections", "/law, govt and politics", "text", "Alcoholic beverage", "St. Patrick\'s Day")
                         GROUP BY tn.idTweet
                       ) AS entidades,
                       (
-                        SELECT GROUP_CONCAT(DISTINCT(REPLACE(ty.type, "http://dbpedia.org/class/", "")))
+                        SELECT GROUP_CONCAT(DISTINCT(REPLACE(CONCAT("type", ty.type), "http://dbpedia.org/class/", "")))
                         FROM chat_tweets_nlp tn
                         JOIN chat_tweets_conceito c ON c.palavra = tn.palavra
                         JOIN resource_type ty ON ty.resource = c.resource
