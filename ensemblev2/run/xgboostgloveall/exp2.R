@@ -7,7 +7,7 @@ source(file_path_as_absolute("utils/tokenizer.R"))
 
 baseResultsFiles <- "ensemblev2/resultados/exp2/"
 baseResampleFiles <- "ensemblev2/resample/exp2/"
-embeddingFile <- "adhoc/exportembedding/embeddings.txt"
+embeddingFile <- "word2vec/embeddings.txt"
 
 dados <- getDadosBaselineByQ("q2")
 
