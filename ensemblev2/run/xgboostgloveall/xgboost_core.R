@@ -108,5 +108,7 @@ for (year in 1:5) {
   	resultados <- addRowAdpater(resultados, round(precision(preds>.50, dados$resposta[-trainIndex]) * 100,6), round(recall(preds>.50, dados$resposta[-trainIndex]) * 100,6))
 }
 
-cat(baseResultsFiles);
+cat(baseResultsFiles)
 cat(embeddingFile)
+View(resultados)
+resultados
