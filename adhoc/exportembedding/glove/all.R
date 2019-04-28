@@ -3,6 +3,7 @@ library(text2vec)
 library(data.table)
 library(SnowballC)
 library(keras)
+library(stringr)
 
 source(file_path_as_absolute("utils/getDados.R"))
 source(file_path_as_absolute("baseline/dados.R"))
@@ -10,6 +11,10 @@ source(file_path_as_absolute("utils/tokenizer.R"))
 
 #Section: Gerar embeddings
 dadosTreinarEmbeddings <- getDadosWordEmbeddingsV2()
+
+#gsub("[\r\n]", "", x)
+dadosTreinarEmbeddings$textEmbedding <- sapply(dadosTreinarEmbeddings$textEmbedding, tolower)
+dadosTreinarEmbeddings$textEmbedding <- str_replace_all(dadosTreinarEmbeddings$textEmbedding, "[\r\n]" , "")
 
 tokens <- dadosTreinarEmbeddings$textEmbedding %>% tolower %>% word_tokenizer
 
