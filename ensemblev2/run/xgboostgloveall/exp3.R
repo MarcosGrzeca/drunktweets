@@ -7,7 +7,7 @@ source(file_path_as_absolute("utils/tokenizer.R"))
 
 baseResultsFiles <- "ensemblev2/resultados/exp3/"
 baseResampleFiles <- "ensemblev2/resample/exp3/"
-embeddingFile <- "adhoc/exportembedding/glove_50epocas_0l_sem_stopwords.txt"
+embeddingFile <- "adhoc/exportembedding/glove_50epocas_10l.txt"
 
 dados <- getDadosBaselineByQ("q3")
 
