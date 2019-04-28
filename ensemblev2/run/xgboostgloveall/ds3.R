@@ -8,7 +8,7 @@ source(file_path_as_absolute("utils/getDadosAmazon.R"))
 
 baseResultsFiles <- "ensemblev2/resultados/ds3/"
 baseResampleFiles <- "ensemblev2/resample/ds3/"
-embeddingFile <- "word2vec/embeddings.txt"
+embeddingFile <- "word2vec/phrase_vec.txt"
 
 dados <- getDadosAmazon()
 
