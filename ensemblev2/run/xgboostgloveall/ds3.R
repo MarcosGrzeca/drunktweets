@@ -13,6 +13,6 @@ embeddingFile <- "adhoc/exportembedding/glove_50epocas_0l_sem_stopwords.txt"
 dados <- getDadosAmazon()
 
 try({
-	source(file_path_as_absolute("ensemblev2/run/xgboost/xgboost_core.R"))
+	source(file_path_as_absolute("ensemblev2/run/xgboostgloveall/xgboost_core.R"))
 	#source(file_path_as_absolute("ensemblev2/git.R"))
 })
