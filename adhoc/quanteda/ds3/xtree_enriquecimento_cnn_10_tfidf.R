@@ -1,3 +1,4 @@
+#https://quanteda.io/reference/dfm_tfidf.html
 library(tools)
 library(rword2vec)
 library(lsa)
