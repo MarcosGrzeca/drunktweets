@@ -22,6 +22,7 @@ fbcorpus <- corpus(dados$textEmbedding)
 #fbdfm <- dfm(fbcorpus, remove=stopwords("english"), verbose=TRUE, stem = TRUE, remove_punct = TRUE)
 fbdfm <- dfm(fbcorpus, remove=stopwords("english"), verbose=TRUE, remove_punct = TRUE)
 #fbdfm <- dfm_trim(fbdfm, min_docfreq = 2, verbose=TRUE)
+tfidf <- dfm_tfidf(fbdfm)
 
 dados$entidades = gsub(",", " ", dados$entidades)
 entidades <- corpus(dados$entidades)
@@ -69,7 +70,8 @@ library(xgboost)
 
 for (iteracao in 1:3) {
   # converting matrix object
-  X <- as(cbind(embed,typesdfm,entidadesdfm), "dgCMatrix")
+  #tfidf
+  X <- as(cbind(tfidf, embed,typesdfm,entidadesdfm), "dgCMatrix")
   
   # parameters to explore
   tryEta <- c(1,2,3)
@@ -124,3 +126,19 @@ for (iteracao in 1:3) {
   #cat("\nPrecision(0) on test set=", round(precision(preds<.50, fb$attacks[test]==0),3))
   #cat("\nRecall(0) on test set=", round(recall(preds<.50, fb$attacks[test]==0),3))
 }
+
+
+View(data_dfm_lbgexample)
+
+dfmat1 <- as.dfm(data_dfm_lbgexample)
+aa <- dfm_tfidf(dfmat1)[, 5:10] 
+head(dfmat1[, 5:10])
+head(aa)
+
+dfmat1 <- as.dfm(data_dfm_lbgexample)
+aa <- dfm_tfidf(dfmat1)[, 5:10] 
+head(dfmat1[, 5:10])
+head(aa)
+
+head(fbdfm[, 5:10])
+
