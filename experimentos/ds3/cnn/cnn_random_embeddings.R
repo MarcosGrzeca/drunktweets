@@ -5,7 +5,7 @@ source(file_path_as_absolute("utils/getDados.R"))
 dados <- getDadosAmazon()
  
 maxlen <- 40
-max_words <- 15000
+max_words <- 9051
 
 tokenizer <-  text_tokenizer(num_words = max_words) %>%
               fit_text_tokenizer(dados$textEmbedding)
