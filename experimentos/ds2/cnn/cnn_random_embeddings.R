@@ -11,7 +11,7 @@ names(resultados) <- c("Baseline", "F1", "Precisão", "Revocação")
 
 library(keras)
 iteracoes <- 0
-while (iteracoes < 20) {	
+while (iteracoes < 20) {
 	callbacks_list <- list(
 		callback_early_stopping(
 			monitor = metrica,
