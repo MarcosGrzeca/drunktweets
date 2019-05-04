@@ -1,9 +1,9 @@
 library(tools)
 source(file_path_as_absolute("ipm/loads.R"))
 
-epocas <- c(3,5,10)
+epocas <- c(5)
 enriquecimentos <- c(0, 1)
-metricas <- c("acc", "val_loss")
+metricas <- c("val_loss")
 early_stop <- 1
 
 files <- c("experimentos/ds1/q1/cnn/cnn_random_embeddings_bow_q1.R")
