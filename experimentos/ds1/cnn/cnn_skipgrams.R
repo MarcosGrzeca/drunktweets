@@ -1,4 +1,4 @@
-#max_words <- vocab_size
+max_words <- vocab_size
 word_index <- tokenizer$word_index
 embedding_dims <- 100
 embedding_matrix <- array(0, c(max_words, embedding_dims))
