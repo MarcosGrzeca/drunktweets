@@ -41,11 +41,11 @@ dados_test_sequence <- data[-trainIndex,]
 max_sequence <- max(sapply(dados_train$sequences, max))
 max_sequence_types <- max(sapply(dados_train$sequences_types, max))
 
-train_sequences <- vectorize_sequences(dados_train$sequences, dimension = max_sequence)
-train_sequences_types <- vectorize_sequences(dados_train$sequences_types, dimension = max_sequence_types)
+sequences <- vectorize_sequences(dados_train$sequences, dimension = max_sequence)
+sequences_types <- vectorize_sequences(dados_train$sequences_types, dimension = max_sequence_types)
 
-test_sequences <- vectorize_sequences(dados_test$sequences, dimension = max_sequence)
-test_sequences_types <- vectorize_sequences(dados_test$sequences_types, dimension = max_sequence_types)
+sequences_test <- vectorize_sequences(dados_test$sequences, dimension = max_sequence)
+sequences_test_types <- vectorize_sequences(dados_test$sequences_types, dimension = max_sequence_types)
 
 #Text parser BoW
 tokenizerBow <- text_tokenizer(num_words = max_words) %>%
