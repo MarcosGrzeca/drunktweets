@@ -14,19 +14,10 @@ for (word in names(word_index)) {
   	embedding_vector
   	View(embedding_vector)
     if (!is.null(embedding_vector))
-      embedding_matrix[index+1,] <- as.vector(embedding_vector)
+      embedding_matrix[index+1,] <- as.double(embedding_vector)
   }
 }
 
-str(embedding_matrix)
-
-aa <- as.vector(embedding_vector)
-
-View(aa)
-
-aa
-
-index
 
 library(tools)
 
