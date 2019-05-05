@@ -11,8 +11,6 @@ for (word in names(word_index)) {
   index <- word_index[[word]]
   if (index < max_words) {
   	embedding_vector <- w2v[w2v$word %in% word, 2:101]
-  	embedding_vector
-  	View(embedding_vector)
     if (!is.null(embedding_vector))
       embedding_matrix[index+1,] <- as.double(embedding_vector)
   }
