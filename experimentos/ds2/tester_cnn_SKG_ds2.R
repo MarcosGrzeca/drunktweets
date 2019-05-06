@@ -1,0 +1,26 @@
+library(tools)
+source(file_path_as_absolute("ipm/loads.R"))
+
+epocas <- c(5)
+enriquecimentos <- c(0, 1)
+metricas <- c("val_loss")
+early_stop <- 1
+
+source(file_path_as_absolute("experimentos/ds2/getDados.R"))
+files <- c("experimentos/ds2/cnn/cnn_skipgrams.R")
+
+for (file in files) {
+	redeDesc <- "CNN_SKP_DS2"
+	for (epoca in epocas) {
+		for (metrica in metricas) {
+			for (enriquecimento in enriquecimentos) {
+				resultados <- data.frame(matrix(ncol = 4, nrow = 0))
+				names(resultados) <- c("Baseline", "F1", "Precisão", "Revocação")
+				source(file_path_as_absolute(file))
+				logar("DS2", "SkipGrams", "CNN", epoca, 1, metrica, enriquecimento, resultados, model_to_json(model), redeDesc, file)
+			}
+		}
+	}
+}
+
+system("init 0")
