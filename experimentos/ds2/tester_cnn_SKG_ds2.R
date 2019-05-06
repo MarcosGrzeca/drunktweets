@@ -6,6 +6,7 @@ enriquecimentos <- c(0, 1)
 metricas <- c("val_loss")
 early_stop <- 1
 
+bow <- 1
 source(file_path_as_absolute("experimentos/ds2/getDados.R"))
 files <- c("experimentos/ds2/cnn/cnn_skipgrams.R")
 

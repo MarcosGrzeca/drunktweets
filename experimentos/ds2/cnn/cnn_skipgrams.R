@@ -156,11 +156,13 @@ while (iteracoes < 20) {
 	}
 
 	predictions2 <- round(predictions, 0)
-	matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
-	if (matriz$byClass["Recall"] * 100 > 50) {
-		if (matriz$byClass["Precision"] * 100 > 50) {
-	        iteracoes <- iteracoes + 1
-			resultados <- addRowAdpater(resultados, paste0("Enriquecimento: ", enriquecimento, " - Early: ", early_stop), matriz)
+	if (predictions2[1] != "NaN") {
+		matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
+		if (matriz$byClass["Recall"] * 100 > 50) {
+			if (matriz$byClass["Precision"] * 100 > 50) {
+		        iteracoes <- iteracoes + 1
+				resultados <- addRowAdpater(resultados, paste0("Enriquecimento: ", enriquecimento, " - Early: ", early_stop), matriz)
+			}
 		}
 	}
 }
