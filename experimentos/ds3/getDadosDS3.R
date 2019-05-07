@@ -4,7 +4,7 @@ source(file_path_as_absolute("utils/getDados.R"))
 
 dados <- getDadosAmazon()
  
-maxlen <- 40
+maxlen <- 20
 max_words <- 9052
 
 tokenizer <-  text_tokenizer(num_words = max_words) %>%
@@ -31,7 +31,7 @@ vocabTypesLenght <- length(tokenizer_types$word_index)
 dados$sequences_types <- texts_to_sequences(tokenizer_types, dados$types)
 
 library(caret)
-trainIndex <- createDataPartition(as.factor(dados$resposta), p=0.8, list=FALSE)
+trainIndex <- createDataPartition(dados$resposta, p=0.8, list=FALSE)
 dados_train <- dados[ trainIndex,]
 dados_test <- dados[-trainIndex,]
 
