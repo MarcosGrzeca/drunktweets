@@ -7,7 +7,7 @@ early_stop <- 1
 
 library(keras)
 iteracoes <- 0
-while (iteracoes < 20) {
+while (iteracoes < 10) {
 	source(file_path_as_absolute(fileGetDados))
 	word_index <- tokenizer$word_index
 	embedding_dims <- 100
