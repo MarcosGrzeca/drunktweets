@@ -43,14 +43,16 @@ for (file in files) {
 	}
 }
 
-epocas <- c(3,5,10,20)
+# epocas <- c(3,5,10,20)
+epocas <- c(5)
 enriquecimentos <- c(0, 1)
-metricas <- c("acc", "val_loss")
+# metricas <- c("acc", "val_loss")
+metricas <- c("val_loss")
 
 files <- c("experimentos/ds1/q3/cnn/glove_bow_q3.R")
 
 for (file in files) {
-	redeDesc <- "CNNGloveBowDS1Q3"
+	redeDesc <- "CNNGloveBowDS1Q3B"
 	for (epoca in epocas) {
 		for (metrica in metricas) {
 			for (enriquecimento in enriquecimentos) {
