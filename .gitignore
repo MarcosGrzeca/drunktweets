@@ -17,3 +17,4 @@ ensemble/resultados/exp5/imageFileRede-sem-key-words.RData
 ensemble/resultados/exp5/imageFileRede-sem-key-words.RDataTmp
 .Rproj.user
 .vscode/settings.json
+*.pper
