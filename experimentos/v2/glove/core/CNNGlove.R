@@ -3,6 +3,8 @@ library(tools)
 resultados <- data.frame(matrix(ncol = 4, nrow = 0))
 names(resultados) <- c("Baseline", "F1", "Precisão", "Revocação")
 
+early_stop <- 1
+
 library(keras)
 iteracoes <- 0
 while (iteracoes < 20) {
