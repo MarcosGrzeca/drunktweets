@@ -11,19 +11,25 @@ while (iteracoes < 20) {
 	source(file_path_as_absolute(fileGetDados))
 	max_words <- vocab_size
 	word_index <- tokenizer$word_index
-	embedding_dims <- 100
-	embedding_matrix <- array(0, c(max_words, embedding_dims))
 
-	w2v <- readr::read_delim("adhoc/exportembedding/new_skipgrams_10_epocas_5l.txt", 
-	                         skip=1, delim=" ", quote="",
-	                         col_names=c("word", paste0("V", 1:100)))
+	# lines <- readLines("/var/www/html/drunktweets/adhoc/exportembedding/glove_50epocas_5l.txt")
+	lines <- readLines("/var/www/html/drunktweets/adhoc/exportembedding/new_skipgrams_10_epocas_5l.txt")
+	embeddings_index <- new.env(hash = TRUE, parent = emptyenv())
+	for (i in 1:length(lines)) {
+	  line <- lines[[i]]
+	  values <- strsplit(line, " ")[[1]]
+	  word <- values[[1]]
+	  embeddings_index[[word]] <- as.double(values[-1])
+	}
 
+	embedding_dim <- 100
+	embedding_matrix <- array(0, c(max_words, embedding_dim))
 	for (word in names(word_index)) {
 	  index <- word_index[[word]]
 	  if (index < max_words) {
-	  	embedding_vector <- w2v[w2v$word %in% word, 2:101]
+	    embedding_vector <- embeddings_index[[word]]
 	    if (!is.null(embedding_vector))
-	      embedding_matrix[index+1,] <- as.double(embedding_vector)
+	      embedding_matrix[index+1,] <- embedding_vector
 	  }
 	}
 
