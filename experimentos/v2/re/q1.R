@@ -13,7 +13,7 @@ maxlen <- 38
 max_words <- 7574
 questionAval <- "q1"
 
-files <- c("experimentos/v2/cnn/core/CNNRE.R")
+files <- c("experimentos/v2/re/core/CNNRE.R")
 
 fileGetDados <- "experimentos/ds1/sequence_generate_with_bow.R"
 
