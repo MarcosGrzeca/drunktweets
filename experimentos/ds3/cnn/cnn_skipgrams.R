@@ -15,6 +15,7 @@ word_index = tokenizer$word_index
 
 vocab_size <- length(word_index)
 vocab_size <- vocab_size + 1
+max_words <- vocab_size
 
 cat("Found", length(word_index), "unique tokens.\n")
 data <- pad_sequences(sequences, maxlen = maxlen)
