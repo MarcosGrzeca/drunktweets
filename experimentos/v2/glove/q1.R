@@ -1,5 +1,6 @@
 library(tools)
 source(file_path_as_absolute("ipm/loads.R"))
+source(file_path_as_absolute("ipm/glove/load.R"))
 
 set.seed(10)
 epocas <- c(5)
