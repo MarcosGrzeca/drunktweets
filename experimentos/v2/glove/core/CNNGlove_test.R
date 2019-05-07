@@ -44,7 +44,7 @@ while (iteracoes < 3) {
 	# Data Preparation --------------------------------------------------------
 	# Parameters --------------------------------------------------------------
 	embedding_dims <- 100
-	filters <- 20
+	filters <- 32
 	hidden_dims <- 10
 
 	main_input <- layer_input(shape = c(maxlen), dtype = "int32")
@@ -92,6 +92,7 @@ while (iteracoes < 3) {
 						layer_dense(units = 4, activation = "relu", kernel_regularizer = regularizer_l2(0.001))
 		
 		main_output <- layer_concatenate(c(cnn_output, auxilary_output)) %>% 
+				layer_dropout(0.1) %>%
 				# layer_dropout(0.2) %>%
 				layer_dense(units = 2, activation = "relu", kernel_regularizer = regularizer_l2(0.001)) %>%
 				layer_dense(units = 1, activation = 'sigmoid')
@@ -110,6 +111,7 @@ while (iteracoes < 3) {
 						layer_dense(units = 4, activation = "relu", kernel_regularizer = regularizer_l2(0.001))
 		
 		main_output <- layer_concatenate(c(cnn_output, auxilary_output)) %>% 
+				layer_dropout(0.1) %>%
 				layer_dense(units = 2, activation = "relu", kernel_regularizer = regularizer_l2(0.001)) %>%
 				layer_dense(units = 1, activation = 'sigmoid')
 
