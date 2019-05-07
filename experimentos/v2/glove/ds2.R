@@ -32,4 +32,4 @@ for (file in files) {
 	}
 }
 
-system("init 0")
+source(file_path_as_absolute("shutdown.R"))
