@@ -4,7 +4,7 @@ source(file_path_as_absolute("utils/getDados.R"))
 
 dados <- getDadosAmazon()
  
-maxlen <- 20
+maxlen <- 30
 max_words <- 9052
 
 tokenizer <-  text_tokenizer(num_words = max_words) %>%
