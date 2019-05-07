@@ -12,12 +12,12 @@ library("tools")
 maxlen <- 38
 max_words <- 16615
 
-files <- c("experimentos/v2/re/core/CNNRE.R")
+files <- c("experimentos/v2/skipgrams/core/CNNSKP.R")
 
 fileGetDados <- "experimentos/ds2/sequence_generate_with_bow.R"
 
 for (file in files) {
-	redeDesc <- "V2_CNNREBowDS2"
+	redeDesc <- "V2_CNNSKPCERTOBowDS2"
 	for (epoca in epocas) {
 		for (metrica in metricas) {
 			for (enriquecimento in enriquecimentos) {
