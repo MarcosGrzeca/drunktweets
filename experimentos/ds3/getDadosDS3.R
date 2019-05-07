@@ -48,7 +48,7 @@ test_sequences <- vectorize_sequences(dados_test$sequences, dimension = max_sequ
 test_sequences_types <- vectorize_sequences(dados_test$sequences_types, dimension = max_sequence_types)
 
 #Text parser BoW
-tokenizerBow <- text_tokenizer(num_words = 8000) %>%
+tokenizerBow <- text_tokenizer(num_words = 9052) %>%
   fit_text_tokenizer(dados$textParser)
 
 dataframebow_train <- texts_to_matrix(tokenizerBow, dados_train$textParser, mode = "binary")
