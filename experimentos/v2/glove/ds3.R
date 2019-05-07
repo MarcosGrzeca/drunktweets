@@ -14,8 +14,7 @@ maxlen <- 38
 max_words <- 16615
 
 files <- c("experimentos/v2/glove/core/CNNGlove.R")
-
-fileGetDados <- "experimentos/ds2/sequence_generate_with_bow.R"
+fileGetDados <- "experimentos/ds3/getDadosDS3.R"
 
 for (file in files) {
 	redeDesc <- "V2_CNNGloveBowDS3-20"

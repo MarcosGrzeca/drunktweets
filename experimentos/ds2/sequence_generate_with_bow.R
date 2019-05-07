@@ -35,7 +35,10 @@ try({
 	dados_train_sequence <- data[ trainIndex,]
 	dados_test_sequence <- data[-trainIndex,]
 
-	max_sequence <- max(sapply(dados_train$sequences, max))
+	max_sequence <- 100
+	try({
+		max_sequence <- max(sapply(dados_train$sequences, max))
+	})
 	max_sequence_types <- max(sapply(dados_train$sequences_types, max))
 
 	sequences <- vectorize_sequences(dados_train$sequences, dimension = max_sequence)
