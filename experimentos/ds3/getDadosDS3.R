@@ -5,7 +5,7 @@ source(file_path_as_absolute("utils/getDados.R"))
 dados <- getDadosAmazon()
  
 maxlen <- 40
-max_words <- 15000
+max_words <- 9052
 
 tokenizer <-  text_tokenizer(num_words = max_words) %>%
               fit_text_tokenizer(dados$textEmbedding)
@@ -31,7 +31,7 @@ vocabTypesLenght <- length(tokenizer_types$word_index)
 dados$sequences_types <- texts_to_sequences(tokenizer_types, dados$types)
 
 library(caret)
-trainIndex <- createDataPartition(dados$resposta, p=0.8, list=FALSE)
+trainIndex <- createDataPartition(as.factor(dados$resposta), p=0.8, list=FALSE)
 dados_train <- dados[ trainIndex,]
 dados_test <- dados[-trainIndex,]
 
@@ -48,7 +48,7 @@ sequences_test <- vectorize_sequences(dados_test$sequences, dimension = max_sequ
 sequences_test_types <- vectorize_sequences(dados_test$sequences_types, dimension = max_sequence_types)
 
 #Text parser BoW
-tokenizerBow <- text_tokenizer(num_words = 9052) %>%
+tokenizerBow <- text_tokenizer(num_words = max_words) %>%
   fit_text_tokenizer(dados$textParser)
 
 dataframebow_train <- texts_to_matrix(tokenizerBow, dados_train$textParser, mode = "binary")
