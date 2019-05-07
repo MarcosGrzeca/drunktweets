@@ -85,7 +85,7 @@ while (iteracoes < 3) {
 	if (enriquecimento == 1) {
 		cnn_output <- layer_concatenate(c(ccn_out_3, ccn_out_4, ccn_out_5)) %>% 
 						layer_dropout(0.2) %>%
-						layer_dense(units = 4, activation = "relu", kernel_regularizer = regularizer_l2(0.001))
+						layer_dense(units = 2, activation = "relu", kernel_regularizer = regularizer_l2(0.001))
 
 		auxilary_output <- layer_concatenate(c(bow_out, entities_out, types_out)) %>% 
 						layer_dropout(0.2) %>%
@@ -103,7 +103,7 @@ while (iteracoes < 3) {
 	} else {
 		cnn_output <- layer_concatenate(c(ccn_out_3, ccn_out_4, ccn_out_5)) %>% 
 						layer_dropout(0.2) %>%
-						layer_dense(units = 4, activation = "relu", kernel_regularizer = regularizer_l2(0.001))
+						layer_dense(units = 2, activation = "relu", kernel_regularizer = regularizer_l2(0.001))
 
 		auxilary_output <- bow_out	%>% 
 						layer_dropout(0.2) %>%
