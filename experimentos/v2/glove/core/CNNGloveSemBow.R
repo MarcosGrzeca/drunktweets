@@ -91,7 +91,7 @@ while (iteracoes < 20) {
 			outputs = main_output
 		)
 	} else {
-		main_output <- 	layer_concatenate(c(ccn_out_3, ccn_out_4, ccn_out_5, entities_out, types_out)) %>% 
+		main_output <- 	layer_concatenate(c(ccn_out_3, ccn_out_4, ccn_out_5)) %>% 
 						layer_dropout(0.2) %>%
 						layer_dense(units = 32, activation = "relu", kernel_regularizer = regularizer_l2(0.001)) %>% 
 						layer_dense(units = 1, activation = 'sigmoid')
