@@ -91,7 +91,8 @@ while (iteracoes < 20) {
 		
 		main_output <- layer_concatenate(c(cnn_output, auxilary_output)) %>% 
 				# layer_dropout(0.2) %>%
-				layer_dense(units = 16, activation = "relu", kernel_regularizer = regularizer_l2(0.001)) %>%
+				# layer_dense(units = 16, activation = "relu", kernel_regularizer = regularizer_l2(0.001)) %>% V3
+				layer_dense(units = 24, activation = "relu", kernel_regularizer = regularizer_l2(0.001)) %>%
 				layer_dense(units = 1, activation = 'sigmoid')
 
 		model <- keras_model(
@@ -108,7 +109,8 @@ while (iteracoes < 20) {
 						layer_dense(units = 8, activation = "relu", kernel_regularizer = regularizer_l2(0.001))
 		
 		main_output <- layer_concatenate(c(cnn_output, auxilary_output)) %>% 
-				layer_dense(units = 16, activation = "relu", kernel_regularizer = regularizer_l2(0.001)) %>%
+				# layer_dense(units = 16, activation = "relu", kernel_regularizer = regularizer_l2(0.001)) %>% V3
+				layer_dense(units = 24, activation = "relu", kernel_regularizer = regularizer_l2(0.001)) %>%
 				layer_dense(units = 1, activation = 'sigmoid')
 
 		model <- keras_model(
