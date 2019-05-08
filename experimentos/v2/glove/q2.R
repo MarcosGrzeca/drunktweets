@@ -19,7 +19,7 @@ files <- c("experimentos/v2/glove/core/CNNGlove.R")
 fileGetDados <- "experimentos/ds1/sequence_generate_with_bow.R"
 
 for (file in files) {
-	redeDesc <- "V2_CNNGloveBowDS1-Q2-20"
+	redeDesc <- "V3_CNNGloveBowDS1-Q2-20"
 	for (epoca in epocas) {
 		for (metrica in metricas) {
 			for (enriquecimento in enriquecimentos) {
@@ -33,4 +33,4 @@ for (file in files) {
 	}
 }
 
-source(file_path_as_absolute("shutdown.R"))
+#source(file_path_as_absolute("shutdown.R"))

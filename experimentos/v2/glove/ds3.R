@@ -17,7 +17,7 @@ files <- c("experimentos/v2/glove/core/CNNGlove.R")
 fileGetDados <- "experimentos/ds3/getDadosDS3.R"
 
 for (file in files) {
-	redeDesc <- "V2_CNNGloveBowDS3-20"
+	redeDesc <- "V3_CNNGloveBowDS3-20"
 	for (epoca in epocas) {
 		for (metrica in metricas) {
 			for (enriquecimento in enriquecimentos) {
@@ -31,4 +31,4 @@ for (file in files) {
 	}
 }
 
-source(file_path_as_absolute("shutdown.R"))
+#source(file_path_as_absolute("shutdown.R"))
