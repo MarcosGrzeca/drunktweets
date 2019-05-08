@@ -1,15 +1,13 @@
 library(tools)
 
-if (!isset(resultados)) {
-	resultados <- data.frame(matrix(ncol = 4, nrow = 0))
-	names(resultados) <- c("Baseline", "F1", "Precisão", "Revocação")
-}
+resultados <- data.frame(matrix(ncol = 4, nrow = 0))
+names(resultados) <- c("Baseline", "F1", "Precisão", "Revocação")
 
 early_stop <- 1
 
 library(keras)
 iteracoes <- 0
-while (iteracoes < 3) {
+while (iteracoes < 20) {
 	source(file_path_as_absolute(fileGetDados))
 	word_index <- tokenizer$word_index
 	embedding_dims <- 100
@@ -44,7 +42,7 @@ while (iteracoes < 3) {
 	# Data Preparation --------------------------------------------------------
 	# Parameters --------------------------------------------------------------
 	embedding_dims <- 100
-	filters <- 10
+	filters <- 20
 	hidden_dims <- 10
 
 	main_input <- layer_input(shape = c(maxlen), dtype = "int32")
@@ -85,16 +83,15 @@ while (iteracoes < 3) {
 	if (enriquecimento == 1) {
 		cnn_output <- layer_concatenate(c(ccn_out_3, ccn_out_4, ccn_out_5)) %>% 
 						layer_dropout(0.2) %>%
-						layer_dense(units = 2, activation = "relu")
+						layer_dense(units = 12, activation = "relu", kernel_regularizer = regularizer_l2(0.001))
 
 		auxilary_output <- layer_concatenate(c(bow_out, entities_out, types_out)) %>% 
 						layer_dropout(0.2) %>%
-						layer_dense(units = 4, activation = "relu")
+						layer_dense(units = 12, activation = "relu", kernel_regularizer = regularizer_l2(0.001))
 		
-		main_output <- cnn_output %>% 
-				layer_dropout(0.1) %>%
+		main_output <- layer_concatenate(c(cnn_output, auxilary_output)) %>% 
 				# layer_dropout(0.2) %>%
-				layer_dense(units = 2, activation = "relu") %>%
+				layer_dense(units = 2, activation = "relu", kernel_regularizer = regularizer_l2(0.001)) %>%
 				layer_dense(units = 1, activation = 'sigmoid')
 
 		model <- keras_model(
@@ -104,15 +101,14 @@ while (iteracoes < 3) {
 	} else {
 		cnn_output <- layer_concatenate(c(ccn_out_3, ccn_out_4, ccn_out_5)) %>% 
 						layer_dropout(0.2) %>%
-						layer_dense(units = 2, activation = "relu")
+						layer_dense(units = 12, activation = "relu", kernel_regularizer = regularizer_l2(0.001))
 
 		auxilary_output <- bow_out	%>% 
 						layer_dropout(0.2) %>%
-						layer_dense(units = 4, activation = "relu")
+						layer_dense(units = 12, activation = "relu", kernel_regularizer = regularizer_l2(0.001))
 		
-		main_output <- cnn_output %>% 
-				layer_dropout(0.1) %>%
-				layer_dense(units = 2, activation = "relu") %>%
+		main_output <- layer_concatenate(c(cnn_output, auxilary_output)) %>% 
+				layer_dense(units = 2, activation = "relu", kernel_regularizer = regularizer_l2(0.001)) %>%
 				layer_dense(units = 1, activation = 'sigmoid')
 
 		model <- keras_model(
