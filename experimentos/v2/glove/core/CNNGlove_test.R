@@ -1,15 +1,13 @@
 library(tools)
 
-if (!isset(resultados)) {
-	resultados <- data.frame(matrix(ncol = 4, nrow = 0))
-	names(resultados) <- c("Baseline", "F1", "Precisão", "Revocação")
-}
+resultados <- data.frame(matrix(ncol = 4, nrow = 0))
+names(resultados) <- c("Baseline", "F1", "Precisão", "Revocação")
 
 early_stop <- 1
 
 library(keras)
 iteracoes <- 0
-while (iteracoes < 3) {
+while (iteracoes < 20) {
 	source(file_path_as_absolute(fileGetDados))
 	word_index <- tokenizer$word_index
 	embedding_dims <- 100
@@ -93,7 +91,9 @@ while (iteracoes < 3) {
 		
 		main_output <- layer_concatenate(c(cnn_output, auxilary_output)) %>% 
 				# layer_dropout(0.2) %>%
-				layer_dense(units = 16, activation = "relu", kernel_regularizer = regularizer_l2(0.001)) %>%
+				# layer_dense(units = 16, activation = "relu", kernel_regularizer = regularizer_l2(0.001)) %>% V3
+				# layer_dense(units = 24, activation = "relu", kernel_regularizer = regularizer_l2(0.001)) %>% V4
+				layer_dense(units = 50, activation = "relu", kernel_regularizer = regularizer_l2(0.001)) %>% #V6
 				layer_dense(units = 1, activation = 'sigmoid')
 
 		model <- keras_model(
@@ -110,7 +110,8 @@ while (iteracoes < 3) {
 						layer_dense(units = 8, activation = "relu", kernel_regularizer = regularizer_l2(0.001))
 		
 		main_output <- layer_concatenate(c(cnn_output, auxilary_output)) %>% 
-				layer_dense(units = 16, activation = "relu", kernel_regularizer = regularizer_l2(0.001)) %>%
+				# layer_dense(units = 16, activation = "relu", kernel_regularizer = regularizer_l2(0.001)) %>% V3
+				layer_dense(units = 50, activation = "relu", kernel_regularizer = regularizer_l2(0.001)) %>%
 				layer_dense(units = 1, activation = 'sigmoid')
 
 		model <- keras_model(
