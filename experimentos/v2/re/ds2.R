@@ -17,7 +17,7 @@ files <- c("experimentos/v2/re/core/CNNRE.R")
 fileGetDados <- "experimentos/ds2/sequence_generate_with_bow.R"
 
 for (file in files) {
-	redeDesc <- "V2_CNNREBowDS2"
+	redeDesc <- "V3_CNNREBowDS2"
 	for (epoca in epocas) {
 		for (metrica in metricas) {
 			for (enriquecimento in enriquecimentos) {
