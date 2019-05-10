@@ -33,7 +33,7 @@ while (iteracoes < 20) {
 	# Data Preparation --------------------------------------------------------
 	# Parameters --------------------------------------------------------------
 	embedding_dims <- 100
-	filters <- 20
+	filters <- 24
 	hidden_dims <- 10
 
 	main_input <- layer_input(shape = c(maxlen), dtype = "int32")
