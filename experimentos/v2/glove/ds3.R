@@ -17,7 +17,7 @@ files <- c("experimentos/v2/glove/core/CNNGlove.R")
 fileGetDados <- "experimentos/ds3/getDadosDS3.R"
 
 for (file in files) {
-	redeDesc <- "V6_CNNGloveBowDS3-20"
+	redeDesc <- "V7_CNNGloveBowDS3-20"
 	for (epoca in epocas) {
 		for (metrica in metricas) {
 			for (enriquecimento in enriquecimentos) {
