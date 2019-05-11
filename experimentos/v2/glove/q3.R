@@ -14,12 +14,15 @@ maxlen <- 38
 max_words <- 3036
 questionAval <- "q3"
 
-files <- c("experimentos/v2/glove/core/CNNGlove.R")
+files <- c("experimentos/v2/glove/core/CNNGlove.R","experimentos/v2/glove/core/CNNGlove.R","experimentos/v2/glove/core/CNNGlove.R","experimentos/v2/glove/core/CNNGlove.R","experimentos/v2/glove/core/CNNGlove.R","experimentos/v2/glove/core/CNNGlove.R")
 
 fileGetDados <- "experimentos/ds1/sequence_generate_with_bow.R"
 
 for (file in files) {
-	redeDesc <- "V7_CNNGloveBowDS1-Q3-20"
+	redeDesc <- "V4_CNNGloveBowDS1-Q3"
+	indicador <- as.integer(runif(1, min=10, max=1000))
+	redeDesc <- paste0(redeDesc, indicador)
+
 	for (epoca in epocas) {
 		for (metrica in metricas) {
 			for (enriquecimento in enriquecimentos) {
