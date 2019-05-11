@@ -36,4 +36,4 @@ for (file in files) {
 	}
 }
 
-#source(file_path_as_absolute("shutdown.R"))
+source(file_path_as_absolute("shutdown.R"))
