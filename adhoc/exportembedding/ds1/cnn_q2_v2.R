@@ -93,7 +93,7 @@ history <- model %>%
     y = array(dados_train$resposta),
     batch_size = 64,
     #epochs = 10,
-    epochs = 5,
+    epochs = 10,
     validation_split = 0.2
   )
 
@@ -117,4 +117,4 @@ words <- words %>%
 
 row.names(embedding_matrixTwo) <- c("UNK", words$word)
 
-write.table(embedding_matrixTwo, "adhoc/exportembedding/ds1/q2/v2_cnn_5_epocas.txt",sep=" ",row.names=TRUE)
+write.table(embedding_matrixTwo, "adhoc/exportembedding/ds1/q2/v2_cnn_10_epocas.txt",sep=" ",row.names=TRUE)
