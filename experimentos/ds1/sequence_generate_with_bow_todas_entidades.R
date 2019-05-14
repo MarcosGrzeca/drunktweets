@@ -15,13 +15,13 @@ try({
 
 	data <- pad_sequences(sequences, maxlen = 30)
 
-	tokenizer_entities <- text_tokenizer(num_words = 500) %>%
+	tokenizer_entities <- text_tokenizer(num_words = 5000) %>%
 	fit_text_tokenizer(dados$entidades)
 
 	vocabEntitiesLenght <- length(tokenizer_entities$word_index)
 	dados$sequences <- texts_to_sequences(tokenizer_entities, dados$entidades)
 
-	tokenizer_types <- text_tokenizer(num_words = 500) %>%
+	tokenizer_types <- text_tokenizer(num_words = 3000) %>%
 	fit_text_tokenizer(dados$types)
 	vocabTypesLenght <- length(tokenizer_types$word_index)
 	dados$sequences_types <- texts_to_sequences(tokenizer_types, dados$types)

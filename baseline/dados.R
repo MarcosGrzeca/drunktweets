@@ -73,7 +73,7 @@ getDadosBaseline <- function() {
 }
 
 getDadosBaselineByQ <- function(var) {
-	prop <- 0
+	prop <- 1
 
 	if (prop == 0) {
 		sql <- paste0("SELECT id, ", var, " as resposta,

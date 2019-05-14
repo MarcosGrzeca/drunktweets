@@ -18,7 +18,9 @@ source(file_path_as_absolute("experimentos/v2/glove/requires.R"))
 
 # files <- c("experimentos/v2/glove/core/CNNGlove.R")
 
-fileGetDados <- "experimentos/ds1/sequence_generate_with_bow.R"
+if (!isset(fileGetDados)) {
+	fileGetDados <- "experimentos/ds1/sequence_generate_with_bow.R"
+}
 
 for (file in files) {
 	redeDesc <- "V7_CNNGloveBowDS1-Q1-20"
