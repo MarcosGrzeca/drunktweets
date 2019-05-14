@@ -37,9 +37,9 @@ try({
 
 	max_sequence <- 100
 	try({
-		max_sequence <- max(sapply(dados_train$sequences, max))
+		max_sequence <- max(sapply(dados_train$sequences[lengths(dados_train$sequences) > 0], max))
 	})
-	max_sequence_types <- max(sapply(dados_train$sequences_types, max))
+	max_sequence_types <- max(sapply(dados_train$sequences_types[lengths(dados_train$sequences_types) > 0], max))
 
 	sequences <- vectorize_sequences(dados_train$sequences, dimension = max_sequence)
 	sequences_types <- vectorize_sequences(dados_train$sequences_types, dimension = max_sequence_types)
