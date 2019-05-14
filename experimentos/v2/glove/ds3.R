@@ -21,6 +21,8 @@ fileGetDados <- "experimentos/ds3/getDadosDS3.R"
 
 for (file in files) {
 	redeDesc <- "V7_CNNGloveBowDS3-20"
+	redeDesc <- paste0(PREFX, redeDesc)
+	
 	for (epoca in epocas) {
 		for (metrica in metricas) {
 			for (enriquecimento in enriquecimentos) {
