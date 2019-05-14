@@ -12,8 +12,11 @@ library("tools")
 
 maxlen <- 38
 max_words <- 16615
+questionAval <- "ds2"
 
-files <- c("experimentos/v2/glove/core/CNNGlove.R")
+source(file_path_as_absolute("experimentos/v2/glove/requires.R"))
+
+# files <- c("experimentos/v2/glove/core/CNNGlove.R")
 
 fileGetDados <- "experimentos/ds2/sequence_generate_with_bow.R"
 
