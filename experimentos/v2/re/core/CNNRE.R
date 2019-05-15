@@ -143,6 +143,27 @@ while (iteracoes < 20) {
 	matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
 	if (matriz$byClass["Recall"] * 100 > 50) {
 		if (matriz$byClass["Precision"] * 100 > 50) {
+
+			if (isset(die)) {
+				if (die == 1) {
+					library(dplyr)
+
+					embedding_matrixTwo <- get_weights(model)[[1]]
+					words <- data_frame(
+					  word = names(tokenizer$word_index), 
+					  id = as.integer(unlist(tokenizer$word_index))
+					)
+
+					words <- words %>%
+					  filter(id <= tokenizer$num_words) %>%
+					  arrange(id)
+
+					row.names(embedding_matrixTwo) <- c("UNK", words$word)
+					write.table(embedding_matrixTwo, embedding_result,sep=" ",row.names=TRUE)
+
+					break;
+				}
+			}
 	        iteracoes <- iteracoes + 1
 			resultados <- addRowAdpater(resultados, paste0("Enriquecimento: ", enriquecimento, " - Early: ", early_stop), matriz)
 		}
