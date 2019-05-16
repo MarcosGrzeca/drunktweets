@@ -16,7 +16,6 @@ while (iteracoes < 20) {
 	word_index <- tokenizer$word_index
 	embedding_dims <- 100
 
-
 	callbacks_list <- list(
 		callback_early_stopping(
 			monitor = metrica,
@@ -111,10 +110,11 @@ while (iteracoes < 20) {
 		}
 		
 		if (bow_opt == 1) {
+			
 			main_output <- layer_concatenate(c(cnn_output, auxilary_output)) %>% 
 					layer_dense(units = 24, activation = "relu", kernel_regularizer = regularizer_l2(0.001)) %>%
 					layer_dense(units = 1, activation = 'sigmoid')
-			)
+			
 			model <- keras_model(
 				inputs = c(main_input, input_bow),
 				outputs = main_output
@@ -123,9 +123,11 @@ while (iteracoes < 20) {
 			main_output <- cnn_output %>% 
 					layer_dense(units = 24, activation = "relu", kernel_regularizer = regularizer_l2(0.001)) %>%
 					layer_dense(units = 1, activation = 'sigmoid')
+
 			model <- keras_model(
 				inputs = main_input,
 				outputs = main_output
+			)
 		}
 
 	}
