@@ -5,6 +5,10 @@ names(resultados) <- c("Baseline", "F1", "Precisão", "Revocação")
 
 early_stop <- 1
 
+if (!isset(bow_opt)) {
+	bow_opt <- 1
+}
+
 library(keras)
 iteracoes <- 0
 while (iteracoes < 20) {
@@ -76,9 +80,15 @@ while (iteracoes < 20) {
 						layer_dropout(0.2) %>%
 						layer_dense(units = 8, activation = "relu", kernel_regularizer = regularizer_l2(0.001))
 
-		auxilary_output <- layer_concatenate(c(bow_out, entities_out, types_out)) %>% 
-						layer_dropout(0.2) %>%
-						layer_dense(units = 8, activation = "relu", kernel_regularizer = regularizer_l2(0.001))
+		if (bow_opt) {
+			auxilary_output <- layer_concatenate(c(bow_out, entities_out, types_out)) %>% 
+							layer_dropout(0.2) %>%
+							layer_dense(units = 8, activation = "relu", kernel_regularizer = regularizer_l2(0.001))
+		} else {
+			auxilary_output <- layer_concatenate(c(ntities_out, types_out)) %>% 
+							layer_dropout(0.2) %>%
+							layer_dense(units = 2, activation = "relu", kernel_regularizer = regularizer_l2(0.001))
+		}
 		
 		main_output <- layer_concatenate(c(cnn_output, auxilary_output)) %>% 
 				# layer_dropout(0.2) %>%
@@ -94,13 +104,21 @@ while (iteracoes < 20) {
 						layer_dropout(0.2) %>%
 						layer_dense(units = 8, activation = "relu", kernel_regularizer = regularizer_l2(0.001))
 
-		auxilary_output <- bow_out	%>% 
-						layer_dropout(0.2) %>%
-						layer_dense(units = 8, activation = "relu", kernel_regularizer = regularizer_l2(0.001))
+		if (bow_opt) {
+			auxilary_output <- bow_out	%>% 
+							layer_dropout(0.2) %>%
+							layer_dense(units = 8, activation = "relu", kernel_regularizer = regularizer_l2(0.001))
+		}
 		
-		main_output <- layer_concatenate(c(cnn_output, auxilary_output)) %>% 
-				layer_dense(units = 24, activation = "relu", kernel_regularizer = regularizer_l2(0.001)) %>%
-				layer_dense(units = 1, activation = 'sigmoid')
+		if (bow_opt) {
+			main_output <- layer_concatenate(c(cnn_output, auxilary_output)) %>% 
+					layer_dense(units = 24, activation = "relu", kernel_regularizer = regularizer_l2(0.001)) %>%
+					layer_dense(units = 1, activation = 'sigmoid')
+		} else {
+			main_output <- cnn_output %>% 
+					layer_dense(units = 24, activation = "relu", kernel_regularizer = regularizer_l2(0.001)) %>%
+					layer_dense(units = 1, activation = 'sigmoid')
+		}
 
 		model <- keras_model(
 			inputs = c(main_input, input_bow),
@@ -116,27 +134,47 @@ while (iteracoes < 20) {
 	)
 
 	if (enriquecimento == 1) {
+		if (bow_opt == 1) {
+			entrada <- list(dados_train_sequence, dataframebow_train, sequences, sequences_types)
+		} else {
+			entrada <- list(dados_train_sequence, sequences, sequences_types)
+		}
+
 		history <- model %>%
 			fit(
-			  x = list(dados_train_sequence, dataframebow_train, sequences, sequences_types),
+			  x = entrada,
 			  y = array(dados_train$resposta),
 			  batch_size = FLAGS$batch_size,
 			  epochs = epoca,
 			  callbacks = callbacks_list,
 			  validation_split = 0.2
 			)
-		predictions <- model %>% predict(list(dados_test_sequence, dataframebow_test, sequences_test, sequences_test_types))
+		if (bow_opt == 1) {
+			predictions <- model %>% predict(list(dados_test_sequence, dataframebow_test, sequences_test, sequences_test_types))
+		} else {
+			predictions <- model %>% predict(list(dados_test_sequence, sequences_test, sequences_test_types))
+		}
 	} else {
+		if (bow_opt == 1) {
+			entrada <- list(dados_train_sequence, dataframebow_train)
+		} else {
+			entrada <- list(dados_train_sequence)
+		}
 		history <- model %>%
 			fit(
-			  x = list(dados_train_sequence, dataframebow_train),
+			  x = entrada,
 			  y = array(dados_train$resposta),
 			  batch_size = FLAGS$batch_size,
 			  epochs = epoca,
 			  callbacks = callbacks_list,
 			  validation_split = 0.2
 			)
-		predictions <- model %>% predict(list(dados_test_sequence, dataframebow_test))
+
+		if (bow_opt == 1) {
+			predictions <- model %>% predict(list(dados_test_sequence, dataframebow_test))
+		} else {
+			predictions <- model %>% predict(list(dados_test_sequence))
+		}
 	}
 
 	predictions2 <- round(predictions, 0)
