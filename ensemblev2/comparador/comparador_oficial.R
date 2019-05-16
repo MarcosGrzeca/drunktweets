@@ -1,12 +1,23 @@
 library(caret)
 library(dplyr)
 
-expName <- "ds2"
+expName <- "ds3"
+
+resultados <- data.frame(matrix(ncol = 4, nrow = 0))
+names(resultados) <- c("F1", "Precision", "Recall")
+
+addRowAdpaterBamos <- function(resultados, f1, precision, recall) {
+  newRes <- data.frame(f1, precision, recall)
+  rownames(newRes) <- "Exp"
+  names(newRes) <- c("F1", "Precision", "Recall")
+  newdf <- rbind(resultados, newRes)
+  return (newdf)
+}
 
 for (year in 1:5) {
 	svmResults <- readRDS(file = paste0("ensemblev2/resultados/", expName, "/svm", year, ".rds"))
 	xgboost <- readRDS(file = paste0("ensemblev2/resultados/", expName, "/xgboost", year, ".rds"))
-	nnResults <- readRDS(file = paste0("ensemblev2/resultados/", expName, "/neuralprob", year, ".rds"))
+	nnResults <- readRDS(file = paste0("ensemblev2/resultados/", expName, "/v3/neuralprob", year, ".rds"))
 
 	if (expName == "exp1") {
 		datasetFile <-"ensemble/datasets/exp1/2-Gram-dbpedia-types-enriquecimento-info-q1-not-null_info_entidades.Rda"
@@ -27,7 +38,7 @@ for (year in 1:5) {
 	data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
 	data_test <- maFinal[-trainIndex,]
 	
-	bigDataFrame <- bind_cols(list(as.numeric(as.character(svmResults)), as.numeric(as.character(xgboost))))
+	bigDataFrame <- bind_cols(list(as.numeric(as.character(svmResults)), as.numeric(as.character(xgboost)), as.numeric(as.character(nnResults))))
 	pred <- round(rowMeans(bigDataFrame),0)
 	
 	#bigDataFrame <- bind_cols(list(as.numeric(as.character(svmResults)), as.numeric(as.character(xgboost))))
@@ -42,4 +53,11 @@ for (year in 1:5) {
 	print(matriz$byClass["F1"])
 	print(matriz$byClass["Precision"])
 	print(matriz$byClass["Recall"])
+
+	resultados <- addRowAdpaterBamos(resultados, matriz$byClass["F1"], matriz$byClass["Precision"], matriz$byClass["Recall"])
 }
+
+View(resultados)
+mean(resultados$F1 * 100)
+mean(resultados$Precision * 100)
+mean(resultados$Recall * 100)
