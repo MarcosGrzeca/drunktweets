@@ -4,7 +4,7 @@ library(lsa)
 library(readr)
 library(quanteda)
 
-Cores <- 8
+Cores <- 16
 
 library(doMC)
 registerDoMC(cores=Cores)
