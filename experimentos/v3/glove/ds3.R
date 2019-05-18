@@ -20,7 +20,7 @@ source(file_path_as_absolute("experimentos/v2/glove/requires.R"))
 fileGetDados <- "experimentos/ds3/getDadosDS3.R"
 
 for (file in files) {
-	redeDesc <- "V7_CNNGloveBowDS3-20"
+	redeDesc <- "TECNNGloveBowDS3-20"
 	redeDesc <- paste0(PREFX, redeDesc)
 	
 	for (epoca in epocas) {

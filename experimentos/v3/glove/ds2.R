@@ -21,7 +21,7 @@ source(file_path_as_absolute("experimentos/v2/glove/requires.R"))
 fileGetDados <- "experimentos/ds2/sequence_generate_with_bow.R"
 
 for (file in files) {
-	redeDesc <- "V7_CNNGloveBowDS2-20"
+	redeDesc <- "TECNNGloveBowDS2-20"
 	redeDesc <- paste0(PREFX, redeDesc)
 	
 	for (epoca in epocas) {

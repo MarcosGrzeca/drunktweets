@@ -23,7 +23,7 @@ if (!isset(fileGetDados)) {
 }
 
 for (file in files) {
-	redeDesc <- "V7_CNNGloveBowDS1-Q1-20"
+	redeDesc <- "TECNNGloveBowDS1-Q1-20"
 	redeDesc <- paste0(PREFX, redeDesc)
 	
 	for (epoca in epocas) {
