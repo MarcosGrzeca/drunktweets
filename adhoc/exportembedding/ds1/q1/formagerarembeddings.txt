@@ -1,0 +1,18 @@
+cnn_10_epocas_v2.txt
+ - default
+cnn_10_epocas_v2_PONTOS.txt
+ - default, mantendo a pontuação
+cnn_10_epocas_v3.txt
+ - Alterei hidden layers para 20
+ cnn_5_epocas_24.txt
+  - 24 hidden layers, 5 epocas e mantendo a pontuação
+ cnn_10_epocas_24.txt
+  - 24 hidden layers, 10 epocas e mantendo a pontuação
+ cnn_5_epocas_12.txt (ruim)
+  - 12 layers, mantive pontuação
+ cnn_5_epocas_16.txt
+  - 16 layers, mantive pontuação
+ cnn_5_epocas_8.txt
+ - 8 layers, mantive pontuação
+ cnn_10_epocas_8.txt
+ - 8 layers, mantive pontuação
