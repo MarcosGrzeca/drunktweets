@@ -6,11 +6,11 @@ source(file_path_as_absolute("utils/getDados.R"))
 source(file_path_as_absolute("baseline/dados.R"))
 source(file_path_as_absolute("utils/tokenizer.R"))
 
-dados <- getDadosBaselineByQ("q2")
-dados$textEmbedding <- removePunctuation(dados$textEmbedding)
+dados <- getDadosBaselineByQ("q1")
+# dados$textEmbedding <- removePunctuation(dados$textEmbedding)
 
 maxlen <- 38
-max_words <- 4405
+max_words <- 7860
 
 tokenizer <-  text_tokenizer(num_words = max_words) %>%
               fit_text_tokenizer(dados$textEmbedding)
@@ -36,9 +36,24 @@ dados_test_sequence <- data[-trainIndex,]
 max_words <- vocab_size
 word_index <- tokenizer$word_index
 
+callbacks_list <- list(
+    callback_early_stopping(
+      monitor = "val_loss",
+      patience = 1
+    ),
+    callback_model_checkpoint(
+      filepath = paste0("adhoc/exportembedding/adicionais/test_models.h5"),
+      monitor = "val_loss",
+      save_best_only = TRUE
+    )
+  )
+
 # Data Preparation --------------------------------------------------------
 # Parameters --------------------------------------------------------------
 embedding_dims <- 100
+
+# Parameters --------------------------------------------------------------
+# filters <- 200
 filters <- 164
 
 main_input <- layer_input(shape = c(maxlen), dtype = "int32")
@@ -92,6 +107,7 @@ history <- model %>%
     y = array(dados_train$resposta),
     batch_size = 64,
     epochs = 10,
+    #callbacks = callbacks_list,
     validation_split = 0.2
   )
 
@@ -115,6 +131,6 @@ words <- words %>%
 
 row.names(embedding_matrixTwo) <- c("UNK", words$word)
 
-embedding_file <- "adhoc/exportembedding/ds1/q2/cnn_10_epocas_8_filters164.txt"
+embedding_file <- "adhoc/exportembedding/ds1/q1/cnn_10_epocas_8_filters164.txt"
 write.table(embedding_matrixTwo, embedding_file, sep=" ",row.names=TRUE)
 system(paste0("sed -i 's/\"//g' ", embedding_file))
