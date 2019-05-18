@@ -1,1 +1,3 @@
 sed -i 's/"//g' file.txt
+
+system(paste0("sed -i 's/\"//g' ", embedding_file))
