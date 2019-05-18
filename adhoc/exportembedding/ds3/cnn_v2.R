@@ -1,16 +1,17 @@
 library(tools)
 library(tm)
 
-source(file_path_as_absolute("ipm/experimenters.R"))
-source(file_path_as_absolute("utils/getDados.R"))
-source(file_path_as_absolute("baseline/dados.R"))
-source(file_path_as_absolute("utils/tokenizer.R"))
+source(file_path_as_absolute("ipm/loads.R"))
+source(file_path_as_absolute("utils/getDadosAmazon.R"))
 
-dados <- getDadosBaselineByQ("q2")
+#Section: Dados classificar
+dados <- getDadosAmazon()
+
 #dados$textEmbedding <- removePunctuation(dados$textEmbedding)
 
+#Preparação dos dados
 maxlen <- 38
-max_words <- 4405
+max_words <- 9322
 
 tokenizer <-  text_tokenizer(num_words = max_words) %>%
               fit_text_tokenizer(dados$textEmbedding)
@@ -25,6 +26,17 @@ vocab_size
 cat("Found", length(word_index), "unique tokens.\n")
 data <- pad_sequences(sequences, maxlen = maxlen)
 
+tokenizer_entities <- text_tokenizer(num_words = 1000) %>%
+  fit_text_tokenizer(dados$entidades)
+
+vocabEntitiesLenght <- length(tokenizer_entities$word_index)
+dados$sequences <- texts_to_sequences(tokenizer_entities, dados$entidades)
+
+tokenizer_types <- text_tokenizer(num_words = 1000) %>%
+  fit_text_tokenizer(dados$types)
+vocabTypesLenght <- length(tokenizer_types$word_index)
+dados$sequences_types <- texts_to_sequences(tokenizer_types, dados$types)
+
 library(caret)
 trainIndex <- createDataPartition(dados$resposta, p=0.8, list=FALSE)
 dados_train <- dados[ trainIndex,]
@@ -32,6 +44,15 @@ dados_test <- dados[-trainIndex,]
 
 dados_train_sequence <- data[ trainIndex,]
 dados_test_sequence <- data[-trainIndex,]
+
+max_sequence <- max(sapply(dados_train$sequences, max))
+max_sequence_types <- max(sapply(dados_train$sequences_types, max))
+
+train_sequences <- vectorize_sequences(dados_train$sequences, dimension = max_sequence)
+train_sequences_types <- vectorize_sequences(dados_train$sequences_types, dimension = max_sequence_types)
+
+test_sequences <- vectorize_sequences(dados_test$sequences, dimension = max_sequence)
+test_sequences_types <- vectorize_sequences(dados_test$sequences_types, dimension = max_sequence_types)
 
 max_words <- vocab_size
 word_index <- tokenizer$word_index
@@ -95,6 +116,7 @@ history <- model %>%
     validation_split = 0.2
   )
 
+history
 # predictions <- model %>% predict(list(dados_test_sequence))
 # predictions2 <- round(predictions, 0
 # matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
@@ -115,6 +137,6 @@ words <- words %>%
 
 row.names(embedding_matrixTwo) <- c("UNK", words$word)
 
-embedding_file <- "adhoc/exportembedding/ds1/q2/cnn_10_epocas_8_filters164.txt"
+embedding_file <- "adhoc/exportembedding/cnn_10_epocas_8_filters164.txt"
 write.table(embedding_matrixTwo, embedding_file, sep=" ",row.names=TRUE)
 system(paste0("sed -i 's/\"//g' ", embedding_file))

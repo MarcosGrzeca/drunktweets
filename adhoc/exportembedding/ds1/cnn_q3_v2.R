@@ -7,7 +7,7 @@ source(file_path_as_absolute("baseline/dados.R"))
 source(file_path_as_absolute("utils/tokenizer.R"))
 
 dados <- getDadosBaselineByQ("q3")
-dados$textEmbedding <- removePunctuation(dados$textEmbedding)
+#dados$textEmbedding <- removePunctuation(dados$textEmbedding)
 
 maxlen <- 38
 max_words <- 3080
