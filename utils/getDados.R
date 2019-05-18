@@ -640,6 +640,7 @@ getDadosChat <- function() {
                       textSemPalavrasControle as textEmbedding,
                       hashtags,
                       erros as numeroErros,
+                      hora,
                       (
                         SELECT GROUP_CONCAT(DISTINCT(CONCAT("entidade", tn.palavra)))
                         FROM chat_tweets_nlp tn
@@ -691,5 +692,6 @@ getDadosChat <- function() {
   dados$textParser = gsub("'", "", dados$textParser)
 
   dados$numeroErros[dados$numeroErros > 1] <- 1
+  dados <- discretizarTurno(dados)
   return (dados)
 }

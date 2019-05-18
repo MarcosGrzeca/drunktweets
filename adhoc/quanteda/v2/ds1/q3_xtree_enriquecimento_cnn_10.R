@@ -16,7 +16,7 @@ source(file_path_as_absolute("adhoc/quanteda/metrics.R"))
 
 #Configuracoes
 DATABASE <- "icwsm"
-dados <- getDadosBaselineByQ("q1")
+dados <- getDadosBaselineByQ("q3")
 
 fbcorpus <- corpus(dados$textEmbedding)
 fbdfm <- dfm(fbcorpus, remove=stopwords("english"), verbose=TRUE, remove_punct = TRUE)
@@ -36,7 +36,7 @@ typesdfm <- dfm(types, verbose=TRUE)
 #    keptFeatures = NULL, language = "english", thesaurus = NULL,
 #    dictionary = NULL, valuetype = c("glob", "regex", "fixed"), ..
 
-w2v <- readr::read_delim("adhoc/exportembedding/ds1/q1/cnn_10_epocas_8_filters164.txt", 
+w2v <- readr::read_delim("adhoc/exportembedding/ds1/q3/cnn_10_epocas_8_filters164.txt", 
                   skip=1, delim=" ", quote="",
                   col_names=c("word", paste0("V", 1:100)))
 
@@ -215,7 +215,6 @@ for (iteracao in 1:10) {
   # out-of-sample accuracy
   preds <- predict(rf, X[test,])
   resultados <- addRowSimple(resultados, "Inteiro", round(precision(preds>.50, dados$resposta[test]) * 100,6), round(recall(preds>.50, dados$resposta[test]) * 100,6))
-
 
   cat("Iteracao = ",iteracao, "\n",sep="")
   View(resultados)

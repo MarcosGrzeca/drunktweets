@@ -105,5 +105,6 @@ getDadosAmazon <- function() {
   
   dados$hashtags = gsub("#", "#tag_", dados$hashtags)
   dados$numeroErros[dados$numeroErros > 1] <- 1
+  dados <- discretizarTurno(dados)
   return (dados)
 }

@@ -4,21 +4,24 @@ library(lsa)
 library(readr)
 library(quanteda)
 
-library(doMC)
 Cores <- 8
+
+library(doMC)
 registerDoMC(cores=Cores)
 
 source(file_path_as_absolute("utils/getDados.R"))
 source(file_path_as_absolute("baseline/dados.R"))
 source(file_path_as_absolute("utils/tokenizer.R"))
 source(file_path_as_absolute("utils/resultadoshelper.R"))
+source(file_path_as_absolute("utils/getDadosAmazon.R"))
 source(file_path_as_absolute("adhoc/quanteda/metrics.R"))
 
 #Configuracoes
 DATABASE <- "icwsm"
-dados <- getDadosBaselineByQ("q1")
+dados <- getDadosAmazon()
 
 fbcorpus <- corpus(dados$textEmbedding)
+#fbdfm <- dfm(fbcorpus, remove=stopwords("english"), verbose=TRUE, stem = TRUE, remove_punct = TRUE)
 fbdfm <- dfm(fbcorpus, remove=stopwords("english"), verbose=TRUE, remove_punct = TRUE)
 #fbdfm <- dfm_trim(fbdfm, min_docfreq = 2, verbose=TRUE)
 
@@ -36,7 +39,7 @@ typesdfm <- dfm(types, verbose=TRUE)
 #    keptFeatures = NULL, language = "english", thesaurus = NULL,
 #    dictionary = NULL, valuetype = c("glob", "regex", "fixed"), ..
 
-w2v <- readr::read_delim("adhoc/exportembedding/ds1/q1/cnn_10_epocas_8_filters164.txt", 
+w2v <- readr::read_delim("adhoc/exportembedding/ds3/cnn_10_epocas_8_filters164.txt", 
                   skip=1, delim=" ", quote="",
                   col_names=c("word", paste0("V", 1:100)))
 
@@ -58,11 +61,6 @@ for (i in 1:ndoc(fbdfm)){
   if (nrow(embed_vec)==0) embed[i,] <- 0
 }
 
-set.seed(10)
-library(xgboost)
-
-#Com enriquecimento
-
 resultados <- data.frame(matrix(ncol = 4, nrow = 0))
 names(resultados) <- c("Name", "Precision", "Recall")
 
@@ -74,13 +72,16 @@ addRowSimple <- function(resultados, rowName, precision, recall) {
   return (newdf)
 }
 
+set.seed(10)
+library(xgboost)
+
 for (iteracao in 1:10) {
   training <- sample(1:nrow(dados), floor(.80 * nrow(dados)))
   test <- (1:nrow(dados))[1:nrow(dados) %in% training == FALSE]
-  
+
   # converting matrix object
   # X <- as(cbind(embed,typesdfm,entidadesdfm), "dgCMatrix")
-  X <- as(embed, "dgCMatrix")
+  X <- as(cbind(embed), "dgCMatrix")
   
   # parameters to explore
   tryEta <- c(1,2,3)
@@ -124,8 +125,8 @@ for (iteracao in 1:10) {
   # out-of-sample accuracy
   preds <- predict(rf, X[test,])
   resultados <- addRowSimple(resultados, "Sem", round(precision(preds>.50, dados$resposta[test]) * 100,6), round(recall(preds>.50, dados$resposta[test]) * 100,6))
-  
-  X <- as(cbind(embed, typesdfm, entidadesdfm), "dgCMatrix")
+
+  X <- as(cbind(embed,typesdfm,entidadesdfm), "dgCMatrix")
   
   # parameters to explore
   tryEta <- c(1,2,3)
@@ -170,7 +171,7 @@ for (iteracao in 1:10) {
   preds <- predict(rf, X[test,])
   resultados <- addRowSimple(resultados, "Com", round(precision(preds>.50, dados$resposta[test]) * 100,6), round(recall(preds>.50, dados$resposta[test]) * 100,6))
 
-  teste <- cbind(dados$numeroErros, dados$turno, dados$emoticonPos, dados$emoticonNeg)
+  teste <- cbind(dados$numeroErros, dados$turno)
   X <- as(cbind(embed, typesdfm, entidadesdfm, as.matrix(teste)), "dgCMatrix")
   
   # parameters to explore
@@ -215,10 +216,6 @@ for (iteracao in 1:10) {
   # out-of-sample accuracy
   preds <- predict(rf, X[test,])
   resultados <- addRowSimple(resultados, "Inteiro", round(precision(preds>.50, dados$resposta[test]) * 100,6), round(recall(preds>.50, dados$resposta[test]) * 100,6))
-
-
-  cat("Iteracao = ",iteracao, "\n",sep="")
-  View(resultados)
 }
 
-resultados
+View(resultados)
