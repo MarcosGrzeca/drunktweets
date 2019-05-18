@@ -216,6 +216,8 @@ for (iteracao in 1:10) {
   # out-of-sample accuracy
   preds <- predict(rf, X[test,])
   resultados <- addRowSimple(resultados, "Inteiro", round(precision(preds>.50, dados$resposta[test]) * 100,6), round(recall(preds>.50, dados$resposta[test]) * 100,6))
+  cat("Iteracao = ",iteracao, "\n",sep="")
+  View(resultados)
 }
 
-View(resultados)
+resultados
