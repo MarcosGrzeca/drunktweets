@@ -171,7 +171,7 @@ for (iteracao in 1:10) {
   preds <- predict(rf, X[test,])
   resultados <- addRowSimple(resultados, "Com", round(precision(preds>.50, dados$resposta[test]) * 100,6), round(recall(preds>.50, dados$resposta[test]) * 100,6))
 
-  teste <- cbind(dados$numeroErros, dados$turno)
+  teste <- cbind(dados$numeroErros, dados$turno, dados$emoticonPos, dados$emoticonNeg)
   X <- as(cbind(embed, typesdfm, entidadesdfm, as.matrix(teste)), "dgCMatrix")
   
   # parameters to explore
