@@ -38,7 +38,8 @@ typesdfm <- dfm(types, verbose=TRUE)
 
 
 #w2v <- readr::read_delim("adhoc/exportembedding/ds1/q2/cnn_10_epocas.txt", 
-w2v <- readr::read_delim("adhoc/exportembedding/ds3/cnn_10_epocas.txt", 
+# w2v <- readr::read_delim("adhoc/exportembedding/ds3/cnn_10_epocas.txt", 
+w2v <- readr::read_delim("adhoc/exportembedding/ds1/q1/cnn_10_epocas_8_filters164.txt", 
                   skip=1, delim=" ", quote="",
                   col_names=c("word", paste0("V", 1:100)))
 
