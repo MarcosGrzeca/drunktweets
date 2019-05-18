@@ -125,7 +125,7 @@ history <- model %>%
     y = array(dados_train$resposta),
     batch_size = 64,
     epochs = 10,
-    callbacks = callbacks_list,
+    #callbacks = callbacks_list,
     validation_split = 0.2
   )
 
