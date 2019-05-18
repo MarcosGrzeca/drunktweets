@@ -57,6 +57,18 @@ test_sequences_types <- vectorize_sequences(dados_test$sequences_types, dimensio
 max_words <- vocab_size
 word_index <- tokenizer$word_index
 
+callbacks_list <- list(
+    callback_early_stopping(
+      monitor = "val_loss",
+      patience = 1
+    ),
+    callback_model_checkpoint(
+      filepath = paste0("adhoc/exportembedding/adicionais/test_models.h5"),
+      monitor = "val_loss",
+      save_best_only = TRUE
+    )
+  )
+
 # Data Preparation --------------------------------------------------------
 # Parameters --------------------------------------------------------------
 embedding_dims <- 100
@@ -113,6 +125,7 @@ history <- model %>%
     y = array(dados_train$resposta),
     batch_size = 64,
     epochs = 10,
+    callbacks = callbacks_list,
     validation_split = 0.2
   )
 
