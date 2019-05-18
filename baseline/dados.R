@@ -191,6 +191,8 @@ getDadosBaselineByQ <- function(var) {
 	dados$types = gsub("[^A-Za-z0-9,_ ]","",dados$types, ignore.case=T)
 	# dados$types[is.na(dados$types)] <- "SEMENTIDADES"
 
+	dados$numeroErros[dados$numeroErros > 1] <- 1
+	dados <- discretizarTurno(dados)
 	return (dados)
 }
 
