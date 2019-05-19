@@ -1,4 +1,4 @@
-files <- c("experimentos/v2/glove/core/CNNGlove.R")
+files <- c("experimentos/v3/glove/core/CNNGloveSemBow.R")
 
 PREFX <- "VFinal_"
 

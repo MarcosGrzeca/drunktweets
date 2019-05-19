@@ -14,7 +14,7 @@ maxlen <- 38
 max_words <- 7574
 questionAval <- "q1"
 
-source(file_path_as_absolute("experimentos/v2/glove/requires.R"))
+source(file_path_as_absolute("experimentos/v3/glove/requires.R"))
 
 # files <- c("experimentos/v2/glove/core/CNNGlove.R")
 
