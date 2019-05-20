@@ -43,16 +43,11 @@ while (iteracoes < 20) {
 	# Parameters --------------------------------------------------------------
 	embedding_dims <- 100
 	filters <- 164
-	hidden_dims <- 10
-
-	main_input <- layer_input(shape = c(maxlen), dtype = "int32")
+	ain_input <- layer_input(shape = c(maxlen), dtype = "int32")
 
 	embedding_input <- 	main_input %>% 
 				 		layer_embedding(input_dim = vocab_size, output_dim = embedding_dims, input_length = maxlen)
 	
-	input_bow <- layer_input(shape = c(max_words))
-	bow_out <- input_bow
-
 	auxiliary_input_entidades <- layer_input(shape = c(max_sequence))
 	entities_out <- auxiliary_input_entidades
 
