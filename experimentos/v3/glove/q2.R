@@ -14,11 +14,13 @@ maxlen <- 38
 max_words <- 4315
 questionAval <- "q2"
 
-source(file_path_as_absolute("experimentos/v2/glove/requires.R"))
+source(file_path_as_absolute("experimentos/v3/glove/requires.R"))
 
 # files <- c("experimentos/v2/glove/core/CNNGlove.R")
 
-fileGetDados <- "experimentos/ds1/sequence_generate_with_bow.R"
+if (!isset(fileGetDados)) {
+	fileGetDados <- "experimentos/ds1/sequence_generate_with_bow.R"
+}
 
 for (file in files) {
 	redeDesc <- "TECNNGloveBowDS1-Q2-20"
