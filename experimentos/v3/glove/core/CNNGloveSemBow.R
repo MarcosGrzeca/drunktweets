@@ -43,7 +43,7 @@ while (iteracoes < 20) {
 	# Parameters --------------------------------------------------------------
 	embedding_dims <- 100
 	filters <- 164
-	ain_input <- layer_input(shape = c(maxlen), dtype = "int32")
+	main_input <- layer_input(shape = c(maxlen), dtype = "int32")
 
 	embedding_input <- 	main_input %>% 
 				 		layer_embedding(input_dim = vocab_size, output_dim = embedding_dims, input_length = maxlen)
