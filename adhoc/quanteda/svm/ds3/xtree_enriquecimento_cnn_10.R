@@ -32,14 +32,25 @@ types <- corpus(dados$types)
 typesdfm <- dfm(types, verbose=TRUE)
 
 set.seed(10)
-training <- sample(1:nrow(dados), floor(.80 * nrow(dados)))
-test <- (1:nrow(dados))[1:nrow(dados) %in% training == FALSE]
-
 library(xgboost)
+
+resultados <- data.frame(matrix(ncol = 4, nrow = 0))
+names(resultados) <- c("Name", "Precision", "Recall")
+
+addRowSimple <- function(resultados, rowName, precision, recall) {
+  newRes <- data.frame(rowName, precision, recall)
+  rownames(newRes) <- rowName
+  names(newRes) <- c("Name", "Precision", "Recall")
+  newdf <- rbind(resultados, newRes)
+  return (newdf)
+}
 
 #Com enriquecimento
 
 for (iteracao in 1:10) {
+  training <- sample(1:nrow(dados), floor(.80 * nrow(dados)))
+  test <- (1:nrow(dados))[1:nrow(dados) %in% training == FALSE]
+  
   # converting matrix object
   X <- as(fbdfm, "dgCMatrix")
   
