@@ -33,6 +33,7 @@ typesdfm <- dfm(types, verbose=TRUE)
 dados$hashtags = gsub(",", " ", dados$hashtags)
 hashtags <- corpus(dados$hashtags)
 hashtagsdfm <- dfm(hashtags, verbose=TRUE)
+hashtagsdfm <- dfm_trim(hashtagsdfm, min_docfreq = 2, verbose=TRUE)
 
 #dfm(x, verbose = TRUE, toLower = TRUE,
 #    removeNumbers = TRUE, removePunct = TRUE, removeSeparators = TRUE,
