@@ -61,53 +61,7 @@ for (iteracao in 1:10) {
   training <- sample(1:nrow(dados), floor(.80 * nrow(dados)))
   test <- (1:nrow(dados))[1:nrow(dados) %in% training == FALSE]
   
-  # converting matrix object
-  X <- as(fbdfm, "dgCMatrix")
-  
-  # parameters to explore
-  tryEta <- c(1,2,3)
-  tryDepths <- c(1,2,4,6)
-  # placeholders for now
-  bestEta=NA
-  bestDepth=NA
-  bestAcc=0
-  
-  for(eta in tryEta){
-    for(dp in tryDepths){ 
-      bst <- xgb.cv(data = X[training,], 
-                    label =  dados$resposta[training], 
-                    max.depth = dp,
-                    eta = eta, 
-                    nthread = Cores,
-                    nround = 500,
-                    nfold=5,
-                    print_every_n = 500L,
-                    objective = "binary:logistic")
-      # cross-validated accuracy
-      acc <- 1-mean(tail(bst$evaluation_log$test_error_mean))
-      if(acc>bestAcc){
-        bestEta=eta
-        bestAcc=acc
-        bestDepth=dp
-      }
-    }
-  }
-  
-  # running best model
-  rf <- xgboost(data = X[training,], 
-                label = dados$resposta[training], 
-                max.depth = bestDepth,
-                eta = bestEta, 
-                nthread = Cores,
-                nround = 500,
-                print_every_n=500L,
-                objective = "binary:logistic")
-  
-  # out-of-sample accuracy
-  preds <- predict(rf, X[test,])
-  resultados <- addRowSimple(resultados, "Sem", round(precision(preds>.50, dados$resposta[test]) * 100,6), round(recall(preds>.50, dados$resposta[test]) * 100,6))
-  
-  X <- as(cbind(fbdfm, typesdfm, entidadesdfm), "dgCMatrix")
+  X <- as(cbind(fbdfm, typesdfm, entidadesdfm, hashtagsdfm), "dgCMatrix")
   
   # parameters to explore
   tryEta <- c(1,2,3)
@@ -154,7 +108,7 @@ for (iteracao in 1:10) {
   
   
   teste <- cbind(dados$numeroErros, dados$turno, dados$emoticonPos, dados$emoticonNeg)
-  X <- as(cbind(fbdfm, typesdfm, entidadesdfm, as.matrix(teste)), "dgCMatrix")
+  X <- as(cbind(fbdfm, typesdfm, entidadesdfm, hashtagsdfm, as.matrix(teste)), "dgCMatrix")
   
   # parameters to explore
   tryEta <- c(1,2,3)
