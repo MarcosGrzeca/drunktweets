@@ -13,14 +13,16 @@ source(file_path_as_absolute("baseline/dados.R"))
 source(file_path_as_absolute("utils/tokenizer.R"))
 source(file_path_as_absolute("utils/resultadoshelper.R"))
 source(file_path_as_absolute("adhoc/quanteda/metrics.R"))
+source(file_path_as_absolute("adhoc/quanteda/svm/classifier/requires.R"))
 
 #Configuracoes
 DATABASE <- "icwsm"
 dados <- getDadosBaselineByQ("q1")
+dados$resposta <- as.factor(dados$resposta)
 
 fbcorpus <- corpus(dados$textEmbedding)
 fbdfm <- dfm(fbcorpus, remove=stopwords("english"), verbose=TRUE, remove_punct = TRUE)
-#fbdfm <- dfm_trim(fbdfm, min_docfreq = 2, verbose=TRUE)
+fbdfm <- dfm_trim(fbdfm, min_docfreq = 2, verbose=TRUE)
 
 dados$entidades = gsub(",", " ", dados$entidades)
 entidades <- corpus(dados$entidades)
@@ -36,9 +38,6 @@ typesdfm <- dfm(types, verbose=TRUE)
 #    keptFeatures = NULL, language = "english", thesaurus = NULL,
 #    dictionary = NULL, valuetype = c("glob", "regex", "fixed"), ..
 
-
-#w2v <- readr::read_delim("adhoc/exportembedding/ds1/q2/cnn_10_epocas.txt", 
-# w2v <- readr::read_delim("adhoc/exportembedding/ds3/cnn_10_epocas.txt", 
 w2v <- readr::read_delim("adhoc/exportembedding/ds1/q1/cnn_10_epocas_8_filters164.txt", 
                   skip=1, delim=" ", quote="",
                   col_names=c("word", paste0("V", 1:100)))
@@ -69,37 +68,23 @@ library(xgboost)
 resultados <- data.frame(matrix(ncol = 4, nrow = 0))
 names(resultados) <- c("Name", "Precision", "Recall")
 
-addRowSimple <- function(resultados, rowName, precision, recall) {
-  newRes <- data.frame(rowName, precision, recall)
-  rownames(newRes) <- rowName
-  names(newRes) <- c("Name", "Precision", "Recall")
-  newdf <- rbind(resultados, newRes)
-  return (newdf)
-}
-
-# for (iteracao in 1:10) {
+for (iteracao in 1:1) {
   training <- sample(1:nrow(dados), floor(.80 * nrow(dados)))
   test <- (1:nrow(dados))[1:nrow(dados) %in% training == FALSE]
   
-  # converting matrix object
-  # X <- as(cbind(embed,typesdfm,entidadesdfm), "dgCMatrix")
-  X <- as(embed, "dgCMatrix")
-  
   marcos <- as.data.frame(embed)
-  str(marcos)
-  
-  dados$resposta[training]
-  
-  library(caret)
-  
-  fit <- train(x = marcos[training,],
-            y = as.factor(dados$resposta[training]), 
-            method = "svmLinear", 
-            trControl = trainControl(method = "cv", number = 5, savePred=T))  
-  
-  pred <- predict(fit, marcos[test,])
-  matriz <- confusionMatrix(data = pred, as.factor(dados$resposta[test]), positive="1")
-  matriz
+    
+  fit <- treinar(marcos[training,], dados$resposta[training])
+
+  matriz3Gram25NotNullBaseline <- getMatriz(fit, dados$resposta[test])
+  resultados <- addRow(resultados, "3 GRAM 25", matriz3Gram25NotNullBaseline)
+
+  cat(iteracao)
+  View(resultados)
+
+  # pred <- predict(fit, marcos[test,])
+  # matriz <- confusionMatrix(data = pred, dados$resposta[test], positive="1")
+  # matriz
   
   # out-of-sample accuracy
   # preds <- predict(rf, X[test,])
