@@ -12,11 +12,12 @@ source(file_path_as_absolute("utils/getDados.R"))
 source(file_path_as_absolute("baseline/dados.R"))
 source(file_path_as_absolute("utils/tokenizer.R"))
 source(file_path_as_absolute("utils/resultadoshelper.R"))
+source(file_path_as_absolute("utils/getDadosAmazon.R"))
 source(file_path_as_absolute("adhoc/quanteda/metrics.R"))
 
 #Configuracoes
 DATABASE <- "icwsm"
-dados <- getDadosChat()
+dados <- getDadosAmazon()
 
 fbcorpus <- corpus(dados$textParser)
 fbdfm <- dfm(fbcorpus, remove=stopwords("english"), verbose=TRUE, remove_punct = TRUE)
@@ -30,32 +31,15 @@ dados$types = gsub(",", " ", dados$types)
 types <- corpus(dados$types)
 typesdfm <- dfm(types, verbose=TRUE)
 
-#dfm(x, verbose = TRUE, toLower = TRUE,
-#    removeNumbers = TRUE, removePunct = TRUE, removeSeparators = TRUE,
-#    removeTwitter = FALSE, stem = FALSE, ignoredFeatures = NULL,
-#    keptFeatures = NULL, language = "english", thesaurus = NULL,
-#    dictionary = NULL, valuetype = c("glob", "regex", "fixed"), ..
-
 set.seed(10)
+training <- sample(1:nrow(dados), floor(.80 * nrow(dados)))
+test <- (1:nrow(dados))[1:nrow(dados) %in% training == FALSE]
+
 library(xgboost)
 
 #Com enriquecimento
 
-resultados <- data.frame(matrix(ncol = 4, nrow = 0))
-names(resultados) <- c("Name", "Precision", "Recall")
-
-addRowSimple <- function(resultados, rowName, precision, recall) {
-  newRes <- data.frame(rowName, precision, recall)
-  rownames(newRes) <- rowName
-  names(newRes) <- c("Name", "Precision", "Recall")
-  newdf <- rbind(resultados, newRes)
-  return (newdf)
-}
-
 for (iteracao in 1:10) {
-  training <- sample(1:nrow(dados), floor(.80 * nrow(dados)))
-  test <- (1:nrow(dados))[1:nrow(dados) %in% training == FALSE]
-  
   # converting matrix object
   X <- as(fbdfm, "dgCMatrix")
   
@@ -147,8 +131,8 @@ for (iteracao in 1:10) {
   preds <- predict(rf, X[test,])
   resultados <- addRowSimple(resultados, "Com", round(precision(preds>.50, dados$resposta[test]) * 100,6), round(recall(preds>.50, dados$resposta[test]) * 100,6))
   
-  # teste <- cbind(dados$numeroErros, dados$turno, dados$emoticonPos, dados$emoticonNeg)
-  teste <- cbind(dados$numeroErros, dados$turno)
+
+  teste <- cbind(dados$numeroErros, dados$turno, dados$emoticonPos, dados$emoticonNeg)
   X <- as(cbind(fbdfm, typesdfm, entidadesdfm, as.matrix(teste)), "dgCMatrix")
   
   # parameters to explore
@@ -193,9 +177,6 @@ for (iteracao in 1:10) {
   # out-of-sample accuracy
   preds <- predict(rf, X[test,])
   resultados <- addRowSimple(resultados, "Inteiro", round(precision(preds>.50, dados$resposta[test]) * 100,6), round(recall(preds>.50, dados$resposta[test]) * 100,6))
-
   cat("Iteracao = ",iteracao, "\n",sep="")
   View(resultados)
 }
-
-resultados
