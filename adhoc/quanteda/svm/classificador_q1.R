@@ -85,10 +85,21 @@ addRowSimple <- function(resultados, rowName, precision, recall) {
   # X <- as(cbind(embed,typesdfm,entidadesdfm), "dgCMatrix")
   X <- as(embed, "dgCMatrix")
   
-  fit <- train(x = X[training,],
-            y = dados$resposta[training], 
+  marcos <- as.data.frame(embed)
+  str(marcos)
+  
+  dados$resposta[training]
+  
+  library(caret)
+  
+  fit <- train(x = marcos[training,],
+            y = as.factor(dados$resposta[training]), 
             method = "svmLinear", 
             trControl = trainControl(method = "cv", number = 5, savePred=T))  
+  
+  pred <- predict(fit, marcos[test,])
+  matriz <- confusionMatrix(data = pred, as.factor(dados$resposta[test]), positive="1")
+  matriz
   
   # out-of-sample accuracy
   # preds <- predict(rf, X[test,])
