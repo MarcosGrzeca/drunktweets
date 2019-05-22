@@ -83,35 +83,39 @@ library(xgboost)
 resultados <- data.frame(matrix(ncol = 4, nrow = 0))
 names(resultados) <- c("Name", "Precision", "Recall")
 
-for (iteracao in 1:2) {
+for (iteracao in 1:10) {
   training <- sample(1:nrow(dados), floor(.80 * nrow(dados)))
   test <- (1:nrow(dados))[1:nrow(dados) %in% training == FALSE]
   
   textoDF <- as.data.frame(embed)
   hashtagsDF <- as.data.frame(hashtagsdfm)
   hashtagsDF <- subset(hashtagsDF, select = -c(document))
-  marcos <- cbind(textoDF, hashtagsDF)
+  entidadesDF <- as.data.frame(entidadesdfm)
+  typesDF <- as.data.frame(typesdfm)
   
+  adidionalFeatures <- cbind(dados$numeroErros, dados$turno, dados$emoticonPos, dados$emoticonNeg)
+
   #marcos <- textoDF
-      
+  
+  #Sem enriquecimento
+  marcos <- cbind(textoDF, hashtagsDF)    
   fit <- treinar(marcos[training,], dados$resposta[training])
   fit
   
   matriz3Gram25NotNullBaseline <- getMatriz(fit, marcos[test,], dados$resposta[test])
-  resultados <- addRow(resultados, "Linear", matriz3Gram25NotNullBaseline)
+  resultados <- addRow(resultados, "LinearSEM", matriz3Gram25NotNullBaseline)
+
+  #Com enriquecimento
+  marcos <- cbind(textoDF, hashtagsDF, entidadesDF, typesDF, adidionalFeatures)
+
+  fit <- treinar(marcos[training,], dados$resposta[training])
+  fit
+  
+  matriz3Gram25NotNullBaseline <- getMatriz(fit, marcos[test,], dados$resposta[test])
+  resultados <- addRow(resultados, "LinearCom", matriz3Gram25NotNullBaseline)
 
   cat(iteracao)
   View(resultados)
-
-  # pred <- predict(fit, marcos[test,])
-  # matriz <- confusionMatrix(data = pred, dados$resposta[test], positive="1")
-  # matriz
-  
-  # out-of-sample accuracy
-  # preds <- predict(rf, X[test,])
-  # resultados <- addRowSimple(resultados, "Com", round(precision(preds>.50, dados$resposta[test]) * 100,6), round(recall(preds>.50, dados$resposta[test]) * 100,6))
-  # cat("Iteracao = ",iteracao, "\n",sep="")
-  # View(resultados)
 }
 
 resultados
