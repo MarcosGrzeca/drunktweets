@@ -32,6 +32,11 @@ dados$types = gsub(",", " ", dados$types)
 types <- corpus(dados$types)
 typesdfm <- dfm(types, verbose=TRUE)
 
+dados$hashtags = gsub(",", " ", dados$hashtags)
+hashtags <- corpus(dados$hashtags)
+hashtagsdfm <- dfm(hashtags, verbose=TRUE)
+hashtagsdfm <- dfm_trim(hashtagsdfm, min_docfreq = 2, verbose=TRUE)
+
 #dfm(x, verbose = TRUE, toLower = TRUE,
 #    removeNumbers = TRUE, removePunct = TRUE, removeSeparators = TRUE,
 #    removeTwitter = FALSE, stem = FALSE, ignoredFeatures = NULL,
@@ -68,12 +73,15 @@ library(xgboost)
 resultados <- data.frame(matrix(ncol = 4, nrow = 0))
 names(resultados) <- c("Name", "Precision", "Recall")
 
-for (iteracao in 1:1) {
+for (iteracao in 1:2) {
   training <- sample(1:nrow(dados), floor(.80 * nrow(dados)))
   test <- (1:nrow(dados))[1:nrow(dados) %in% training == FALSE]
   
-  marcos <- as.data.frame(embed)
-    
+  textoDF <- as.data.frame(embed)
+  hashtagsDF <- as.data.frame(hashtagsdfm)
+
+  marcos <- cbind(textoDF, hashtagsDF)
+      
   fit <- treinar(marcos[training,], dados$resposta[training])
 
   matriz3Gram25NotNullBaseline <- getMatriz(fit, dados$resposta[test])
@@ -91,6 +99,6 @@ for (iteracao in 1:1) {
   # resultados <- addRowSimple(resultados, "Com", round(precision(preds>.50, dados$resposta[test]) * 100,6), round(recall(preds>.50, dados$resposta[test]) * 100,6))
   # cat("Iteracao = ",iteracao, "\n",sep="")
   # View(resultados)
-# }
+}
 
 resultados
