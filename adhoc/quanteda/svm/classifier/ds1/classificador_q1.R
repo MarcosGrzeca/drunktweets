@@ -5,6 +5,16 @@ library(readr)
 library(quanteda)
 
 library(doMC)
+
+
+if (!require("kernlab")) {
+  install.packages("kernlab")
+}
+
+if (!require("e1071")) {
+  install.packages("e1071")
+}
+
 Cores <- 8
 registerDoMC(cores=Cores)
 
