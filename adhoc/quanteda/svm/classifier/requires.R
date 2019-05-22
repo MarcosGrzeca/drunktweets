@@ -25,7 +25,7 @@ getMatriz <- function(fit, data_test, resposta) {
 }
 
 addRow <- function(resultados, rowName, matriz, ...) {
-  newRes <- data.frame(matriz$byClass["F1"], matriz$byClass["Precision"], matriz$byClass["Recall"])
+  newRes <- data.frame(matriz$byClass["F1"] * 100, matriz$byClass["Precision"] * 100, matriz$byClass["Recall"] * 100)
   rownames(newRes) <- rowName
   names(newRes) <- c("F1", "Precision", "Recall")
   newdf <- rbind(resultados, newRes)
