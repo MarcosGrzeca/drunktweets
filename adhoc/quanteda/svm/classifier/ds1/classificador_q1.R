@@ -97,7 +97,7 @@ for (iteracao in 1:2) {
   fit <- treinar(marcos[training,], dados$resposta[training])
   fit
   
-  matriz3Gram25NotNullBaseline <- getMatriz(fit, dados$resposta[test])
+  matriz3Gram25NotNullBaseline <- getMatriz(fit, marcos[test,], dados$resposta[test])
   resultados <- addRow(resultados, "Linear", matriz3Gram25NotNullBaseline)
 
   cat(iteracao)

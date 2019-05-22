@@ -1,24 +1,26 @@
 library(caret)
 
 treinar <- function(data_train, resposta){
-    fit <- train(x = data_train,
+    fit <- train(
+            x = data_train,
             y = resposta, 
             method = "svmLinear", 
             trControl = trainControl(method = "cv", number = 5, savePred=T))
     return (fit)
 }
 
-treinarPoly <- function(data_train){
-    fit <- train(x = subset(data_train, select = -c(resposta)),
-            y = data_train$resposta, 
+treinarPoly <- function(data_train, resposta) {
+    fit <- train(
+            x = data_train,
+            y = resposta, 
             method = "svmPoly", 
             trControl = trainControl(method = "cv", number = 5, savePred=T))
     return (fit)
 }
 
-getMatriz <- function(fit, data_test) {
-  pred <- predict(fit, subset(data_test, select = -c(resposta)))
-  matriz <- confusionMatrix(data = pred, data_test$resposta, positive="1")
+getMatriz <- function(fit, data_test, resposta) {
+  pred <- predict(fit, data_test)
+  matriz <- confusionMatrix(data = pred, resposta, positive="1")
   return (matriz)
 }
 
