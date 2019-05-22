@@ -1,7 +1,7 @@
 library(caret)
 
 treinar <- function(data_train, resposta){
-    fit <- train(x = data_train),
+    fit <- train(x = data_train,
             y = resposta, 
             method = "svmLinear", 
             trControl = trainControl(method = "cv", number = 5, savePred=T))
