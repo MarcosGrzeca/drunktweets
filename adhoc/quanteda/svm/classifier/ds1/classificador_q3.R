@@ -26,7 +26,7 @@ source(file_path_as_absolute("adhoc/quanteda/svm/classifier/requires.R"))
 
 #Configuracoes
 DATABASE <- "icwsm"
-dados <- getDadosBaselineByQ("q1")
+dados <- getDadosBaselineByQ("q3")
 dados$resposta <- as.factor(dados$resposta)
 
 fbcorpus <- corpus(dados$textEmbedding)
