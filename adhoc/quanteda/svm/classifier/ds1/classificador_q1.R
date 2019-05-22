@@ -89,11 +89,14 @@ for (iteracao in 1:2) {
   
   textoDF <- as.data.frame(embed)
   hashtagsDF <- as.data.frame(hashtagsdfm)
-
+  hashtagsDF <- subset(hashtagsDF, select = -c(document))
   marcos <- cbind(textoDF, hashtagsDF)
+  
+  #marcos <- textoDF
       
   fit <- treinar(marcos[training,], dados$resposta[training])
-
+  fit
+  
   matriz3Gram25NotNullBaseline <- getMatriz(fit, dados$resposta[test])
   resultados <- addRow(resultados, "Linear", matriz3Gram25NotNullBaseline)
 
