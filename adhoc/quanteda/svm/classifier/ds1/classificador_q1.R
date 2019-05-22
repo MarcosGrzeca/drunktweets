@@ -90,8 +90,12 @@ for (iteracao in 1:10) {
   textoDF <- as.data.frame(embed)
   hashtagsDF <- as.data.frame(hashtagsdfm)
   hashtagsDF <- subset(hashtagsDF, select = -c(document))
+  
   entidadesDF <- as.data.frame(entidadesdfm)
+  entidadesDF <- subset(entidadesDF, select = -c(document))
+  
   typesDF <- as.data.frame(typesdfm)
+  typesDF <- subset(typesDF, select = -c(document))
   
   adidionalFeatures <- cbind(dados$numeroErros, dados$turno, dados$emoticonPos, dados$emoticonNeg)
 
@@ -114,7 +118,7 @@ for (iteracao in 1:10) {
   matriz3Gram25NotNullBaseline <- getMatriz(fit, marcos[test,], dados$resposta[test])
   resultados <- addRow(resultados, "LinearCom", matriz3Gram25NotNullBaseline)
 
-  cat(iteracao)
+  cat(iteracao, "\n")
   View(resultados)
 }
 
