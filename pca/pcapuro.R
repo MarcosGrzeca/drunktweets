@@ -65,6 +65,11 @@ res.ind$contrib        # Contributions to the PCs
 res.ind$cos2           # Quality of representation 
 
 
+
+
 View(as.data.frame(res.ind$coord))
 
 res.ind$cos2
+
+#ACESSAR O RESULTADO
+View(a$x)
