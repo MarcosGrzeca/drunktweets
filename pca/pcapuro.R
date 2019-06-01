@@ -7,39 +7,17 @@ source(file_path_as_absolute("pca/loader.R"))
 library("factoextra")
 library("FactoMineR")
 
-pca <- PCA(train_sequences,  graph = FALSE)
-pca
-
-
-
-
-
-
-
-
-
-
-
-
-
-fviz_pca_ind(pca, col.ind = "cos2",
-             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
-             repel = TRUE # Avoid text overlapping (slow if many points)
-)
-
 
 # res.dist <- get_dist(df, stand = TRUE, method = "pearson")
 # fviz_dist(res.dist, 
 #           gradient = list(low = "#00AFBB", mid = "white", high = "#FC4E07"))
 
 a <- prcomp(train_sequences, scale = FALSE)
-a
-
-nrow(train_sequences)
-a$PC1
+a$x
 
 b <- princomp(train_sequences, cor = FALSE, scores = TRUE)
-as.data.frame(b)
+b
+b$x
 
 #http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/118-principal-component-analysis-in-r-prcomp-vs-princomp/
 #https://www.r-bloggers.com/principal-component-analysis-in-r/
@@ -79,4 +57,5 @@ mySVD <- svd(train_sequences)
 mySVD # the diagonal of Sigma mySVD$d is given as a vector
 sigma <- matrix(0,13,13) # we have 4 PCs, no need for a 5th column
 diag(sigma) <- mySVD$d # sigma is now our true sigma matrix
+sigma
 
