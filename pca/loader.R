@@ -32,9 +32,6 @@ trainIndex <- createDataPartition(dados$resposta, p=0.8, list=FALSE)
 dados_train <- dados[ trainIndex,]
 dados_test <- dados[-trainIndex,]
 
-dados_train_sequence <- data[ trainIndex,]
-dados_test_sequence <- data[-trainIndex,]
-
 max_sequence <- max(sapply(dados_train$sequences[lengths(dados_train$sequences) > 0], max))
 max_sequence_types <- max(sapply(dados_train$sequences_types[lengths(dados_train$sequences_types) > 0], max))
 
