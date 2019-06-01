@@ -27,6 +27,7 @@ source(file_path_as_absolute("adhoc/quanteda/svm/classifier/requires.R"))
 #Configuracoes
 DATABASE <- "icwsm"
 dados <- getDadosAmazon()
+dados$resposta <- as.factor(dados$resposta)
 
 fbcorpus <- corpus(dados$textEmbedding)
 fbdfm <- dfm(fbcorpus, remove=stopwords("english"), verbose=TRUE, remove_punct = TRUE)
