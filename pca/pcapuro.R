@@ -72,4 +72,11 @@ View(as.data.frame(res.ind$coord))
 res.ind$cos2
 
 #ACESSAR O RESULTADO
-View(a$x)
+
+# Perform SVD
+#https://www.r-bloggers.com/principal-component-analysis-in-r/
+mySVD <- svd(train_sequences)
+mySVD # the diagonal of Sigma mySVD$d is given as a vector
+sigma <- matrix(0,13,13) # we have 4 PCs, no need for a 5th column
+diag(sigma) <- mySVD$d # sigma is now our true sigma matrix
+
