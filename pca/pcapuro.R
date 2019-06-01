@@ -8,6 +8,19 @@ library("factoextra")
 library("FactoMineR")
 
 pca <- PCA(train_sequences,  graph = FALSE)
+pca
+
+
+
+
+
+
+
+
+
+
+
+
 
 fviz_pca_ind(pca, col.ind = "cos2",
              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
@@ -18,3 +31,39 @@ fviz_pca_ind(pca, col.ind = "cos2",
 # res.dist <- get_dist(df, stand = TRUE, method = "pearson")
 # fviz_dist(res.dist, 
 #           gradient = list(low = "#00AFBB", mid = "white", high = "#FC4E07"))
+
+a <- prcomp(train_sequences, scale = FALSE)
+a
+
+nrow(train_sequences)
+a$PC1
+
+b <- princomp(train_sequences, cor = FALSE, scores = TRUE)
+as.data.frame(b)
+
+#http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/118-principal-component-analysis-in-r-prcomp-vs-princomp/
+
+library(factoextra)
+# Eigenvalues
+eig.val <- get_eigenvalue(a)
+eig.val
+
+# Results for Variables
+res.var <- get_pca_var(pca)
+res.var$coord          # Coordinates
+res.var$contrib        # Contributions to the PCs
+res.var$cos2           # Quality of representation 
+
+res.var$cos2
+
+
+# Results for individuals
+res.ind <- get_pca_ind(pca)
+res.ind$coord          # Coordinates
+res.ind$contrib        # Contributions to the PCs
+res.ind$cos2           # Quality of representation 
+
+
+View(as.data.frame(res.ind$coord))
+
+res.ind$cos2
