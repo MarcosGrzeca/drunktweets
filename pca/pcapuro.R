@@ -42,6 +42,7 @@ b <- princomp(train_sequences, cor = FALSE, scores = TRUE)
 as.data.frame(b)
 
 #http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/118-principal-component-analysis-in-r-prcomp-vs-princomp/
+#https://www.r-bloggers.com/principal-component-analysis-in-r/
 
 library(factoextra)
 # Eigenvalues
