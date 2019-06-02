@@ -12,11 +12,14 @@ library(caret)
 library(tools)
 library(keras)
 
+resultados <- data.frame(matrix(ncol = 4, nrow = 0))
+names(resultados) <- c("Baseline", "F1", "Precisão", "Revocação")
+
 set.seed(10)
 split=0.80
 
 for (year in 1:20) {
-  year <- 1
+  #year <- 1
 	trainIndex <- readRDS(file = paste0(baseResampleFiles, "trainIndex", year, ".rds"))
 	# trainIndex <- createDataPartition(dados$resposta, p=0.8, list=FALSE)
 	
@@ -99,8 +102,8 @@ for (year in 1:20) {
 	auxilary_output <- layer_concatenate(c(auxiliary_input_entidades, auxiliary_input_types))
 
 	auxiliar <- 	auxilary_output %>% 
-					layer_dropout(0.2) %>%
-					layer_dense(units = 8, activation = "relu", kernel_regularizer = regularizer_l2(0.001))
+					layer_dense(units = 8, activation = "relu", kernel_regularizer = regularizer_l2(0.001)) %>%
+	        layer_dropout(0.2)
 
 	main_output <- 	layer_concatenate(c(cnn_output, auxiliar)) %>% 
 					layer_dense(units = 24, activation = "relu", kernel_regularizer = regularizer_l2(0.001)) %>%
@@ -136,10 +139,11 @@ for (year in 1:20) {
 	predictions2 <- round(predictions, 0)
 
     matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados[-trainIndex,]$resposta), positive="1")
-    matriz
     resultados <- addRowAdpater(resultados, "Com enriquecimento", matriz)
+    
+    View(resultados)
 }
 
-resultados$F1
-resultados$Precision
-resultados$Recall
+mean(resultados$F1)
+mean(resultados$Precision)
+mean(resultados$Recall)
