@@ -74,5 +74,11 @@ addRowSimple <- function(resultados, rowName, precision, recall) {
   return (newdf)
 }
 
-X <- cbind(embed,entidadesdfm,typesdfm,dados$resposta)
+entidadesDF <- as.data.frame(entidadesdfm)
+entidadesDF <- subset(entidadesDF, select = -c(document))
+
+typesDF <- as.data.frame(typesdfm)
+typesDF <- subset(typesDF, select = -c(document))
+
+X <- cbind(embed,entidadesDF,typesDF,dados$resposta)
 saveRDS(X, file = "adhoc/redemaluca/ds1/representacao_one_hot.rds")
