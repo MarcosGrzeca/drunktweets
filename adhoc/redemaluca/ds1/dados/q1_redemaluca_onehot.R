@@ -80,8 +80,11 @@ entidadesDF <- subset(entidadesDF, select = -c(document))
 typesDF <- as.data.frame(typesdfm)
 typesDF <- subset(typesDF, select = -c(document))
 
-X <- cbind(embed,entidadesDF,typesDF,dados$resposta)
+#X <- cbind(embed,entidadesDF,typesDF,dados$resposta)
+X <- cbind(embed,enti,type,dados$resposta)
 save(X, file = "adhoc/redemaluca/ds1/representacao_one_hot.RData")
+
+View(X)
 
 
 library(keras)
@@ -95,8 +98,15 @@ max_sequence
 
 enti <- vectorize_sequences(entidades, dimension = max_sequence)
 
-View(enti)
 
+tokenizer_types <- text_tokenizer(num_words = 100) %>%
+                    fit_text_tokenizer(dados$types)
+vocabTypesLenght <- length(tokenizer_types$word_index)
+types <- texts_to_sequences(tokenizer_types, dados$types)
+max_types <- max(sapply(types, max))
+
+type <- vectorize_sequences(types, dimension = max_types)
+View(type)
 
 vectorize_sequences <- function(sequences, dimension = max_features) {
   results <- matrix(0, nrow = length(sequences), ncol = dimension)
