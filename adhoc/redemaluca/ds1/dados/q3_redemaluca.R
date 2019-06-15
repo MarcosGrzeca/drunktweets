@@ -74,5 +74,9 @@ addRowSimple <- function(resultados, rowName, precision, recall) {
   return (newdf)
 }
 
-X <- cbind(embed,dados$resposta)
-save(X, file = "adhoc/redemaluca/ds1/dados/q3_representacao.RData")
+enriquecimento <- cbind(typesdfm, entidadesdfm)
+pca_entities <- prcomp(enriquecimento, scale = FALSE)
+
+X <- cbind(embed,pca_entities$x[,1:50], dados$resposta)
+
+save(X, file = "adhoc/redemaluca/ds1/dados/q3_representacao_PCA_50.RData")
