@@ -60,4 +60,4 @@ for (i in 1:ndoc(fbdfm)){
 }
 
 X <- cbind(embed,dados$resposta)
-save(X, file = "adhoc/redemaluca/ds1/q2_representacao.RData")
+save(X, file = "adhoc/redemaluca/ds3/ds3_representacao.RData")
