@@ -2,7 +2,7 @@ library(keras)
 library(tools)
 library(caret)
 
-load("adhoc/redemaluca/ds1/q2_representacao.RData")
+load("adhoc/redemaluca/ds1/dados/q2_representacao.RData")
 
 set.seed(10)
 split=0.80
@@ -26,13 +26,9 @@ for (i in 1:10) {
   one_hot_train <- X[inTrain, 1:100]
   resposta <-  X[inTrain, 101]
   
-  nrow(one_hot_train)
-  nrow(one_hot_test)
-  
   one_hot_test <- X[-inTrain, 1:100]
   resposta_test <-  X[-inTrain, 101]
   
-  nrow(one_hot_test)
   
   # MODEL --------------------------------------------------------------
   model <- keras_model_sequential() %>%

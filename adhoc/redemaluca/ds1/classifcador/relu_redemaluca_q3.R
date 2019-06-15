@@ -2,7 +2,7 @@ library(keras)
 library(tools)
 library(caret)
 
-load("adhoc/redemaluca/ds1/dados/representacao_with_PCA.RData")
+load("adhoc/redemaluca/ds1/dados/q3_representacao.RData")
 
 set.seed(10)
 split=0.80
@@ -21,17 +21,18 @@ names(resultados) <- c("Baseline", "F1", "Precisão", "Revocação")
 
 for (i in 1:10) {
 
-  inTrain <- createDataPartition(y = X[, 111], p = split, list = FALSE)
+  inTrain <- createDataPartition(y = X[, 101], p = split, list = FALSE)
   
-  one_hot_train <- X[inTrain, 1:110]
-  resposta <-  X[inTrain, 111]
+  one_hot_train <- X[inTrain, 1:100]
+  resposta <-  X[inTrain, 101]
   
-  one_hot_test <- X[-inTrain, 1:110]
-  resposta_test <-  X[-inTrain, 111]
+  one_hot_test <- X[-inTrain, 1:100]
+  resposta_test <-  X[-inTrain, 101]
+  
   
   # MODEL --------------------------------------------------------------
   model <- keras_model_sequential() %>%
-    layer_dense(units = 128, activation = "relu", input_shape = c(110)) %>%
+    layer_dense(units = 128, activation = "relu", input_shape = c(100)) %>%
     layer_dense(units = 64, activation = "relu") %>%
     layer_dense(units = 16, activation = "relu") %>%
     layer_dense(units = 1, activation = "sigmoid")
@@ -53,6 +54,8 @@ for (i in 1:10) {
   
   history
   
+  
+  nrow(one_hot_test)
   predictions <- model %>% predict_classes(one_hot_test)
   matriz <- confusionMatrix(data = as.factor(predictions), as.factor(resposta_test), positive="1")
   #matriz

@@ -2,7 +2,7 @@ library(keras)
 library(tools)
 library(caret)
 
-load("adhoc/redemaluca/ds1/representacao_with_PCA_50.RData")
+load("adhoc/redemaluca/ds1/dados/representacao_with_PCA_50.RData")
 
 set.seed(10)
 split=0.80
