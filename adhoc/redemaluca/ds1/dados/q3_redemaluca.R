@@ -75,4 +75,4 @@ addRowSimple <- function(resultados, rowName, precision, recall) {
 }
 
 X <- cbind(embed,dados$resposta)
-save(X, file = "adhoc/redemaluca/ds1/q3_representacao.RData")
+save(X, file = "adhoc/redemaluca/ds1/dados/q3_representacao.RData")
