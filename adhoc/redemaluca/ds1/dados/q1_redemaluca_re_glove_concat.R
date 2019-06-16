@@ -37,13 +37,19 @@ typesdfm <- dfm(types, verbose=TRUE)
 #    dictionary = NULL, valuetype = c("glob", "regex", "fixed"), ..
 
 w2v <- readr::read_delim("adhoc/exportembedding/ds1/q1/cnn_10_epocas_8_filters164.txt", 
-                  skip=1, delim=" ", quote="",
-                  col_names=c("word", paste0("V", 1:100)))
+                         skip=1, delim=" ", quote="",
+                         col_names=c("word", paste0("V", 1:100)))
 
 w2v <- w2v[w2v$word %in% featnames(fbdfm),]
 
+w2vGloVe <- readr::read_delim("/var/www/html/glove.twitter.27B.100d.txt", 
+                              skip=1, delim=" ", quote="",
+                              col_names=c("word", paste0("V", 1:100)))
+
+w2vGloVe <- w2vGloVe[w2vGloVe$word %in% featnames(fbdfm),]
+
 # creating new feature matrix for embeddings
-embed <- matrix(NA, nrow=ndoc(fbdfm), ncol=100)
+embed <- matrix(NA, nrow=ndoc(fbdfm), ncol=200)
 for (i in 1:ndoc(fbdfm)){
   if (i %% 100 == 0) message(i, '/', ndoc(fbdfm))
   # extract word counts
@@ -52,40 +58,20 @@ for (i in 1:ndoc(fbdfm)){
   doc_words <- featnames(fbdfm)[vec>0]
   # extract embeddings for those words
   embed_vec <- w2v[w2v$word %in% doc_words, 2:101]
-  # aggregate from word- to document-level embeddings by taking AVG
-  embed[i,] <- colMeans(embed_vec, na.rm=TRUE)
+  embed_vec_glove <- w2vGloVe[w2vGloVe$word %in% doc_words, 2:101]
+  
+  one <- colMeans(embed_vec, na.rm=TRUE)
+  two <- colMeans(embed_vec_glove, na.rm=TRUE)
+  
+  embed[i,] <- c(one, two)
   # if no words in embeddings, simply set to 0
   if (nrow(embed_vec)==0) embed[i,] <- 0
 }
+View(embed)
 
-enriquecimento <- cbind(typesdfm, entidadesdfm)
-pca_entities <- prcomp(enriquecimento, scale = FALSE)
+set.seed(10)
 
-X <- cbind(embed,pca_entities$x[,1:10], dados$resposta)
-save(X, file = "adhoc/redemaluca/ds1/representacao_with_PCA.RData")
+#Com enriquecimento
 
-library(ggfortify)
-autoplot(pca_entities)
-
-#http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/118-principal-component-analysis-in-r-prcomp-vs-princomp/
-library(factoextra)
-fviz_eig(pca_entities)
-
-#http://www.sthda.com/english/wiki/print.php?id=207
-# Eigenvalues
-eig <- (pca_entities$sdev)^2
-
-# Variances in percentage
-variance <- eig*100/sum(eig)
-
-# Cumulative variances
-cumvar <- cumsum(variance)
-
-eig.decathlon2.active <- data.frame(eig = eig, variance = variance,
-                                    cumvariance = cumvar)
-head(eig.decathlon2.active)
-
-
-library("factoextra")
-eig.val <- get_eigenvalue(res.pca)
-head(eig.val)
+X <- cbind(embed,dados$resposta)
+save(X, file = "adhoc/redemaluca/ds1/q1_representacao_re_glove_concat.RData")
