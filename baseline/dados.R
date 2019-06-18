@@ -108,7 +108,7 @@ getDadosBaselineByQ <- function(var) {
 						SELECT GROUP_CONCAT(tn.palavra)
 						FROM tweets_nlp tn
 						WHERE tn.idTweetInterno = t.idInterno
-						AND palavra IN ('/food and drink/beverages/alcoholic beverages/wine', '/food and drink/beverages/alcoholic beverages/cocktails and beer', '#url')
+            AND palavra IN ('/food and drink/beverages/alcoholic beverages/cocktails and beer','/food and drink/beverages/alcoholic beverages/wine','beer','/food and drink','Alcoholic beverage','wine','Beer','/science/chemistry','/health and fitness/disease/cold and flu','/shopping/gifts/party supplies','party','/art and entertainment/movies and tv/movies','alcohol','/health and fitness/addiction','/law, govt and politics/law enforcement/police','/health and fitness/addiction/alcoholism','Wine','Music video','SHOT','NEW MUSIC VIDEO','J.CLANCY','shot','LIFE','/sports/golf','/food and drink/beverages','/society/sex','/sports/tennis','Party','club','Dinosaur Bar-B-Que','Public house','/art and entertainment/music','/sports/polo','/health and fitness/addiction/substance abuse','tequila','/travel/specialty travel/vineyards','Ale','vodka','/sports/basketball','/food and drink/cuisines/mexican cuisine','/art and entertainment/movies and tv/comedies','/art and entertainment/dance','Ethanol','Beer pong','/pets/reptiles','England','liquor','Club', '#url')
 						GROUP BY tn.idTweetInterno) AS entidades
 					  FROM tweets t
 					  -- WHERE LENGTH(textoParserRisadaEmoticom) > 5
