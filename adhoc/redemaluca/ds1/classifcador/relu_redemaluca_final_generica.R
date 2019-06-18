@@ -2,7 +2,8 @@ library(keras)
 library(tools)
 library(caret)
 
-load("adhoc/redemaluca/ds1/dados/q1_redemaluca_with_PCA.R")
+#load("adhoc/redemaluca/ds1/dados/representacao_with_PCA_50.RData")
+load("adhoc/redemaluca/ds1/dados/q3_representacao_PCA_10.RData")
 
 set.seed(10)
 split=0.80
@@ -43,7 +44,7 @@ for (i in 1:10) {
 
   callbacks_list <- list(
   	callback_early_stopping(
-  		monitor = "val_loss",
+  		monitor = "val_acc",
   		patience = 1
   		),
   	callback_model_checkpoint(
@@ -54,10 +55,11 @@ for (i in 1:10) {
   	)
 
   model <- keras_model_sequential() %>%
-  layer_dense(units = 128, activation = "relu", input_shape = c(ncol(one_hot_train))) %>%
-  layer_dropout(0.2) %>%
-  layer_dense(units = 16, activation = "relu") %>%
-  layer_dense(units = 1, activation = "sigmoid")
+          layer_dense(units = 128, activation = "relu", input_shape = c(ncol(one_hot_train))) %>%
+          layer_dense(units = 32, activation = "relu") %>%
+          layer_dropout(0.2) %>%
+          layer_dense(units = 16, activation = "relu") %>%
+          layer_dense(units = 1, activation = "sigmoid")
   
   model %>% compile(
   	loss = "binary_crossentropy",
@@ -71,7 +73,7 @@ for (i in 1:10) {
   	one_hot_train, resposta,
   	batch_size = 64,
   	epochs = 5,
-  	callbacks = callbacks_list,
+  	#callbacks = callbacks_list,
   	validation_split = 0.2
   	)
   
@@ -84,5 +86,5 @@ for (i in 1:10) {
 }
 resultados
 mean(resultados$F1)
-mean(resultados$Recall)
 mean(resultados$Precision)
+mean(resultados$Recall)
