@@ -4,11 +4,13 @@ library(caret)
 
 # load("adhoc/redemaluca/ds2/dados/ds2_representacao_pca50.RData")
 # load("adhoc/redemaluca/ds2/dados/ds2_representacao_pca50.RData")
-load("adhoc/redemaluca/ds2/dados/ds2_representacao_pca50.RData")
+load("adhoc/redemaluca/ds1/representacao_with_PCA_13.RData")
 #load("adhoc/redemaluca/ds1/dados/q3_representacao_PCA_10.RData")
 
 set.seed(10)
 split=0.80
+
+enriquecimento <- 1
 
 addRowAdpater <- function(resultados, baseline, matriz, ...) {
   print(baseline)
@@ -52,14 +54,26 @@ for (i in 1:10) {
     layer_dropout(0.2) %>%
     layer_dense(units = 16, activation = "relu")
   
-  main_output <- layer_concatenate(c(modelPrincipal,modelEntidades)) %>%  
-    layer_dense(units = 32, activation = "relu") %>%
-    layer_dense(units = 1, activation = 'sigmoid')
-  
-  model <- keras_model(
-    inputs = c(main_input, entidade_input),
-    outputs = main_output
-  )
+
+  if (enriquecimento == 1) {
+    main_output <- layer_concatenate(c(modelPrincipal,modelEntidades)) %>%  
+      layer_dense(units = 32, activation = "relu") %>%
+      layer_dense(units = 1, activation = 'sigmoid')
+    
+    model <- keras_model(
+      inputs = c(main_input, entidade_input),
+      outputs = main_output
+    )
+  } else {
+    main_output <- modelPrincipal %>%  
+      layer_dense(units = 32, activation = "relu") %>%
+      layer_dense(units = 1, activation = 'sigmoid')
+    
+    model <- keras_model(
+      inputs = main_input,
+      outputs = main_output
+    )
+  }
   
   model %>% compile(
     loss = "binary_crossentropy",
@@ -68,9 +82,14 @@ for (i in 1:10) {
   )
   
   # Training ----------------------------------------------------------------
+  if (enriquecimento == 1) {
+    entrada <- list(one_hot_train,entidades_train)
+  } else {
+    entrada <- one_hot_train
+  }
   history <- model %>%
     fit(
-      x = list(one_hot_train,entidades_train),
+      x = entrada,
       y = array(resposta),
       batch_size = 64,
       epochs = 5,
