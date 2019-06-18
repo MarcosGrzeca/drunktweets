@@ -10,10 +10,9 @@ load("adhoc/redemaluca/ds1/representacao_with_PCA_13.RData")
 set.seed(10)
 split=0.80
 
-enriquecimento <- 1
+enriquecimento <- 0
 
 addRowAdpater <- function(resultados, baseline, matriz, ...) {
-  print(baseline)
   newRes <- data.frame(baseline, matriz$byClass["F1"] * 100, matriz$byClass["Precision"] * 100, matriz$byClass["Recall"] * 100)
   rownames(newRes) <- baseline
   names(newRes) <- c("Baseline", "F1", "Precision", "Recall")
@@ -98,7 +97,12 @@ for (i in 1:10) {
   
   history
   
-  predictions <- model %>% predict(list(one_hot_test, entidades_test))
+
+  if (enriquecimento == 1) {
+    predictions <- model %>% predict(list(one_hot_test, entidades_test))
+  } else {
+    predictions <- model %>% predict(one_hot_test)
+  }
   predictions <- round(predictions, 0)
   matriz <- confusionMatrix(data = as.factor(predictions), as.factor(resposta_test), positive="1")
   
