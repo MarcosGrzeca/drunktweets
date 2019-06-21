@@ -63,20 +63,39 @@ library(xgboost)
 
 #Com enriquecimento
 
-resultados <- data.frame(matrix(ncol = 4, nrow = 0))
-names(resultados) <- c("Name", "Precision", "Recall")
-
-addRowSimple <- function(resultados, rowName, precision, recall) {
-  newRes <- data.frame(rowName, precision, recall)
-  rownames(newRes) <- rowName
-  names(newRes) <- c("Name", "Precision", "Recall")
-  newdf <- rbind(resultados, newRes)
-  return (newdf)
+vectorize_sequences <- function(sequences, dimension = max_features) {
+  results <- matrix(0, nrow = length(sequences), ncol = dimension)
+  for (i in 1:length(sequences)) {
+    if (length(sequences[[i]])) {
+      results[i, sequences[[i]]] <- 1
+    }
+  }
+  return (results)
 }
 
-enriquecimento <- cbind(typesdfm, entidadesdfm)
-pca_entities <- prcomp(enriquecimento, scale = FALSE)
+# enriquecimento <- cbind(typesdfm, entidadesdfm)
+# pca_entities <- prcomp(enriquecimento, scale = FALSE)
 
-X <- cbind(embed,pca_entities$x[,1:50], dados$resposta)
+# X <- cbind(embed,pca_entities$x[,1:50], dados$resposta)
 
+library(keras)
+tokenizer_entities <- text_tokenizer(num_words = 15) %>%
+                      fit_text_tokenizer(dados$entidades)
+vocabEntitiesLenght <- length(tokenizer_entities$word_index)
+entidades <- texts_to_sequences(tokenizer_entities, dados$entidades)
+
+max_sequence <- max(sapply(entidades, max))
+max_sequence
+
+enti <- vectorize_sequences(entidades, dimension = max_sequence)
+
+tokenizer_types <- text_tokenizer(num_words = 50) %>%
+                    fit_text_tokenizer(dados$types)
+vocabTypesLenght <- length(tokenizer_types$word_index)
+types <- texts_to_sequences(tokenizer_types, dados$types)
+max_types <- max(sapply(types, max))
+
+type <- vectorize_sequences(types, dimension = max_types)
+
+X <- cbind(embed,enti,type,dados$resposta)
 save(X, file = "adhoc/redemaluca/ds1/dados/q3_representacao_PCA_50.RData")

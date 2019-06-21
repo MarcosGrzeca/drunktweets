@@ -2,7 +2,10 @@ library(keras)
 library(tools)
 library(caret)
 
+# load("adhoc/redemaluca/ds2/dados/ds2_representacao_pca50.RData")
+# load("adhoc/redemaluca/ds2/dados/ds2_representacao_pca50.RData")
 load("adhoc/redemaluca/ds2/dados/ds2_representacao_pca50.RData")
+#load("adhoc/redemaluca/ds1/dados/q3_representacao_PCA_10.RData")
 
 set.seed(10)
 split=0.80
@@ -45,12 +48,12 @@ for (i in 1:10) {
   
   entidade_input <- layer_input(shape = c(entidades))
   modelEntidades <- entidade_input %>%
-    layer_dense(units = 10, activation = "relu", input_shape = c(entidades)) %>%
+    layer_dense(units = 32, activation = "relu", input_shape = c(entidades)) %>%
     layer_dropout(0.2) %>%
-    layer_dense(units = 2, activation = "relu")
+    layer_dense(units = 16, activation = "relu")
   
   main_output <- layer_concatenate(c(modelPrincipal,modelEntidades)) %>%  
-    layer_dense(units = 24, activation = "relu") %>%
+    layer_dense(units = 32, activation = "relu") %>%
     layer_dense(units = 1, activation = 'sigmoid')
   
   model <- keras_model(
@@ -85,5 +88,5 @@ for (i in 1:10) {
 }
 resultados
 mean(resultados$F1)
-mean(resultados$Recall)
 mean(resultados$Precision)
+mean(resultados$Recall)

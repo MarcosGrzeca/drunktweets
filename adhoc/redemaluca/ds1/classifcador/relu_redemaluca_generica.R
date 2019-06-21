@@ -2,7 +2,8 @@ library(keras)
 library(tools)
 library(caret)
 
-load("adhoc/redemaluca/ds1/dados/representacao_with_PCA.RData")
+load("adhoc/redemaluca/ds1/dados/q3_representacao_PCA_10.RData")
+#load("adhoc/redemaluca/ds1/q1_representacao_re_glove_concat.RData")
 
 set.seed(10)
 split=0.80
@@ -20,28 +21,30 @@ resultados <- data.frame(matrix(ncol = 4, nrow = 0))
 names(resultados) <- c("Baseline", "F1", "Precisão", "Revocação")
 
 for (i in 1:10) {
-
+  
   inTrain <- createDataPartition(y = X[, ncol(X)], p = split, list = FALSE)
   
-  one_hot_train <- X[inTrain, 1:ncol(X) - 1]
+  tam <- ncol(X) - 1
+  tam <- 102
+  one_hot_train <- X[inTrain, 1:tam]
   resposta <-  X[inTrain, ncol(X)]
   
-  one_hot_test <- X[-inTrain, 1:ncol(X) - 1]
+  one_hot_test <- X[-inTrain, 1:tam]
   resposta_test <-  X[-inTrain, ncol(X)]
   
-  # MODEL --------------------------------------------------------------
+  #MODEL --------------------------------------------------------------
   model <- keras_model_sequential() %>%
-    layer_dense(units = 128, activation = "relu", input_shape = c(ncol(X) - 1)) %>%
+    layer_dense(units = 128, activation = "relu", input_shape = c(tam)) %>%
     layer_dense(units = 64, activation = "relu") %>%
+    layer_dropout(0.2) %>%
     layer_dense(units = 16, activation = "relu") %>%
     layer_dense(units = 1, activation = "sigmoid")
-
+  
   # model <- keras_model_sequential() %>%
   #   layer_dense(units = 128, activation = "relu", input_shape = c(ncol(one_hot_train))) %>%
   #   layer_dropout(0.2) %>%
   #   layer_dense(units = 16, activation = "relu") %>%
   #   layer_dense(units = 1, activation = "sigmoid")
-  
   
   model %>% compile(
     loss = "binary_crossentropy",
@@ -72,3 +75,6 @@ for (i in 1:10) {
   View(resultados)
 }
 resultados
+mean(resultados$F1)
+mean(resultados$Recall)
+mean(resultados$Precision)

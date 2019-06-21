@@ -16,7 +16,7 @@ source(file_path_as_absolute("adhoc/quanteda/metrics.R"))
 
 #Configuracoes
 DATABASE <- "icwsm"
-dados <- getDadosBaselineByQ("q2")
+dados <- getDadosBaselineByQ("q3")
 
 fbcorpus <- corpus(dados$textEmbedding)
 fbdfm <- dfm(fbcorpus, remove=stopwords("english"), verbose=TRUE, remove_punct = TRUE)
@@ -58,8 +58,8 @@ for (i in 1:ndoc(fbdfm)){
   if (nrow(embed_vec)==0) embed[i,] <- 0
 }
 
+
 enriquecimento <- cbind(typesdfm, entidadesdfm)
 pca_entities <- prcomp(enriquecimento, scale = FALSE)
-
-X <- cbind(embed,pca_entities$x[,1:12], dados$resposta)
-save(X, file = "adhoc/redemaluca/ds1/oficial/q2_glove_PCA12.RData")
+X <- cbind(embed,pca_entities$x[,1:10], dados$resposta)
+save(X, file = "adhoc/redemaluca/ds1/q3_representacao_glove_PCA_10.RData")

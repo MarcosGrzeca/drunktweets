@@ -16,7 +16,7 @@ source(file_path_as_absolute("adhoc/quanteda/metrics.R"))
 
 #Configuracoes
 DATABASE <- "icwsm"
-dados <- getDadosBaselineByQ("q2")
+dados <- getDadosBaselineByQ("q3")
 
 fbcorpus <- corpus(dados$textEmbedding)
 fbdfm <- dfm(fbcorpus, remove=stopwords("english"), verbose=TRUE, remove_punct = TRUE)
@@ -36,7 +36,7 @@ typesdfm <- dfm(types, verbose=TRUE)
 #    keptFeatures = NULL, language = "english", thesaurus = NULL,
 #    dictionary = NULL, valuetype = c("glob", "regex", "fixed"), ..
 
-w2v <- readr::read_delim("/var/www/html/glove.twitter.27B.100d.txt", 
+w2v <- readr::read_delim("adhoc/exportembedding/ds1/q3/cnn_10_epocas_8_filters164.txt", 
                   skip=1, delim=" ", quote="",
                   col_names=c("word", paste0("V", 1:100)))
 
@@ -61,5 +61,5 @@ for (i in 1:ndoc(fbdfm)){
 enriquecimento <- cbind(typesdfm, entidadesdfm)
 pca_entities <- prcomp(enriquecimento, scale = FALSE)
 
-X <- cbind(embed,pca_entities$x[,1:12], dados$resposta)
-save(X, file = "adhoc/redemaluca/ds1/oficial/q2_glove_PCA12.RData")
+X <- cbind(embed,pca_entities$x[,1:9], dados$resposta)
+save(X, file = "adhoc/redemaluca/ds1/oficial/q3_with_PCA_9.RData")

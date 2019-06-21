@@ -16,7 +16,7 @@ source(file_path_as_absolute("adhoc/quanteda/metrics.R"))
 
 #Configuracoes
 DATABASE <- "icwsm"
-dados <- getDadosBaselineByQ("q1")
+dados <- getDadosBaselineByQ("q2")
 
 fbcorpus <- corpus(dados$textEmbedding)
 fbdfm <- dfm(fbcorpus, remove=stopwords("english"), verbose=TRUE, remove_punct = TRUE)
@@ -36,7 +36,7 @@ typesdfm <- dfm(types, verbose=TRUE)
 #    keptFeatures = NULL, language = "english", thesaurus = NULL,
 #    dictionary = NULL, valuetype = c("glob", "regex", "fixed"), ..
 
-w2v <- readr::read_delim("adhoc/exportembedding/ds1/q1/cnn_10_epocas_8_filters164.txt", 
+w2v <- readr::read_delim("adhoc/exportembedding/ds1/q2/cnn_10_epocas_8_filters164.txt", 
                   skip=1, delim=" ", quote="",
                   col_names=c("word", paste0("V", 1:100)))
 
@@ -61,31 +61,5 @@ for (i in 1:ndoc(fbdfm)){
 enriquecimento <- cbind(typesdfm, entidadesdfm)
 pca_entities <- prcomp(enriquecimento, scale = FALSE)
 
-X <- cbind(embed,pca_entities$x[,1:10], dados$resposta)
-save(X, file = "adhoc/redemaluca/ds1/representacao_with_PCA.RData")
-
-library(ggfortify)
-autoplot(pca_entities)
-
-#http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/118-principal-component-analysis-in-r-prcomp-vs-princomp/
-library(factoextra)
-fviz_eig(pca_entities)
-
-#http://www.sthda.com/english/wiki/print.php?id=207
-# Eigenvalues
-eig <- (pca_entities$sdev)^2
-
-# Variances in percentage
-variance <- eig*100/sum(eig)
-
-# Cumulative variances
-cumvar <- cumsum(variance)
-
-eig.decathlon2.active <- data.frame(eig = eig, variance = variance,
-                                    cumvariance = cumvar)
-head(eig.decathlon2.active)
-
-
-library("factoextra")
-eig.val <- get_eigenvalue(res.pca)
-head(eig.val)
+X <- cbind(embed,pca_entities$x[,1:12], dados$resposta)
+save(X, file = "adhoc/redemaluca/ds1/oficial/q2_with_PCA_12.RData")
