@@ -31,7 +31,7 @@ reviews <- dadosTreinarEmbeddings$textEmbedding
 # reviews <- reviews[word_count > 5]
 
 library(keras)
-tokenizer <- text_tokenizer(num_words = 20000)
+tokenizer <- text_tokenizer(num_words = 10000)
 tokenizer %>% fit_text_tokenizer(reviews)
 
 reviews_check <- reviews %>% texts_to_sequences(tokenizer,.) %>% lapply(., function(x) length(x) > 1) %>% unlist(.)
