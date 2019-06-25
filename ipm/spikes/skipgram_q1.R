@@ -100,7 +100,7 @@ model %>%
   fit_generator(
     skipgrams_generator(reviews, tokenizer, skip_window, negative_samples), 
     # steps_per_epoch = 100000, epochs = 10
-    steps_per_epoch = 1800, epochs = 10
+    steps_per_epoch = 786, epochs = 10
     )
 
 #18689
