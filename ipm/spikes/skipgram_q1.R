@@ -31,7 +31,7 @@ reviews <- dadosTreinarEmbeddings$textEmbedding
 # reviews <- reviews[word_count > 5]
 
 library(keras)
-tokenizer <- text_tokenizer(num_words = 10000)
+tokenizer <- text_tokenizer(num_words = 7563)
 tokenizer %>% fit_text_tokenizer(reviews)
 
 reviews_check <- reviews %>% texts_to_sequences(tokenizer,.) %>% lapply(., function(x) length(x) > 1) %>% unlist(.)
@@ -99,8 +99,7 @@ model %>% compile(loss = "binary_crossentropy", optimizer = "adam")
 model %>%
   fit_generator(
     skipgrams_generator(reviews, tokenizer, skip_window, negative_samples), 
-    # steps_per_epoch = 100000, epochs = 10
-    steps_per_epoch = 786, epochs = 10
+    steps_per_epoch = 756, epochs = 10
     )
 
 #18689
@@ -114,10 +113,14 @@ words <- data_frame(
   id = as.integer(unlist(tokenizer$word_index))
 )
 
+words
+
 words <- words %>%
   filter(id <= tokenizer$num_words) %>%
   arrange(id)
 
 row.names(embedding_matrix) <- c("UNK", words$word)
+
+tokenizer$num_words
 
 write.table(embedding_matrix, "adhoc/exportembedding/new_skipgrams_10_epocas_5l_q1.txt",sep=" ",row.names=TRUE)
