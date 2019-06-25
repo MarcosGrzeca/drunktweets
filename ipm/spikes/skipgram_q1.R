@@ -99,7 +99,7 @@ model %>% compile(loss = "binary_crossentropy", optimizer = "adam")
 model %>%
   fit_generator(
     skipgrams_generator(reviews, tokenizer, skip_window, negative_samples), 
-    steps_per_epoch = 756, epochs = 10
+    steps_per_epoch = 424, epochs = 10
     )
 
 #18689
@@ -123,4 +123,6 @@ row.names(embedding_matrix) <- c("UNK", words$word)
 
 tokenizer$num_words
 
-write.table(embedding_matrix, "adhoc/exportembedding/new_skipgrams_10_epocas_5l_q1.txt",sep=" ",row.names=TRUE)
+embedding_file <- "adhoc/exportembedding/new_skipgrams_10_epocas_5l_q1.txt"
+write.table(embedding_matrix, embedding_file, sep=" ",row.names=TRUE)
+system(paste0("sed -i 's/\"//g' ", embedding_file))
