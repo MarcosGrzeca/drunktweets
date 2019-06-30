@@ -1,7 +1,7 @@
 library(caret)
 library(dplyr)
 
-expName <- "ds3"
+expName <- "exp1"
 
 resultados <- data.frame(matrix(ncol = 4, nrow = 0))
 names(resultados) <- c("F1", "Precision", "Recall")
@@ -17,7 +17,7 @@ addRowAdpaterBamos <- function(resultados, f1, precision, recall) {
 for (year in 1:5) {
 	svmResults <- readRDS(file = paste0("ensemblev3/resultados/", expName, "/svm", year, ".rds"))
 	xgboost <- readRDS(file = paste0("ensemblev3/resultados/", expName, "/xgboost", year, ".rds"))
-	nnResults <- readRDS(file = paste0("ensemblev3/resultados/", expName, "/neuralprob", year, ".rds"))
+	nnResults <- readRDS(file = paste0("ensemblev3/resultados/", expName, "/newdl/neuralprob", year, ".rds"))
 
 	if (expName == "exp1") {
 		datasetFile <-"ensemble/datasets/exp1/2-Gram-dbpedia-types-enriquecimento-info-q1-not-null_info_entidades.Rda"
