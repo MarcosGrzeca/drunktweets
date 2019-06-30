@@ -93,6 +93,17 @@ model <- keras_model(
   outputs = main_output
 )
 
+embedding_dim <- 100
+embedding_matrix <- array(0, c(max_words, embedding_dim))
+for (word in names(word_index)) {
+  index <- word_index[[word]]
+  if (index < max_words) {
+    embedding_vector <- embeddings_index[[word]]
+    if (!is.null(embedding_vector))
+      embedding_matrix[index+1,] <- embedding_vector
+  }
+}
+
 get_layer(model, index = 1) %>%
       set_weights(list(embedding_matrix))
 
