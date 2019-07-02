@@ -7,3 +7,9 @@ adhoc/exportembedding/new_skipgrams_10_epocas_5l_ds3.txt
 
 Resultado SkipGram + CNN:
 "adhoc/exportembedding/ds1/q1/cnn_10_epocas_8_filters164_skipgram.txt"
+"adhoc/exportembedding/ds1/q2/cnn_10_epocas_8_filters164_skipgram.txt"
+"adhoc/exportembedding/ds1/q3/cnn_10_epocas_8_filters164_skipgram.txt"
+
+
+
+#Tweet average + PCA
