@@ -1,0 +1,10 @@
+"adhoc/exportembedding/ds1/q1_cnn_10_epocas_8_filters164_glove.txt"
+"adhoc/exportembedding/ds1/q2_cnn_10_epocas_8_filters164_glove.txt"
+"adhoc/exportembedding/ds1/q3_cnn_10_epocas_8_filters164_glove.txt"
+"adhoc/exportembedding/ds2/ds2_cnn_10_epocas_8_filters164_glove.txt"
+"adhoc/exportembedding/ds3/ds3_cnn_10_epocas_8_filters164_glove.txt"
+
+"adhoc/redemaluca/ds1/dados/cnn_glove_q2_with_PCA_12.RData"
+"adhoc/redemaluca/ds1/dados/cnn_glove_q3_with_PCA_9.RData"
+"adhoc/redemaluca/ds2/dados/cnn_glove_ds2_with_PCA_50.RData"
+"adhoc/redemaluca/ds3/cnn_glove_ds3_with_PCA_15.RData"

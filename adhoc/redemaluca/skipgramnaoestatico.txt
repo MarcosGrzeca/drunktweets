@@ -1,0 +1,9 @@
+Resultado SkipGram:
+adhoc/exportembedding/new_skipgrams_10_epocas_5l_q1.txt
+adhoc/exportembedding/new_skipgrams_10_epocas_5l_q2.txt
+adhoc/exportembedding/new_skipgrams_10_epocas_5l_q3.txt
+adhoc/exportembedding/new_skipgrams_10_epocas_5l_ds2.txt
+adhoc/exportembedding/new_skipgrams_10_epocas_5l_ds3.txt
+
+Resultado SkipGram + CNN:
+"adhoc/exportembedding/ds1/q1/cnn_10_epocas_8_filters164_skipgram.txt"
