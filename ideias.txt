@@ -1,0 +1,24 @@
+To build Ensemble # 1, we trained SVMP-SE, DL-WEDS-SE, and XGB-WEDS-SE classifiers individually using the same data set, reserving 80% of the data for training and 20% for tests. We stored the positive class probability for each tweet and classifier. Next, we apply the average over the positive class probabilities for each tweet, as Figure 10, and classify an tweet as `Drunk Tweet' if the average probability is higher than 50 %. This method to combine multiples different classifiers is called stacking. We executed this process five (5) times, recording the average of F1-measure, precision, and recall metrics.
+
+
+https://blog.nikolaposa.in.rs/2017/01/16/on-structuring-php-projects/
+
+
+, the improvement of precision was at the exposure of recall to drunk texting situations.
+
+Testar LSTM
+Testar LSTM + CNN
+Testar LSTM + PCA BoW + PCA semantic features
+ConceptNet
+Retrofitting
+
+Poderia usar para pegar termos relacionados e zole retrofitting
+https://github.com/mfaruqui/retrofitting
+
+
+SQLS
+word 
+
+rede atual + Rede auxiliar com enriquecimento + 
+
+beer abeverage an_alcolic

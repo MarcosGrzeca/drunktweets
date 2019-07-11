@@ -10,6 +10,12 @@ Resultado SkipGram + CNN:
 "adhoc/exportembedding/ds1/q2/cnn_10_epocas_8_filters164_skipgram.txt"
 "adhoc/exportembedding/ds1/q3/cnn_10_epocas_8_filters164_skipgram.txt"
 "adhoc/exportembedding/ds2/cnn_10_epocas_8_filters164_skipgram.txt"
+"adhoc/exportembedding/ds3/cnn_10_epocas_8_filters164_skipgram.txt"
 
 
 #Tweet average + PCA
+"adhoc/redemaluca/ds1/q1_representacao_skigram_cnn_PCA.RData"
+"adhoc/redemaluca/ds1/q2_representacao_skigram_cnn_PCA.RData"
+"adhoc/redemaluca/ds1/q3_representacao_skigram_cnn_PCA.RData"
+"adhoc/redemaluca/ds2/dados/ds2_representacao_skigram_cnn_PCA.RData"
+"adhoc/redemaluca/ds3/dados/ds3_representacao_skigram_cnn_PCA.RData"
