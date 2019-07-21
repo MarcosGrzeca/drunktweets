@@ -11,7 +11,7 @@ source(file_path_as_absolute("utils/getDados.R"))
 source(file_path_as_absolute("baseline/dados.R"))
 source(file_path_as_absolute("utils/tokenizer.R"))
 
-dados <- getDadosBaselineByQ("q1")
+dados <- getDadosBaselineByQ("q2")
 # dados$textEmbedding <- removePunctuation(dados$textEmbedding)
 
 maxlen <- 38
@@ -128,6 +128,6 @@ words <- words %>%
 
 row.names(embedding_matrixTwo) <- c("UNK", words$word)
 
-embedding_file <- "adhoc/exportembedding/ds1/q1/q1kim.txt"
+embedding_file <- "adhoc/exportembedding/ds1/q2/q2kim.txt"
 write.table(embedding_matrixTwo, embedding_file, sep=" ",row.names=TRUE)
 system(paste0("sed -i 's/\"//g' ", embedding_file))
