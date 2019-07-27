@@ -101,7 +101,8 @@ for (iteracao in 1:1) {
   
   # out-of-sample accuracy
   preds <- as.factor(round(predict(rf, X[test,])))
-  resultados <- addRowSimple(resultados, "Sem", round(precision(preds>.50, maFinal$resposta[test]) * 100,6), round(recall(preds>.50, maFinal$resposta[test]) * 100,6))
+  preds
+  resultados <- addRowSimple(resultados, "Sem", round(precision(preds, maFinal$resposta[test]) * 100,6), round(recall(preds, maFinal$resposta[test]) * 100,6))
   
   cat("Iteracao = ",iteracao, "\n",sep="")
   View(resultados)
