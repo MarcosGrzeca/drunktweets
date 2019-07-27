@@ -16,7 +16,7 @@ set.seed(10)
 library(xgboost)
 
 # for (iteracao in 1:10) {
-for (iteracao in 1:1) {
+for (iteracao in 1:10) {
   load(file = datasetFile)
   maFinal$resposta <- as.factor(maFinal$resposta)
   training <- sample(1:nrow(maFinal), floor(.80 * nrow(maFinal)))
