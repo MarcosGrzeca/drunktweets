@@ -2,7 +2,7 @@ library(tools)
 
 try({
   Cores <- 8
-  datasetFile <-"ensemble/datasets/exp1/2-Gram-dbpedia-types-enriquecimento-info-q1-not-null_info_entidades.Rda"
+  datasetFile <-"chat/rdas/2gram-entidades-erro-sem-key-words_orderbyid.Rda"
   source(file_path_as_absolute("xgboostoverdatasetwi/xcorewi.R"))
   resultados
 })

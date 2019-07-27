@@ -22,41 +22,6 @@ for (iteracao in 1:10) {
   training <- sample(1:nrow(maFinal), floor(.80 * nrow(maFinal)))
   test <- (1:nrow(maFinal))[1:nrow(maFinal) %in% training == FALSE]
   maFinalWithoutResponse <- subset(maFinal, select = -c(resposta))
-
-  # converting matrix object
-  # X <- as(cbind(embed,typesdfm,entidadesdfm), "dgCMatrix")
- 
-  # X <- as(matSparse, "dgCMatrix")
-  
-  # training
-  
-  # options("experssion" = 9500000)
-  # require(xgboost)
-  # require(Matrix)
-  # require(data.table)
-  # sparse_matrix <- sparse.model.matrix(resposta ~ ., data = maFinal)[,-1]
-  
-  # sparse_matrix <- sparse.model.matrix(resposta ~ .-1, data = maFinal)
-  
-  # sparse_matrix
-  
-  
-  
-  
-  # matSparse
-  
-  
-  
-  # X <- xgb.DMatrix(label = resposta, data= as.matrix(maFinal))
-  
-  # marcos <- as.matrix(maFinal)
-  # View(marcos)
-  
-  # X <- xgb.DMatrix(label = resposta, marcos)
-  
-  # marcos$resposta
-  
-  
   matSparse <- as(as.matrix(maFinalWithoutResponse), "sparseMatrix")
   X <- as(matSparse, "dgCMatrix")
   
