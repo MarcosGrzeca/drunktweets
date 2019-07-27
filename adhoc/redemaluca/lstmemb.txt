@@ -1,8 +1,12 @@
 adhoc/exportembedding/ds1/q1/lstm_10_epocas.txt
 adhoc/exportembedding/ds1/q2/lstm_10_epocas.txt
 adhoc/exportembedding/ds1/q3/lstm_10_epocas.txt
+adhoc/exportembedding/ds2/lstm_10_epocas.txt
+adhoc/exportembedding/ds3/lstm_10_epocas_v2.txt
 
 13 12 9 56 17?
 "adhoc/redemaluca/ds1/q1_representacao_lstm_pca.RData"
 "adhoc/redemaluca/ds1/q2_representacao_lstm_pca.RData"
 "adhoc/redemaluca/ds1/q3_representacao_lstm_pca.RData"
+"adhoc/redemaluca/ds2/dados/ds2_representacao_lstm_PCA_50.RData"
+"adhoc/redemaluca/ds3/ds3_representacao_with_lstm_pca_15.RData"

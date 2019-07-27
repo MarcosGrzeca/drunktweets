@@ -22,3 +22,30 @@ word
 rede atual + Rede auxiliar com enriquecimento + 
 
 beer abeverage an_alcolic
+
+
+Posso pegar as métricas do ensemble, concatenar nas word embeddigns e criar uma nova rede neural.
+Refazer arquitetura da rede neural, para verificar se está correta!
+
+Também pode ser word vector + três predições
+
+Criar datasets: CSV, contendo.: Para fazer isso, tem que refazer todos os experimentos salvando todas as predições, inclusive do dataset. Somente se eu chamasse como Zero-R.
+
+Tweet: SVM (predict), (DL), and XGBoost.
+
+Usamos bagging: utilizar as predições dos primeiros classificadores para criar um dataset, que passar por um novo classificador.
+
+
+
+model <- keras_model_sequential() %>%
+			layer_conv_1d(filters = 32, kernel_size = 5, activation = "relu", input_shape = list(NULL, dim(data)[[-1]])) %>%
+			layer_max_pooling_1d(pool_size = 3) %>%
+			layer_conv_1d(filters = 32, kernel_size = 5, activation = "relu") %>%
+			layer_gru(units = 32, dropout = 0.1, recurrent_dropout = 0.5) %>%
+			layer_dense(units = 1)
+
+summary(model)
+model %>% compile(
+	optimizer = optimizer_rmsprop(),
+	loss = "mae"
+	)

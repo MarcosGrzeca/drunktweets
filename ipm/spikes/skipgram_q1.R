@@ -7,8 +7,9 @@ library(keras)
 source(file_path_as_absolute("utils/getDados.R"))
 source(file_path_as_absolute("baseline/dados.R"))
 source(file_path_as_absolute("utils/tokenizer.R"))
+source(file_path_as_absolute("utils/getDadosAmazon.R"))
 
-dadosTreinarEmbeddings <- getDadosBaselineByQ("q1")
+dadosTreinarEmbeddings <- getDadosAmazon()
 
 library(doMC)
 library(mlbench)
@@ -31,7 +32,7 @@ reviews <- dadosTreinarEmbeddings$textEmbedding
 # reviews <- reviews[word_count > 5]
 
 library(keras)
-tokenizer <- text_tokenizer(num_words = 7563)
+tokenizer <- text_tokenizer(num_words = 9322)
 tokenizer %>% fit_text_tokenizer(reviews)
 
 reviews_check <- reviews %>% texts_to_sequences(tokenizer,.) %>% lapply(., function(x) length(x) > 1) %>% unlist(.)
@@ -99,7 +100,7 @@ model %>% compile(loss = "binary_crossentropy", optimizer = "adam")
 model %>%
   fit_generator(
     skipgrams_generator(reviews, tokenizer, skip_window, negative_samples), 
-    steps_per_epoch = 424, epochs = 10
+    steps_per_epoch = 9322, epochs = 1
     )
 
 #18689
@@ -113,16 +114,16 @@ words <- data_frame(
   id = as.integer(unlist(tokenizer$word_index))
 )
 
-words
-
 words <- words %>%
   filter(id <= tokenizer$num_words) %>%
   arrange(id)
 
 row.names(embedding_matrix) <- c("UNK", words$word)
 
-tokenizer$num_words
-
-embedding_file <- "adhoc/exportembedding/new_skipgrams_10_epocas_5l_q1.txt"
+embedding_file <- "adhoc/exportembedding/new_skipgrams_10_epocas_5l_ds3.txt"
 write.table(embedding_matrix, embedding_file, sep=" ",row.names=TRUE)
 system(paste0("sed -i 's/\"//g' ", embedding_file))
+
+# length(row.names(embedding_matrix))
+
+# length(words$word)  
