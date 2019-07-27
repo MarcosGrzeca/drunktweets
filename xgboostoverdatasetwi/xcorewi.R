@@ -1,0 +1,87 @@
+library(caret)
+library(tools)
+library(doMC)
+library(mlbench)
+library(magrittr)
+library(dplyr)
+
+source(file_path_as_absolute("utils/functions.R"))
+
+if (isset(coreCustomizado)) {
+  CORES <- coreCustomizado
+} else {
+  CORES <- 5
+}
+registerDoMC(CORES)
+
+resultados <- data.frame(matrix(ncol = 4, nrow = 0))
+names(resultados) <- c("Name", "Precision", "Recall")
+
+addRowSimple <- function(resultados, rowName, precision, recall) {
+  newRes <- data.frame(rowName, precision, recall)
+  rownames(newRes) <- rowName
+  names(newRes) <- c("Name", "Precision", "Recall")
+  newdf <- rbind(resultados, newRes)
+  return (newdf)
+}
+
+set.seed(10)
+library(xgboost)
+
+# for (iteracao in 1:10) {
+for (iteracao in 1:1) {
+  load(file = datasetFile)
+  maFinal$resposta <- as.factor(maFinal$resposta)
+  training <- sample(1:nrow(maFinal), floor(.80 * nrow(maFinal)))
+  test <- (1:nrow(maFinal))[1:nrow(maFinal) %in% training == FALSE]
+
+  # converting matrix object
+  # X <- as(cbind(embed,typesdfm,entidadesdfm), "dgCMatrix")
+  X <- as(embed, "dgCMatrix")
+  
+  # parameters to explore
+  tryEta <- c(1,2,3)
+  tryDepths <- c(1,2,4,6)
+  # placeholders for now
+  bestEta=NA
+  bestDepth=NA
+  bestAcc=0
+  
+  for(eta in tryEta){
+    for(dp in tryDepths){ 
+      bst <- xgb.cv(data = X[training,], 
+                    label =  maFinal$resposta[training], 
+                    max.depth = dp,
+                    eta = eta, 
+                    nthread = Cores,
+                    nround = 500,
+                    nfold=5,
+                    print_every_n = 500L,
+                    objective = "binary:logistic")
+      # cross-validated accuracy
+      acc <- 1-mean(tail(bst$evaluation_log$test_error_mean))
+      if(acc>bestAcc){
+        bestEta=eta
+        bestAcc=acc
+        bestDepth=dp
+      }
+    }
+  }
+  
+  # running best model
+  rf <- xgboost(data = X[training,], 
+                label = maFinal$resposta[training], 
+                max.depth = bestDepth,
+                eta = bestEta, 
+                nthread = Cores,
+                nround = 500,
+                print_every_n=500L,
+                objective = "binary:logistic")
+  
+  # out-of-sample accuracy
+  preds <- predict(rf, X[test,])
+  resultados <- addRowSimple(resultados, "Sem", round(precision(preds>.50, maFinal$resposta[test]) * 100,6), round(recall(preds>.50, maFinal$resposta[test]) * 100,6))
+  
+  cat("Iteracao = ",iteracao, "\n",sep="")
+  View(resultados)
+}

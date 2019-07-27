@@ -1,0 +1,7 @@
+library(tools)
+
+try({
+  datasetFile <-"ensemble/datasets/exp1/2-Gram-dbpedia-types-enriquecimento-info-q1-not-null_info_entidades.Rda"
+  source(file_path_as_absolute("xgboostoverdatasetwi/xcorewi.R"))
+  resultados
+})
