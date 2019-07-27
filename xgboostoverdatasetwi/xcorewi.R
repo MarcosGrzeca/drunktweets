@@ -1,9 +1,5 @@
 library(caret)
-library(tools)
 library(doMC)
-library(mlbench)
-library(magrittr)
-library(dplyr)
 
 source(file_path_as_absolute("utils/functions.R"))
 
@@ -34,6 +30,7 @@ for (iteracao in 1:1) {
   maFinal$resposta <- as.factor(maFinal$resposta)
   training <- sample(1:nrow(maFinal), floor(.80 * nrow(maFinal)))
   test <- (1:nrow(maFinal))[1:nrow(maFinal) %in% training == FALSE]
+  embed <- subset(maFinal, select = -c(resposta))
 
   # converting matrix object
   # X <- as(cbind(embed,typesdfm,entidadesdfm), "dgCMatrix")
