@@ -1,14 +1,5 @@
 library(caret)
-library(doMC)
-
 source(file_path_as_absolute("utils/functions.R"))
-
-if (isset(coreCustomizado)) {
-  CORES <- coreCustomizado
-} else {
-  CORES <- 5
-}
-registerDoMC(CORES)
 
 resultados <- data.frame(matrix(ncol = 4, nrow = 0))
 names(resultados) <- c("Name", "Precision", "Recall")
@@ -30,42 +21,43 @@ for (iteracao in 1:1) {
   maFinal$resposta <- as.factor(maFinal$resposta)
   training <- sample(1:nrow(maFinal), floor(.80 * nrow(maFinal)))
   test <- (1:nrow(maFinal))[1:nrow(maFinal) %in% training == FALSE]
-  # embed <- subset(maFinal, select = -c(resposta))
+  maFinalWithoutResponse <- subset(maFinal, select = -c(resposta))
 
   # converting matrix object
   # X <- as(cbind(embed,typesdfm,entidadesdfm), "dgCMatrix")
-  X <- as(matSparse, "dgCMatrix")
+ 
+  # X <- as(matSparse, "dgCMatrix")
   
-  training
+  # training
   
-  options("experssion" = 9500000)
-  require(xgboost)
-  require(Matrix)
-  require(data.table)
-  sparse_matrix <- sparse.model.matrix(resposta ~ ., data = maFinal)[,-1]
+  # options("experssion" = 9500000)
+  # require(xgboost)
+  # require(Matrix)
+  # require(data.table)
+  # sparse_matrix <- sparse.model.matrix(resposta ~ ., data = maFinal)[,-1]
   
-  sparse_matrix <- sparse.model.matrix(resposta ~ .-1, data = maFinal)
+  # sparse_matrix <- sparse.model.matrix(resposta ~ .-1, data = maFinal)
   
-  sparse_matrix
-  
-  
-  
-  
-  matSparse
+  # sparse_matrix
   
   
   
-  X <- xgb.DMatrix(label = resposta, data= as.matrix(maFinal))
   
-  marcos <- as.matrix(maFinal)
-  View(marcos)
-  
-  X <- xgb.DMatrix(label = resposta, marcos)
-  
-  marcos$resposta
+  # matSparse
   
   
-  matSparse <- as(as.matrix(maFinal), "sparseMatrix")
+  
+  # X <- xgb.DMatrix(label = resposta, data= as.matrix(maFinal))
+  
+  # marcos <- as.matrix(maFinal)
+  # View(marcos)
+  
+  # X <- xgb.DMatrix(label = resposta, marcos)
+  
+  # marcos$resposta
+  
+  
+  matSparse <- as(as.matrix(maFinalWithoutResponse), "sparseMatrix")
   X <- as(matSparse, "dgCMatrix")
   
   # parameters to explore
@@ -75,9 +67,6 @@ for (iteracao in 1:1) {
   bestEta=NA
   bestDepth=NA
   bestAcc=0
-  
-  maFinal$resposta[training]
-  maFinal$resposta <- as.factor(maFinal$resposta)
   
   for(eta in tryEta){
     for(dp in tryDepths){ 
@@ -102,7 +91,7 @@ for (iteracao in 1:1) {
   
   # running best model
   rf <- xgboost(data = X[training,], 
-                label = maFinal$resposta[training], 
+                label = array(maFinal$resposta[training]), 
                 max.depth = bestDepth,
                 eta = bestEta, 
                 nthread = Cores,
@@ -111,7 +100,7 @@ for (iteracao in 1:1) {
                 objective = "binary:logistic")
   
   # out-of-sample accuracy
-  preds <- predict(rf, X[test,])
+  preds <- as.factor(round(predict(rf, X[test,])))
   resultados <- addRowSimple(resultados, "Sem", round(precision(preds>.50, maFinal$resposta[test]) * 100,6), round(recall(preds>.50, maFinal$resposta[test]) * 100,6))
   
   cat("Iteracao = ",iteracao, "\n",sep="")
