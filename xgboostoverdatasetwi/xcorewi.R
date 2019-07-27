@@ -30,11 +30,43 @@ for (iteracao in 1:1) {
   maFinal$resposta <- as.factor(maFinal$resposta)
   training <- sample(1:nrow(maFinal), floor(.80 * nrow(maFinal)))
   test <- (1:nrow(maFinal))[1:nrow(maFinal) %in% training == FALSE]
-  embed <- subset(maFinal, select = -c(resposta))
+  # embed <- subset(maFinal, select = -c(resposta))
 
   # converting matrix object
   # X <- as(cbind(embed,typesdfm,entidadesdfm), "dgCMatrix")
-  X <- as(embed, "dgCMatrix")
+  X <- as(matSparse, "dgCMatrix")
+  
+  training
+  
+  options("experssion" = 9500000)
+  require(xgboost)
+  require(Matrix)
+  require(data.table)
+  sparse_matrix <- sparse.model.matrix(resposta ~ ., data = maFinal)[,-1]
+  
+  sparse_matrix <- sparse.model.matrix(resposta ~ .-1, data = maFinal)
+  
+  sparse_matrix
+  
+  
+  
+  
+  matSparse
+  
+  
+  
+  X <- xgb.DMatrix(label = resposta, data= as.matrix(maFinal))
+  
+  marcos <- as.matrix(maFinal)
+  View(marcos)
+  
+  X <- xgb.DMatrix(label = resposta, marcos)
+  
+  marcos$resposta
+  
+  
+  matSparse <- as(as.matrix(maFinal), "sparseMatrix")
+  X <- as(matSparse, "dgCMatrix")
   
   # parameters to explore
   tryEta <- c(1,2,3)
@@ -44,13 +76,16 @@ for (iteracao in 1:1) {
   bestDepth=NA
   bestAcc=0
   
+  maFinal$resposta[training]
+  maFinal$resposta <- as.factor(maFinal$resposta)
+  
   for(eta in tryEta){
     for(dp in tryDepths){ 
       bst <- xgb.cv(data = X[training,], 
-                    label =  maFinal$resposta[training], 
+                    label =  array(maFinal$resposta[training]), 
                     max.depth = dp,
                     eta = eta, 
-                    nthread = Cores,
+                    nthread = 16,
                     nround = 500,
                     nfold=5,
                     print_every_n = 500L,
