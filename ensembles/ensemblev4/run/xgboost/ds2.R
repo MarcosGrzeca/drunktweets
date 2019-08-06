@@ -5,13 +5,10 @@ source(file_path_as_absolute("utils/getDados.R"))
 source(file_path_as_absolute("baseline/dados.R"))
 source(file_path_as_absolute("utils/tokenizer.R"))
 
-baseResultsFiles <- "ensemblev3/resultados/ds2/"
-baseResampleFiles <- "ensemblev2/resample/ds2/"
-embeddingFile <- "adhoc/exportembedding/ds2/cnn_10_epocas_8_filters164.txt"
-
-dados <- getDadosChat()
+baseResultsFiles <- "ensembles/ensemblev4/resultados/ds2/"
+baseResampleFiles <- "ensembles/ensemblev2/resample/ds2/"
 
 try({
-	source(file_path_as_absolute("ensemblev3/run/xgboost/xgboost_core.R"))
-	source(file_path_as_absolute("ensemblev2/git.R"))
+	source(file_path_as_absolute("ensembles/ensemblev4/run/xgboost/xgboost_core.R"))
+	#source(file_path_as_absolute("ensemblev2/git.R"))
 })
