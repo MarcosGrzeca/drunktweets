@@ -10,5 +10,4 @@ baseResampleFiles <- "ensembles/ensemblev2/resample/ds2/"
 
 try({
 	source(file_path_as_absolute("ensembles/ensemblev4/run/xgboost/xgboost_core.R"))
-	#source(file_path_as_absolute("ensemblev2/git.R"))
 })
