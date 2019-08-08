@@ -8,6 +8,7 @@ source(file_path_as_absolute("utils/getDadosAmazon.R"))
 
 baseResultsFiles <- "ensembles/ensemblev4/resultados/ds3/"
 baseResampleFiles <- "ensembles/ensemblev2/resample/ds3/"
+embeddingsFile <- "adhoc/redemaluca/ds3/oficial/ensemble/ds3_with_PCA_15.RData"
 
 try({
 	source(file_path_as_absolute("ensembles/ensemblev4/run/xgboost/xgboost_core.R"))

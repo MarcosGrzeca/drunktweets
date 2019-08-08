@@ -18,6 +18,7 @@ set.seed(10)
 library(xgboost)
 
 for (year in 1:5) {
+	load(embeddingsFile)
 	inTrain <- readRDS(file = paste0(baseResampleFiles, "trainIndex", year, ".rds"))
 	trainIndex <- as.data.frame(trainFile)$Resample1
 
