@@ -20,7 +20,6 @@ library(xgboost)
 for (year in 1:5) {
 	load(embeddingsFile)
 	inTrain <- readRDS(file = paste0(baseResampleFiles, "trainIndex", year, ".rds"))
-	trainIndex <- as.data.frame(trainFile)$Resample1
 
 	tam <- ncol(X) - 1
 	one_hot_train <- X[inTrain, 1:tam]
@@ -71,5 +70,5 @@ for (year in 1:5) {
 
 	# out-of-sample accuracy
 	preds <- predict(rf, one_hot_test)
-	saveRDS(preds, file = paste0(baseResultsFiles, "xgboost", year, ".rds"))	
+	saveRDS(preds, file = paste0(baseResultsFiles, "xgboost", year, ".rds"))
 }
