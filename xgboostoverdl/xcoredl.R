@@ -81,7 +81,7 @@ for (year in 1:10) {
 
   # out-of-sample accuracy
   preds <- predict(rf, one_hot_test)
-  resultados <- addRowSimple(resultados, "Com", round(precision(preds>.50, dados$resposta[test]) * 100,6), round(recall(preds>.50, dados$resposta[test]) * 100,6))
+  resultados <- addRowSimple(resultados, "Com", round(precision(preds>.50, resposta_test) * 100,6), round(recall(preds>.50, resposta_test) * 100,6))
   cat("Iteracao = ",iteracao, "\n",sep="")
   View(resultados)
 }
