@@ -7,7 +7,7 @@ source(file_path_as_absolute("utils/tokenizer.R"))
 
 baseResultsFiles <- "ensembles/ensemblev4/resultados/exp1/"
 baseResampleFiles <- "ensembles/ensemblev2/resample/exp1/"
-embeddingsFile <- "adhoc/redemaluca/ds1/representacao_with_PCA_13.RData";
+embeddingsFile <- "adhoc/redemaluca/ds1/oficial/ensemble/q1_with_PCA_13.RData"
 
 try({
 	maxlen <- 38
