@@ -12,5 +12,5 @@ embeddingsFile <- "adhoc/redemaluca/ds1/representacao_with_PCA_13.RData"
 try({
 	maxlen <- 38
 	max_words <- 7574
-	source(file_path_as_absolute("ensembles/ensemblev4/run/xgboost/xgboost_core.R"))
+	source(file_path_as_absolute("xgboostoverdl/xcoredl.R"))
 })

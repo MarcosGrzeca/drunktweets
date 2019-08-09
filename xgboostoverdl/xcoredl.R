@@ -17,7 +17,18 @@ source(file_path_as_absolute("adhoc/quanteda/metrics.R"))
 set.seed(10)
 library(xgboost)
 
-for (year in 1:5) {
+resultados <- data.frame(matrix(ncol = 4, nrow = 0))
+names(resultados) <- c("Name", "Precision", "Recall")
+
+addRowSimple <- function(resultados, rowName, precision, recall) {
+  newRes <- data.frame(rowName, precision, recall)
+  rownames(newRes) <- rowName
+  names(newRes) <- c("Name", "Precision", "Recall")
+  newdf <- rbind(resultados, newRes)
+  return (newdf)
+}
+
+for (year in 1:10) {
   load(embeddingsFile)
   inTrain <- readRDS(file = paste0(baseResampleFiles, "trainIndex", year, ".rds"))
 
@@ -70,5 +81,7 @@ for (year in 1:5) {
 
   # out-of-sample accuracy
   preds <- predict(rf, one_hot_test)
-  saveRDS(preds, file = paste0(baseResultsFiles, "xgboost", year, ".rds"))
+  resultados <- addRowSimple(resultados, "Com", round(precision(preds>.50, dados$resposta[test]) * 100,6), round(recall(preds>.50, dados$resposta[test]) * 100,6))
+  cat("Iteracao = ",iteracao, "\n",sep="")
+  View(resultados)
 }
