@@ -30,7 +30,7 @@ addRowSimple <- function(resultados, rowName, precision, recall) {
 
 for (year in 1:10) {
   load(embeddingsFile)
-  inTrain <- readRDS(file = paste0(baseResampleFiles, "trainIndex", year, ".rds"))
+  inTrain <- sample(1:nrow(X), floor(.80 * nrow(X)))
 
   tam <- ncol(X) - 1
   one_hot_train <- X[inTrain, 1:tam]
@@ -82,6 +82,5 @@ for (year in 1:10) {
   # out-of-sample accuracy
   preds <- predict(rf, one_hot_test)
   resultados <- addRowSimple(resultados, "Com", round(precision(preds>.50, resposta_test) * 100,6), round(recall(preds>.50, resposta_test) * 100,6))
-  cat("Iteracao = ",iteracao, "\n",sep="")
   View(resultados)
 }
