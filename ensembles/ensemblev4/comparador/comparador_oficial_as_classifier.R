@@ -1,6 +1,13 @@
 library(caret)
 library(dplyr)
 
+library(doMC)
+library(mlbench)
+library(magrittr)
+
+CORES <- 4
+registerDoMC(CORES)
+
 expName <- "exp1"
 
 resultados <- data.frame(matrix(ncol = 4, nrow = 0))
