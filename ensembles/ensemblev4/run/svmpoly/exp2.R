@@ -1,0 +1,16 @@
+library(tools)
+
+source(file_path_as_absolute("ipm/experimenters.R"))
+source(file_path_as_absolute("utils/getDados.R"))
+source(file_path_as_absolute("baseline/dados.R"))
+source(file_path_as_absolute("utils/tokenizer.R"))
+
+baseResultsFiles <- "ensembles/ensemblev4/resultados/exp2/"
+baseResampleFiles <- "ensembles/ensemblev2/resample/exp2/"
+embeddingsFile <- "adhoc/redemaluca/ds1/oficial/ensemble/q2_with_PCA_12.RData"
+
+try({
+	maxlen <- 38
+	max_words <- 4405
+	source(file_path_as_absolute("ensembles/ensemblev4/run/svmpoly/svmpoly_core.R"))
+})
