@@ -10,5 +10,5 @@ baseResampleFiles <- "ensembles/ensemblev2/resample/ds2/"
 embeddingsFile <- "adhoc/redemaluca/ds2/dados/oficial/ensemble/ds2_with_PCA_50.RData"
 
 try({
-	source(file_path_as_absolute("ensembles/ensemblev4/run/svmpoly/svmpoly_core.R"))
+	source(file_path_as_absolute("ensembles/ensemblev4/run/svmpoly/svmpoly_core_new.R"))
 })

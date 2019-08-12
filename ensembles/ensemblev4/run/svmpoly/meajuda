@@ -26,7 +26,7 @@ treinarPoly <- function(data_train, resposta) {
 
 set.seed(10)
 
-for (year in 1:5) {
+for (year in 1:1) {
 	load(embeddingsFile)
 	inTrain <- readRDS(file = paste0(baseResampleFiles, "trainIndex", year, ".rds"))
 
@@ -37,12 +37,15 @@ for (year in 1:5) {
 	one_hot_test <- X[-inTrain, 1:tam]
 	resposta_test <-  X[-inTrain, ncol(X)]
   
-  	resposta <- as.factor(resposta)
+	resposta <- as.factor(resposta)
 	levels(resposta) <- make.names(levels(resposta))
 	classifier <- treinarPoly(one_hot_train, as.factor(resposta))
 
   	# out-of-sample accuracy
   	pred <- predict(classifier, one_hot_test, type = "prob") %>% 
   			mutate('class'=names(.)[apply(., 1, which.max)])
+  	
+  	pred$X1
+  	
 	saveRDS(pred$X1, file = paste0(baseResultsFiles, "svmpoly", year, ".rds"))
 }

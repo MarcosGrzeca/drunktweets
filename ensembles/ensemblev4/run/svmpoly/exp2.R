@@ -12,5 +12,5 @@ embeddingsFile <- "adhoc/redemaluca/ds1/oficial/ensemble/q2_with_PCA_12.RData"
 try({
 	maxlen <- 38
 	max_words <- 4405
-	source(file_path_as_absolute("ensembles/ensemblev4/run/svmpoly/svmpoly_core.R"))
+	source(file_path_as_absolute("ensembles/ensemblev4/run/svmpoly/svmpoly_core_new.R"))
 })
