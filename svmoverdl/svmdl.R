@@ -45,14 +45,21 @@ for (year in 1:10) {
   tam <- ncol(X) - 1
   one_hot_train <- X[inTrain, 1:tam]
   resposta <-  X[inTrain, ncol(X)]
+  resposta <- as.factor(resposta)
+  levels(resposta) <- make.names(levels(resposta))
   
   one_hot_test <- X[-inTrain, 1:tam]
   resposta_test <-  X[-inTrain, ncol(X)]
-  
+  resposta_test <- as.factor(resposta_test)
+  levels(resposta_test) <- make.names(levels(resposta_test))
+
+    
   classifier <- treinarPoly(one_hot_train, resposta)
 
   # out-of-sample accuracy
   preds <- predict(classifier, one_hot_test)
-  resultados <- addRowSimple(resultados, "Com", round(precision(preds>.50, resposta_test) * 100,6), round(recall(preds>.50, resposta_test) * 100,6))
+
+  matriz <- confusionMatrix(data = preds, resposta_test, positive="X1")
+  resultados <- addRowSimple(resultados, "Com", round(matriz$byClass["Precision"] * 100,6), round(matriz$byClass["Recall"] * 100,6))
   View(resultados)
 }
