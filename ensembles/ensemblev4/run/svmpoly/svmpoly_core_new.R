@@ -1,0 +1,46 @@
+library(tools)
+library(rword2vec)
+library(lsa)
+library(readr)
+library(quanteda)
+library(caret)
+
+library(doMC)
+Cores <- 32
+registerDoMC(cores=Cores)
+
+source(file_path_as_absolute("utils/getDados.R"))
+source(file_path_as_absolute("baseline/dados.R"))
+source(file_path_as_absolute("utils/tokenizer.R"))
+source(file_path_as_absolute("utils/resultadoshelper.R"))
+source(file_path_as_absolute("adhoc/quanteda/metrics.R"))
+
+treinarPoly <- function(data_train, resposta) {
+    fit <- train(
+            x = data_train,
+            y = resposta, 
+            method = "svmPoly", 
+			trControl = trainControl(method = "cv", number = 5, savePred=T, classProbs = TRUE))
+    return (fit)
+}
+
+set.seed(10)
+
+for (year in 1:5) {
+	load(embeddingsFile)
+	inTrain <- readRDS(file = paste0(baseResampleFiles, "trainIndex", year, ".rds"))
+
+	tam <- ncol(X) - 1
+	one_hot_train <- X[inTrain, 1:tam]
+	resposta <-  X[inTrain, ncol(X)]
+	
+	one_hot_test <- X[-inTrain, 1:tam]
+	resposta_test <-  X[-inTrain, ncol(X)]
+  
+	classifier <- treinarPoly(one_hot_train, as.factor(resposta))
+
+  	# out-of-sample accuracy
+  	pred <- predict(classifier, one_hot_test, type = "prob") %>% 
+  			mutate('class'=names(.)[apply(., 1, which.max)])
+	saveRDS(pred$X1, file = paste0(baseResultsFiles, "svmpoly", year, ".rds"))
+}
