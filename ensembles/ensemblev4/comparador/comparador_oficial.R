@@ -1,7 +1,7 @@
 library(caret)
 library(dplyr)
 
-expName <- "exp1"
+expName <- "exp3"
 
 resultados <- data.frame(matrix(ncol = 4, nrow = 0))
 names(resultados) <- c("F1", "Precision", "Recall")
@@ -18,6 +18,7 @@ for (year in 1:5) {
 	svmResults <- readRDS(file = paste0("ensembles/ensemblev3/resultados/", expName, "/svm", year, ".rds"))
 	xgboost <- readRDS(file = paste0("ensembles/ensemblev4/resultados/", expName, "/xgboost", year, ".rds"))
 	nnResults <- readRDS(file = paste0("ensembles/ensemblev3/resultados/", expName, "/newdl/neuralprob", year, ".rds"))
+	svmLoko <- readRDS(file = paste0("ensembles/ensemblev4/resultados/", expName, "/svmpoly", year, ".rds"))
 	
 	if (expName == "exp1") {
 		datasetFile <-"ensembles/ensemble/datasets/exp1/2-Gram-dbpedia-types-enriquecimento-info-q1-not-null_info_entidades.Rda"
@@ -38,7 +39,7 @@ for (year in 1:5) {
 	data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
 	data_test <- maFinal[-trainIndex,]
 	
-	bigDataFrame <- bind_cols(list(as.numeric(as.character(svmResults)), as.numeric(as.character(xgboost)), as.numeric(as.character(nnResults))))
+	bigDataFrame <- bind_cols(list(as.numeric(as.character(svmLoko)), as.numeric(as.character(svmResults)), as.numeric(as.character(xgboost)), as.numeric(as.character(nnResults))))
 	pred <- round(rowMeans(bigDataFrame),0)
 	
 	#bigDataFrame <- bind_cols(list(as.numeric(as.character(svmResults)), as.numeric(as.character(xgboost))))
