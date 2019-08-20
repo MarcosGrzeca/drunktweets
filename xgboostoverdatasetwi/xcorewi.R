@@ -65,9 +65,7 @@ for (iteracao in 1:10) {
                 objective = "binary:logistic")
   
   # out-of-sample accuracy
-  preds <- as.factor(round(predict(rf, X[test,])))
-  resultados <- addRowSimple(resultados, "Sem", round(precision(preds, maFinal$resposta[test]) * 100,6), round(recall(preds, maFinal$resposta[test]) * 100,6))
-  
+  preds <- as.factor(round(predict(rf, X[test,]))) 
   matriz <- confusionMatrix(data = preds, maFinal$resposta[test], positive="1")
   resultados <- addRowSimple(resultados, "Sem", round(matriz$byClass["Precision"] * 100,6), round(matriz$byClass["Recall"] * 100,6))
   
