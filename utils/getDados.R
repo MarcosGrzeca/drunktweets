@@ -720,18 +720,8 @@ getDadosChatForCloud <- function() {
                       FROM chat_tweets t
                       WHERE contabilizar = 1
                       AND drunk IN ("N", "S")
-                      ORDER by id
+                      GROUP by drunk
+                      ORDER by drunk
                       ')
-
-  dados$resposta[dados$resposta == "N"] <- 0
-  dados$resposta[dados$resposta == "S"] <- 1
-
-  #dados$resposta <- as.factor(dados$resposta)
-  dados$resposta <- as.numeric(dados$resposta)
-  dados$textOriginal <- enc2utf8(dados$textOriginal)
-  dados$textOriginal <- iconv(dados$textOriginal, to='ASCII//TRANSLIT')
-
-  dados$numeroErros[dados$numeroErros > 1] <- 1
-  dados <- discretizarTurno(dados)
   return (dados)
 }
