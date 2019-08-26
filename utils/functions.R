@@ -17,6 +17,9 @@ finishFileLog <- function(nome){
   file.show(nome)
 }
 
+closeAll <- function() {
+  lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
+}
 
 query <- function(sql) {
   dbDataType(RMySQL::MySQL(), "a")
