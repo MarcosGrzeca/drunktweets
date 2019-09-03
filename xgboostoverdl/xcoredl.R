@@ -33,6 +33,7 @@ for (year in 1:10) {
   inTrain <- sample(1:nrow(X), floor(.80 * nrow(X)))
 
   tam <- ncol(X) - 1
+  tam <- 100
   one_hot_train <- X[inTrain, 1:tam]
   resposta <-  X[inTrain, ncol(X)]
   
