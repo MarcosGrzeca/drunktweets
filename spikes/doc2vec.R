@@ -1,5 +1,6 @@
 #http://www.nltk.org/install.html
 
+library(fastText)
 NLTK = reticulate::import("nltk.corpus")
 text_reuters = NLTK$reuters 
 nltk = reticulate::import("nltk")
@@ -41,6 +42,7 @@ concat = c(unlist(train_docs), unlist(test_docs))
 
 length(concat)
 
+str(concat)
 
 clust_vec = textTinyR::tokenize_transform_vec_docs(object = concat, as_token = T,
                                                    to_lower = T, 
@@ -99,10 +101,7 @@ PATH_OUT = "/var/www/html/drunktweets/rt_fst_model"
 
 vecs = fastTextR::skipgram_cbow(input_path = PATH_INPUT, output_path = PATH_OUT, 
                                 method = "skipgram", lr = 0.075, lrUpdateRate = 100, 
-                                dim = 300, ws = 5, epoch = 5, minCount = 1, neg = 5, 
-                                wordNgrams = 2, loss = "ns", bucket = 2e+06,
-                                minn = 0, maxn = 0, thread = 6, t = 1e-04, verbose = 2
-)
+                                dim = 300, ws = 5, epoch = 5)
 
 init = textTinyR::Doc2Vec$new(token_list = clust_vec$token, 
                               word_vector_FILE = "/var/www/html/drunktweets/rt_fst_model.vec",
@@ -119,3 +118,5 @@ rows_cols = 1:5
 doc2_sum[rows_cols, rows_cols]
 doc2_norm[rows_cols, rows_cols]
 doc2_idf[rows_cols, rows_cols]
+
+str(doc2_sum)
