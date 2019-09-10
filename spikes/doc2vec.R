@@ -1,5 +1,6 @@
 #http://www.nltk.org/install.html
 
+devtools::install_github('mlampros/fastText')
 library(fastText)
 NLTK = reticulate::import("nltk.corpus")
 text_reuters = NLTK$reuters 
