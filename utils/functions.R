@@ -23,7 +23,7 @@ closeAll <- function() {
 
 query <- function(sql) {
   dbDataType(RMySQL::MySQL(), "a")
-  mydb = dbConnect(MySQL(), user='root', password='senharoot123', dbname=DATABASE, host='marcosrds.ce948apvv9n9.sa-east-1.rds.amazonaws.com')
+  mydb = dbConnect(MySQL(), user='root', password='senharoot123', dbname=DATABASE, host='marcosrdsgmail.cfxafx6qs9ok.sa-east-1.rds.amazonaws.com')
   dbSendQuery(mydb, "SET SESSION group_concat_max_len = 1000000");
   rs = dbSendQuery(mydb, sql);
   dataBD <- fetch(rs, n=-1)
@@ -35,7 +35,7 @@ query <- function(sql) {
 
 connect <- function() {
   dbDataType(RMySQL::MySQL(), "a")
-  return (dbConnect(MySQL(), user='root', password='senharoot123', dbname=DATABASE, host='marcosrds.ce948apvv9n9.sa-east-1.rds.amazonaws.com'))
+  return (dbConnect(MySQL(), user='root', password='senharoot123', dbname=DATABASE, host='marcosrdsgmail.cfxafx6qs9ok.sa-east-1.rds.amazonaws.com'))
 }
 
 queryConnection <- function(mydb, sql) {
