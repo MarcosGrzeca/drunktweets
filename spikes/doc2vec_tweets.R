@@ -90,6 +90,6 @@ doc2_sum[rows_cols, rows_cols]
 doc2_norm[rows_cols, rows_cols]
 doc2_idf[rows_cols, rows_cols]
 
-primeiroDataset <- cbind(doc2_sum, dados$resposta)
+primeiroDataset <- data.frame((cbind.fill(doc2_sum, dados$resposta))
 
 save(primeiroDataset, file = "/var/www/html/drunktweets/spikes/doc2vec/ds3_doc2_sum.Rda")
