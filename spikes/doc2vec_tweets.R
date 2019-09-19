@@ -72,7 +72,7 @@ PATH_OUT = "/var/www/html/drunktweets/spikes/doc2vec/rt_fst_model"
 
 vecs = fastTextR::skipgram_cbow(input_path = PATH_INPUT, output_path = PATH_OUT, 
                                 method = "skipgram", lr = 0.075, lrUpdateRate = 100, 
-                                dim = 300, ws = 5, epoch = 5)
+                                dim = 100, ws = 5, epoch = 5)
 
 init = textTinyR::Doc2Vec$new(token_list = clust_vec$token, 
                               word_vector_FILE = "/var/www/html/drunktweets/spikes/doc2vec/rt_fst_model.vec",
