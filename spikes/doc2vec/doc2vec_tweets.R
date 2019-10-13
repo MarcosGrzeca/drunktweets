@@ -26,7 +26,6 @@ clust_vec = textTinyR::tokenize_transform_vec_docs(object = concat, as_token = T
                                                    language = "english", 
                                                    min_num_char = 3, 
                                                    max_num_char = 140,
-                                                   stemmer = "porter2_stemmer", 
                                                    threads = 4,
                                                    verbose = T)
 
@@ -41,7 +40,6 @@ utl = textTinyR::sparse_term_matrix$new(vector_data = concat, file_data = NULL,
 
 tm = utl$Term_Matrix(sort_terms = FALSE, to_lower = T, remove_punctuation_vector = F,
                      remove_numbers = F, trim_token = T, split_string = T, 
-                     stemmer = "porter2_stemmer",
                      split_separator = " \r\n\t.,;:()?!//", remove_stopwords = T,
                      language = "english", min_num_char = 3, max_num_char = 140,
                      print_every_rows = 100000, normalize = NULL, tf_idf = F, 
@@ -60,10 +58,22 @@ save_dat = textTinyR::tokenize_transform_vec_docs(object = concat, as_token = T,
                                                   split_separator = " \r\n\t.,;:()?!//",
                                                   remove_stopwords = T, language = "english", 
                                                   min_num_char = 3, max_num_char = 140, 
-                                                  stemmer = "porter2_stemmer", 
                                                   path_2folder = "/var/www/html/drunktweets/spikes/doc2vec/",
                                                   threads = 1,                     # whenever I save data to file set the number threads to 1
                                                   verbose = T)
+
+# save_dat = textTinyR::tokenize_transform_vec_docs(object = concat, as_token = T, 
+#                                                   to_lower = T, 
+#                                                   remove_punctuation_vector = F,
+#                                                   remove_numbers = F, trim_token = T, 
+#                                                   split_string = T, 
+#                                                   split_separator = " \r\n\t.,;:()?!//",
+#                                                   remove_stopwords = T, language = "english", 
+#                                                   min_num_char = 3, max_num_char = 140, 
+#                                                   stemmer = "porter2_stemmer", 
+#                                                   path_2folder = "/var/www/html/drunktweets/spikes/doc2vec/",
+#                                                   threads = 1,                     # whenever I save data to file set the number threads to 1
+#                                                   verbose = T)
 
 save_dat
 
@@ -72,7 +82,7 @@ PATH_OUT = "/var/www/html/drunktweets/spikes/doc2vec/rt_fst_model"
 
 vecs = fastTextR::skipgram_cbow(input_path = PATH_INPUT, output_path = PATH_OUT, 
                                 method = "skipgram", lr = 0.075, lrUpdateRate = 100, 
-                                dim = 100, ws = 5, epoch = 5)
+                                dim = 100, ws = 5, epoch = 10)
 
 init = textTinyR::Doc2Vec$new(token_list = clust_vec$token, 
                               word_vector_FILE = "/var/www/html/drunktweets/spikes/doc2vec/rt_fst_model.vec",
