@@ -25,7 +25,7 @@ clust_vec = textTinyR::tokenize_transform_vec_docs(object = concat, as_token = T
                                                    remove_stopwords = T,
                                                    language = "english", 
                                                    min_num_char = 3, 
-                                                   max_num_char = 100,
+                                                   max_num_char = 140,
                                                    stemmer = "porter2_stemmer", 
                                                    threads = 4,
                                                    verbose = T)
@@ -43,7 +43,7 @@ tm = utl$Term_Matrix(sort_terms = FALSE, to_lower = T, remove_punctuation_vector
                      remove_numbers = F, trim_token = T, split_string = T, 
                      stemmer = "porter2_stemmer",
                      split_separator = " \r\n\t.,;:()?!//", remove_stopwords = T,
-                     language = "english", min_num_char = 3, max_num_char = 100,
+                     language = "english", min_num_char = 3, max_num_char = 140,
                      print_every_rows = 100000, normalize = NULL, tf_idf = F, 
                      threads = 6, verbose = T)
 
@@ -59,7 +59,7 @@ save_dat = textTinyR::tokenize_transform_vec_docs(object = concat, as_token = T,
                                                   split_string = T, 
                                                   split_separator = " \r\n\t.,;:()?!//",
                                                   remove_stopwords = T, language = "english", 
-                                                  min_num_char = 3, max_num_char = 100, 
+                                                  min_num_char = 3, max_num_char = 140, 
                                                   stemmer = "porter2_stemmer", 
                                                   path_2folder = "/var/www/html/drunktweets/spikes/doc2vec/",
                                                   threads = 1,                     # whenever I save data to file set the number threads to 1
@@ -90,6 +90,7 @@ doc2_sum[rows_cols, rows_cols]
 doc2_norm[rows_cols, rows_cols]
 doc2_idf[rows_cols, rows_cols]
 
+library(rowr)
 primeiroDataset <- data.frame((cbind.fill(doc2_sum, dados$resposta))
 
 save(primeiroDataset, file = "/var/www/html/drunktweets/spikes/doc2vec/ds3_doc2_sum.Rda")
