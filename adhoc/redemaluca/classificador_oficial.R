@@ -4,7 +4,7 @@ library(caret)
 
 # load("adhoc/redemaluca/ds2/dados/ds2_representacao_pca50.RData")
 # load("adhoc/redemaluca/ds2/dados/ds2_representacao_pca50.RData")
-load("adhoc/redemaluca/ds1/representacao_with_PCA_13.RData")
+load(adhoc/redemaluca/ds1/dados/q1_redemaluca_with_PCA.R)
 #load("adhoc/redemaluca/ds1/dados/q3_representacao_PCA_10.RData")
 
 set.seed(10)
