@@ -1,0 +1,12 @@
+adhoc/exportembedding/ds1/cnn_q1_v2.R => adhoc/exportembedding/ds1/q1/cnn_10_epocas_8_filters164.txt
+
+adhoc/redemaluca/ds1/dados/q1_redemaluca_with_PCA.R
+
+adhoc/redemaluca/classificador_oficial.R
+
+
+#LSTM
+adhoc\exportembedding\ds1\lstm_q1.R
+
+
+semantic_tweets_alcolic
