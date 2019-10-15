@@ -26,6 +26,7 @@ cat("Found", length(word_index), "unique tokens.\n")
 data <- pad_sequences(sequences, maxlen = maxlen)
 
 library(caret)
+set.seed(10)
 trainIndex <- createDataPartition(dados$resposta, p=0.8, list=FALSE)
 dados_train <- dados[ trainIndex,]
 dados_test <- dados[-trainIndex,]
