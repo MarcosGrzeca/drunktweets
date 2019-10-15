@@ -1,0 +1,3 @@
+https://fasttext.cc/docs/en/cheatsheet.html
+
+./fasttext print-sentence-vectors wiki.en.bin < queries.txt > result.txt
