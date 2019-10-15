@@ -112,10 +112,14 @@ history <- model %>%
     validation_split = 0.2
   )
 
-# predictions <- model %>% predict(list(dados_test_sequence))
-# predictions2 <- round(predictions, 0
-# matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
-# resultados <- addRowAdpater(resultados, DESC, matriz)
+resultados <- data.frame(matrix(ncol = 4, nrow = 0))
+names(resultados) <- c("Baseline", "F1", "Precisão", "Revocação")
+
+predictions <- model %>% predict(list(dados_test_sequence))
+predictions2 <- round(predictions, 0)
+matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
+resultados <- addRowAdpater(resultados, "TESTE", matriz)
+View(resultados)
 
 ##
 library(dplyr)
