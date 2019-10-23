@@ -85,7 +85,7 @@ ccn_out_5 <- embedding_input %>%
   layer_global_max_pooling_1d()
 
 main_output <- layer_concatenate(c(ccn_out_3, ccn_out_4, ccn_out_5)) %>% 
-  layer_dense(units = 32, activation = "relu") %>%
+  layer_dense(units = 64, activation = "relu") %>%
   layer_dropout(0.2) %>%
   layer_dense(units = 32, activation = "relu") %>%
   layer_dense(units = 1, activation = 'sigmoid')
@@ -106,8 +106,9 @@ for (word in names(word_index)) {
   }
 }
 
-get_layer(model, index = 1) %>%
-      set_weights(list(embedding_matrix))
+get_layer(model, index = 2) %>%
+      set_weights(list(embedding_matrix)) %>%
+      freeze_weights()
 
 
 # get_layer(model, index = 1) %>%
@@ -115,8 +116,8 @@ get_layer(model, index = 1) %>%
 #     freeze_weights()
 
 model %>% compile(
-  loss = "mean_squared_error",
-  # loss = "binary_crossentropy",
+  #loss = "mean_squared_error",
+  loss = "binary_crossentropy",
   optimizer = "adam",
   metrics = "accuracy"
 )
