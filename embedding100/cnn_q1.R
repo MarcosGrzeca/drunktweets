@@ -104,7 +104,7 @@ library(keras)
 history <- model %>%
   fit(
     x = list(dados_train_sequence),
-    y = array(dados_train$resposta),
+    y = array(dados$resposta),
     batch_size = 64,
     epochs = 10,
     #callbacks = callbacks_list,
