@@ -1,0 +1,8 @@
+Q1:
+
+Gerar embedding100/cnn_q1.R
+Gerar embedding100/q1_redemaluca_with_PCA.R
+
+Acessar e trocar a linha adhoc\redemaluca\classificador_oficial.R
+embedding100/ds1/q1_with_PCA_13.RData
+
