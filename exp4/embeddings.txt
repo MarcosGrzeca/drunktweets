@@ -1,0 +1,43 @@
+Glove-static
+
+Glove-non-static
+
+Skipgram-static
+	DS1-Q1:
+		adhoc/redemaluca/ds1/q1_representacao_skip_PCA_10.RData
+	DS1-Q2:
+		VERIFIFCARRRRRRRRRRR
+		adhoc/redemaluca/ds1/q2_representacao_skipgram.RData
+	DS1-Q3:
+		VERIFICARRRRRRRRRR
+		adhoc/redemaluca/ds1/q3_representacao_skipgram.RData
+	DS2:
+		VERIFICARRRRRRRRRRR
+		adhoc/redemaluca/ds2/dados/ds2_representacao_skipgram.RData
+	DS3:
+		VERIFICAR
+		adhoc/redemaluca/ds3/ds3_representacao_skipgram.RData
+
+Skipgram-non-static
+	DS1-Q1:
+		adhoc/redemaluca/ds1/q1_representacao_skigram_cnn_PCA.RData
+	DS1-Q2:
+		adhoc/redemaluca/ds1/q2_representacao_skigram_cnn_PCA.RData
+	DS1-Q3:
+		VERIFICARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR:
+		adhoc/redemaluca/ds1/q3_representacao_skip_PCA_10.RData
+	DS2:
+		adhoc/redemaluca/ds2/dados/ds2_representacao_skigram_cnn_PCA.RData
+	DS3:
+		adhoc/redemaluca/ds3/dados/ds3_representacao_skigram_cnn_PCA.RData
+LSTM
+	DS1-Q1:
+		adhoc/redemaluca/ds1/q1_representacao_lstm_pca.RData
+	DS1-Q2:
+		adhoc/redemaluca/ds1/q2_representacao_lstm_pca.RData
+	DS1-Q3:
+		adhoc/redemaluca/ds1/q3_representacao_lstm_pca.RData
+	DS2:
+		adhoc/redemaluca/ds2/dados/ds2_representacao_lstm_PCA_50.RData
+	DS3:
+		adhoc/redemaluca/ds3/ds3_representacao_with_lstm_pca_15.RData

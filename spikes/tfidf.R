@@ -1,9 +1,16 @@
+#https://www.r-bloggers.com/twitter-sentiment-analysis-with-machine-learning-in-r-using-doc2vec-approach/
+
 library(tools)
+library(text2vec)
+library(caret)
+library(glmnet)
+library(ggrepel)
+
 source(file_path_as_absolute("utils/getDadosAmazon.R"))
 dados <- getDadosAmazon()
 
 set.seed(10)
-trainIndex <- createDataPartition(dados$resposta, p = 0.8)
+trainIndex <- createDataPartition(dados$resposta, p = 0.8, list=FALSE)
 tweets_train <- dados[trainIndex, ]
 tweets_test <- dados[-trainIndex, ]
  
@@ -46,11 +53,11 @@ addRowAdpater <- function(resultados, baseline, matriz, ...) {
 
 resultados <- data.frame(matrix(ncol = 4, nrow = 0))
 names(resultados) <- c("Baseline", "F1", "Precisão", "Revocação")
- 
+
 # train the model
 t1 <- Sys.time()
 glmnet_classifier <- cv.glmnet(x = dtm_train_tfidf,
- y = tweets_train[['sentiment']], 
+ y = tweets_train[['resposta']], 
  family = 'binomial', 
  # L1 penalty
  alpha = 1,
@@ -70,5 +77,5 @@ print(paste("max AUC =", round(max(glmnet_classifier$cvm), 4)))
 preds <- predict(glmnet_classifier, dtm_test_tfidf, type = 'response')[ ,1]
 auc(as.numeric(tweets_test$resposta), preds)
  
-matriz <- confusionMatrix(data = as.factor(preds), as.factor(tweets_test$resposta), positive="1")
+matriz <- confusionMatrix(data = as.factor(round(preds, 0)), as.factor(tweets_test$resposta), positive="1")
 # resultados <- addRowAdpater(resultados, DESC, matriz)
