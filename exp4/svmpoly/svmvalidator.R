@@ -39,7 +39,7 @@ set.seed(10)
 
 for (year in 1:5) {
 	load(embeddingsFile)
-	inTrain <- createDataPartition(y = X[, ncol(X)], p = split, list = FALSE)
+	inTrain <- createDataPartition(y = X[, ncol(X)], p = 0.8, list = FALSE)
 
 	tam <- ncol(X) - 1
 	one_hot_train <- X[inTrain, 1:tam]
@@ -52,9 +52,12 @@ for (year in 1:5) {
 	levels(resposta) <- make.names(levels(resposta))
 	classifier <- treinarPoly(one_hot_train, as.factor(resposta))
 
-  	# out-of-sample accuracy
+
+	resposta_test <- as.factor(resposta_test)
+  	levels(resposta_test) <- make.names(levels(resposta_test))
+  	
   	predictions <- predict(classifier, one_hot_test)
-	matriz <- confusionMatrix(data = as.factor(predictions), as.factor(resposta_test), positive="1")
+	matriz <- confusionMatrix(data = predictions, resposta_test, positive="X1")
 	resultados <- addRowAdpater(resultados, "MARCOS", matriz)
 	View(resultados)
 }

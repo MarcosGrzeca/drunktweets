@@ -59,6 +59,11 @@ for (year in 1:10) {
   # out-of-sample accuracy
   preds <- predict(classifier, one_hot_test)
 
+      resposta_test <- as.factor(resposta_test)
+    levels(resposta_test) <- make.names(levels(resposta_test))
+    
+  matriz <- confusionMatrix(data = predictions, resposta_test, positive="X1")
+
   matriz <- confusionMatrix(data = preds, resposta_test, positive="X1")
   resultados <- addRowSimple(resultados, "Com", round(matriz$byClass["Precision"] * 100,6), round(matriz$byClass["Recall"] * 100,6))
   View(resultados)
