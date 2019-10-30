@@ -83,7 +83,7 @@ for (year in 1:10) {
   preds <- predict(rf, one_hot_test)
   predictions2 <- round(preds, 0)
 
-  matriz <- confusionMatrix(data = resposta_test, predictions2, positive="1")
+  matriz <- confusionMatrix(data = as.factor(resposta_test), as.factor(predictions2), positive="1")
   resultados <- addRowAdpater(resultados, "MARCOS", matriz)
   View(resultados)
 }
