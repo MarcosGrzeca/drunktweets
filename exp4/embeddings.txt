@@ -1,6 +1,16 @@
 Glove-static
+	DS1-Q1:
+	DS1-Q2:
+	DS1-Q3:
+	DS2:
+	DS3:
 
 Glove-non-static
+	DS1-Q1:
+	DS1-Q2:
+	DS1-Q3:
+	DS2:
+	DS3:
 
 Skipgram-static
 	DS1-Q1:
