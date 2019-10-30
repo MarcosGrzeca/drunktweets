@@ -17,16 +17,16 @@ source(file_path_as_absolute("adhoc/quanteda/metrics.R"))
 set.seed(10)
 library(xgboost)
 
-resultados <- data.frame(matrix(ncol = 4, nrow = 0))
-names(resultados) <- c("Name", "Precision", "Recall")
-
-addRowSimple <- function(resultados, rowName, precision, recall) {
-  newRes <- data.frame(rowName, precision, recall)
-  rownames(newRes) <- rowName
-  names(newRes) <- c("Name", "Precision", "Recall")
+addRowAdpater <- function(resultados, baseline, matriz, ...) {
+  newRes <- data.frame(baseline, matriz$byClass["F1"] * 100, matriz$byClass["Precision"] * 100, matriz$byClass["Recall"] * 100)
+  rownames(newRes) <- baseline
+  names(newRes) <- c("Baseline", "F1", "Precision", "Recall")
   newdf <- rbind(resultados, newRes)
   return (newdf)
 }
+
+resultados <- data.frame(matrix(ncol = 4, nrow = 0))
+names(resultados) <- c("Baseline", "F1", "Precisão", "Revocação")
 
 for (year in 1:10) {
   load(embeddingsFile)
@@ -81,6 +81,9 @@ for (year in 1:10) {
 
   # out-of-sample accuracy
   preds <- predict(rf, one_hot_test)
-  resultados <- addRowSimple(resultados, "Com", round(precision(preds>.50, resposta_test) * 100,6), round(recall(preds>.50, resposta_test) * 100,6))
+  predictions2 <- round(preds, 0)
+
+  matriz <- confusionMatrix(data = resposta_test, predictions2, positive="1")
+  resultados <- addRowAdpater(resultados, "MARCOS", matriz)
   View(resultados)
 }
