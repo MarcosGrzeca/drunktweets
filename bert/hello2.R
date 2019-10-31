@@ -2,15 +2,28 @@
 
 Sys.setenv(TF_KERAS=1) 
 
-#python3 -m pip install keras-bert
+library(reticulate)
+# use_python("/usr/bin/python3")
+# use_virtualenv("~/myenv")
+# use_condaenv("myenv")
+
+#python3 -m pip3 install keras-bert
 
 # pip install keras-bert
 # tensorflow::install_tensorflow(version = "1.15")
 
-reticulate::py_module_available('keras_bert')
+#reticulate::py_module_available('keras_bert')
+
+install.packages("zeallot")
+library(zeallot)
+
+# install.packages("magrittr") # package installations are only needed the first time you use it
+# install.packages("dplyr")    # alternative installation of the %>%
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)    # alternatively, this also loads %>%
 
 
-pretrained_path = '/Users/turgutabdullayev/Downloads/uncased_L-12_H-768_A-12'
+pretrained_path = '/var/www/html/uncased_L-12_H-768_A-12'
 config_path = file.path(pretrained_path, 'bert_config.json')
 checkpoint_path = file.path(pretrained_path, 'bert_model.ckpt')
 vocab_path = file.path(pretrained_path, 'vocab.txt')
@@ -55,7 +68,7 @@ dt_data = function(dir, rows_to_read){
   return(list(x_train, x_segment, y_train))
 }
 
-c(x_train,x_segment, y_train) %<-% dt_data('~/Downloads/jigsaw-unintended-bias-in-toxicity-classification/train.csv',2000)
+c(x_train,x_segment, y_train) %<-% dt_data('/var/www/html/train.csv',2000)
 
 train = do.call(cbind,x_train) %>% t()
 segments = do.call(cbind,x_segment) %>% t()
@@ -95,3 +108,5 @@ model %>% fit(
   targets,
   epochs=epochs,
   batch_size=bch_size, validation_split=0.2)
+
+sessionInfo()

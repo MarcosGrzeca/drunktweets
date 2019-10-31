@@ -6,7 +6,7 @@ library(quanteda)
 library(caret)
 
 library(doMC)
-Cores <- 12
+Cores <- 4
 registerDoMC(cores=Cores)
 
 source(file_path_as_absolute("utils/getDados.R"))
