@@ -37,7 +37,7 @@ treinarPoly <- function(data_train, resposta) {
 
 set.seed(10)
 
-for (year in 1:5) {
+for (year in 1:10) {
 	load(embeddingsFile)
 	inTrain <- createDataPartition(y = X[, ncol(X)], p = 0.8, list = FALSE)
 
