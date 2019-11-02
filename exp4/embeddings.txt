@@ -7,10 +7,16 @@ Glove-static
 
 Glove-non-static
 	DS1-Q1:
+		adhoc/exportembedding/ds1/q1/cnn_10_epocas_8_filters164_glove.txt
+		adhoc/redemaluca/glovenonstatic/q1_glove_cnn_PCA.RData
 	DS1-Q2:
+		adhoc/exportembedding/ds1/q2/cnn_10_epocas_8_filters164_glove.txt
 	DS1-Q3:
+		adhoc/exportembedding/ds1/q3/cnn_10_epocas_8_filters164_glove.txt
 	DS2:
+		adhoc/exportembedding/ds2/ds2_cnn_10_epocas_8_filters164_glove.txt
 	DS3:
+		adhoc/exportembedding/ds3/ds3_cnn_10_epocas_8_filters164_glove.txt
 
 Skipgram-static
 	DS1-Q1:
