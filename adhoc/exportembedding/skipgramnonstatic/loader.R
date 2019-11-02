@@ -1,7 +1,7 @@
 #Geração dos dados
 
 if (get_os() == "linux") {
-	glove_dir = "/var/www/htmldrunktweets"
+	glove_dir = "/var/www/html/drunktweets"
 } else {
 	glove_dir = "C:/wamp64/www/drunktweets"
 }
