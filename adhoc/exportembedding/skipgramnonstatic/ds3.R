@@ -107,7 +107,7 @@ for (word in names(word_index)) {
   }
 }
 
-get_layer(model, index = 1) %>%
+get_layer(model, index = 2) %>%
       set_weights(list(embedding_matrix))
 
 model %>% compile(
