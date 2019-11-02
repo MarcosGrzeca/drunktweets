@@ -120,4 +120,4 @@ words <- words %>%
 
 row.names(embedding_matrix) <- c("UNK", words$word)
 
-write.table(embedding_matrix, "adhoc/exportembedding/new_skipgrams_10_epocas_5l.txt",sep=" ",row.names=TRUE)
+write.table(embedding_matrix, "adhoc/exportembedding/final_new_skipgrams_10_epocas_5l.txt",sep=" ",row.names=TRUE)
