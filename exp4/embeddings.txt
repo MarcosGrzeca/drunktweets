@@ -17,6 +17,7 @@ Glove-non-static
 		adhoc/redemaluca/glovenonstatic/q3_glove_cnn_PCA.RData
 	DS2:
 		adhoc/exportembedding/ds2/ds2_cnn_10_epocas_8_filters164_glove.txt
+		adhoc/redemaluca/glovenonstatic/ds2_glove_cnn_PCA.RData
 	DS3:
 		adhoc/exportembedding/ds3/ds3_cnn_10_epocas_8_filters164_glove.txt
 
