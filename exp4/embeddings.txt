@@ -42,14 +42,19 @@ Skipgram-static
 Skipgram-non-static
 	DS1-Q1:
 		adhoc/exportembedding/skipgramnonstatic/q1_cnn_10_epocas_8_filters164_skipgram.txt
+		adhoc/redemaluca/skipgramnonstatic/q1_skipgram_cnn_PCA.RData
 	DS1-Q2:
 		adhoc/exportembedding/skipgramnonstatic/q2_cnn_10_epocas_8_filters164_skipgram.txt
+		adhoc/redemaluca/skipgramnonstatic/q2_skipgram_cnn_PCA.RData
 	DS1-Q3:
 		adhoc/exportembedding/skipgramnonstatic/q3_cnn_10_epocas_8_filters164_skipgram.txt
+		adhoc/redemaluca/skipgramnonstatic/q3_skipgram_cnn_PCA.RData
 	DS2:
 		adhoc/exportembedding/skipgramnonstatic/ds2_cnn_10_epocas_8_filters164_skipgram.txt
+		adhoc/redemaluca/skipgramnonstatic/ds2_skipgram_cnn_PCA.RData
 	DS3:
 		adhoc/exportembedding/skipgramnonstatic/ds3_cnn_10_epocas_8_filters164_skipgram.txt
+		adhoc/redemaluca/skipgramnonstatic/ds3_skipgram_cnn_PCA.RData
 		
 LSTM
 	DS1-Q1:
