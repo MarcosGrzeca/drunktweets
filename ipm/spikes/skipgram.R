@@ -30,8 +30,10 @@ reviews <- dadosTreinarEmbeddings$textEmbedding
 # word_count <- str_count(reviews, "\\S+" )
 # reviews <- reviews[word_count > 5]
 
+#length(tokenizer$word_index)
+
 library(keras)
-tokenizer <- text_tokenizer(num_words = 20000)
+tokenizer <- text_tokenizer(num_words = 22351)
 tokenizer %>% fit_text_tokenizer(reviews)
 
 reviews_check <- reviews %>% texts_to_sequences(tokenizer,.) %>% lapply(., function(x) length(x) > 1) %>% unlist(.)
@@ -100,7 +102,7 @@ model %>%
   fit_generator(
     skipgrams_generator(reviews, tokenizer, skip_window, negative_samples), 
     # steps_per_epoch = 100000, epochs = 10
-    steps_per_epoch = 1800, epochs = 10
+    steps_per_epoch = 1869, epochs = 10
     )
 
 #18689

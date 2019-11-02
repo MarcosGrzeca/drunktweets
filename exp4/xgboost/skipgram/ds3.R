@@ -5,7 +5,7 @@ source(file_path_as_absolute("utils/getDados.R"))
 source(file_path_as_absolute("baseline/dados.R"))
 source(file_path_as_absolute("utils/tokenizer.R"))
 
-embeddingsFile <- "adhoc/redemaluca/ds3/ds3_representacao_skipgram.RData"
+embeddingsFile <- "adhoc/redemaluca/skipgram/ds3_skipgram_PCA.RData"
 
 try({
 	source(file_path_as_absolute("exp4/xgboost/xgboost.R"))
