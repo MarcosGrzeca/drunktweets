@@ -29,15 +29,15 @@ Glove-non-static
 
 Skipgram-static
 	DS1-Q1:
-		adhoc/redemaluca/skipgram/q1_skipgram_PCA.RData
+		adhoc/exportembedding/skipgram/q1_skipgram_PCA.RData
 	DS1-Q2:
-		adhoc/redemaluca/skipgram/q2_skipgram_PCA.RData
+		adhoc/exportembedding/skipgram/q2_skipgram_PCA.RData
 	DS1-Q3:
-		adhoc/redemaluca/skipgram/q3_skipgram_PCA.RData
+		adhoc/exportembedding/skipgram/q3_skipgram_PCA.RData
 	DS2:
-		adhoc/redemaluca/skipgram/ds2_skipgram_PCA.RData
+		adhoc/exportembedding/skipgram/ds2_skipgram_PCA.RData
 	DS3:
-		adhoc/redemaluca/skipgram/ds3_skipgram_PCA.RData
+		adhoc/exportembedding/skipgram/ds3_skipgram_PCA.RData
 
 Skipgram-non-static
 	DS1-Q1:
