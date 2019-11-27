@@ -1,6 +1,7 @@
 library(tools)
 
-source(file_path_as_absolute("ipm/glove/load.R"))
+# source(file_path_as_absolute("ipm/glove/load.R"))
+source(file_path_as_absolute("diffembeddings/load.R"))
 
 library(text2vec)
 
