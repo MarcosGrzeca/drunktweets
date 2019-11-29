@@ -1,0 +1,91 @@
+GloVe
+
+drunk
+    drunk     sober     crazy    having     silly  probably       mad  drinking    either   talking 
+1.0000000 0.8188401 0.7703535 0.7520057 0.7516215 0.7466418 0.7442099 0.7441065 0.7417103 0.7395869 
+
+alcohol
+alcohol     vodka     drugs     drink   tequila      weed   consume      soda    drinks  drinking 
+1.0000000 0.7293496 0.7005133 0.6875466 0.6835055 0.6790830 0.6596025 0.6585804 0.6513590 0.6416592 
+
+sober
+sober       drunk intoxicated    hungover    partying       tipsy      stoned    drinking       faded 
+  1.0000000   0.8188401   0.7058904   0.7032638   0.6898572   0.6840719   0.6650024   0.6495831   0.6426805 
+   reckless 
+  0.6326485
+
+beer
+    beer      wine     drink    drinks    coffee     beers  drinking    bottle   whiskey       tea 
+1.0000000 0.8526084 0.7997232 0.7799885 0.7744594 0.7730991 0.7705956 0.7221602 0.6919562 0.6875389 
+
+CNN-DS3
+
+drunk
+  drunk regretting    nervous   battling       nail  adulation    tattoos      rocks        mud   dreaming 
+ 1.0000000  0.5750554  0.5511207  0.5182133  0.5132370  0.4728701  0.4666685  0.4620446  0.4611356  0.4581517
+
+alcohol
+    alcohol             january          letsgethammered          jester 
+      1.0000000       0.3746059       0.3625082       0.3619225 
+     throughout             axe           share           loved		outstanding 	chase
+      0.3601472       0.3556186       0.3556122       0.3538242 	0.3515161 		0.3466926 
+
+sober
+    sober      come       UNK       hit      weed  flipping     beach     shoes   farting       fam 
+1.0000000 0.3693756 0.3599422 0.3546640 0.3462594 0.3425548 0.3338555 0.3281227 0.3240038 0.3227742
+
+beer
+
+     beer     blurry      tiger      route     social   reaction   language    smarter downstairs   wonderin 
+1.0000000  0.5609640  0.5078022  0.4907982  0.4901360  0.4860876  0.4832599  0.4765479  0.4738221  0.4722598 
+
+
+DS1-Q2
+
+   drunk     talking      thrown       pants    injuries savingspace     replies      fucked       belly 
+  1.0000000   0.4044325   0.3753563   0.3713633   0.3652852   0.3556849   0.3527969   0.3497040   0.3421225 
+    tasting    multiple      palmer         gun 
+  0.3415654   0.3349802   0.3248776   0.3224911
+
+
+alcohol   blackout    weekend      three    durring   beerpong   vitamins downstairs   siriusxm    daileys 
+ 1.0000000  0.4094574  0.3608565  0.3225341  0.3125933  0.3049973  0.3036278  0.2999093  0.2984712  0.2891938 
+ prettiest     brewed      neii3 
+ 0.2878335  0.2857043  0.2852576
+
+      sober     heaven       well      those blabbering coulda    america       plan    listens 
+ 1.0000000  0.6106073  0.5903443  0.5795663  0.5763920  0.5581321  0.5575431  0.5555932  0.5437866 
+      faze        hot   contacts   backyard 
+ 0.5408758  0.5344756  0.5330085  0.5328404 
+
+     beer   throwback     wuddup        sky       bump     yessir    buckets       will     tasted 
+ 1.0000000  0.3688425  0.3576215  0.3531666  0.3432862  0.3400661  0.3320079  0.3259404  0.3233449 
+ sometimes  dyanettec forgetting       post 
+ 0.3233166  0.3220487  0.3218512  0.3200462
+
+
+ LSTM DS3
+
+
+    drunk      imdrunk        yaass         beer          url       amanda       merica      whiskey 
+   1.0000000    0.7422402    0.7300334    0.7242690    0.7230384    0.7175395    0.7163444    0.7158455 
+      whoops        loves       snal85        photo celebrations     cocktail 
+   0.7150755    0.7150556    0.7149828    0.7131676    0.7124926    0.7113251 
+
+
+  alcohol         blu       chirp freshbreath     sincere        wolf      boxing      alumni        hero 
+  1.0000000   0.5838721   0.5785481   0.5594829   0.5558074   0.5551315   0.5479311   0.5476683   0.5469637 
+  celebrate     heading   tanqueray       snail    takeaway 
+  0.5468878   0.5460004   0.5442324   0.5442085   0.5398354 
+
+
+   sober  isitfridayyet             free    bankholiday         amanda        quickly 
+     1.0000000      0.5130669      0.4908349      0.4905337      0.4892095      0.4842075 
+       familia         church      deceptive          the85          proud simultaneously      drunkenly 
+     0.4836202      0.4827025      0.4823515      0.4821406      0.4815477      0.4802306      0.4801670
+
+
+    beer   imdrunk       url  hungover     again  cocktail  feelings     yaass     chard       bit   whiskey 
+1.0000000 0.8398324 0.8388156 0.8255266 0.8190338 0.8181079 0.8151097 0.8147969 0.8102804 0.8088815 0.8084485 
+  perfect    amanda       2am 
+0.8052435 0.8044693 0.8019071 

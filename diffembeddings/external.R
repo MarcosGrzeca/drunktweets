@@ -90,15 +90,9 @@
 
 
     # try out the function - we're hoping that "queen" will be in the top 5 results here
-    this_word_vector <- glove.300[['king']] - glove.300[['man']] + glove.300[['woman']]      
-    find_sim_wvs(this_word_vector, glove.300, top_n_res=5)
-
-    
-    # "flock is to geese as bison is to ___________"  (hoping for "herd")
-    # funny... "buffalo" tends to gravitate towards the city while "bison" is the animal
-    my_wv <- glove.300[['flock']] - glove.300[['geese']] + glove.300[['buffalo']]  # all cities because "buffalo, NY"
-    find_sim_wvs(my_wv, glove.300, top_n_res=10)
-    my_wv <- glove.300[['flock']] - glove.300[['geese']] + glove.300[['bison']]    # here we go, we got our "herds" we're looking for
-    find_sim_wvs(my_wv, glove.300, top_n_res=10)
-
-
+    find_sim_wvs(glove.300[['drunk']], glove.300, top_n_res=15)
+    find_sim_wvs(glove.300[['alcohol']], glove.300, top_n_res=15)
+    find_sim_wvs(glove.300[['sober']], glove.300, top_n_res=15)
+    find_sim_wvs(glove.300[['beer']], glove.300, top_n_res=15)
+    find_sim_wvs(glove.300[['wine']], glove.300, top_n_res=15)
+    find_sim_wvs(glove.300[['party']], glove.300, top_n_res=15)

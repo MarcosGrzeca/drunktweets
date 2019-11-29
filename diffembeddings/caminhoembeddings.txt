@@ -1,0 +1,20 @@
+GloVe:
+	/var/www/html/glove.twitter.27B.100d.txt
+
+Word2Vec (Skipgram):
+	adhoc/exportembedding/final_new_skipgrams_10_epocas_5l_semv.txt
+
+CNN:
+
+DS1-Q1
+
+
+DS1-Q2
+
+DS1-Q3
+
+DS2
+
+
+DS3
+	adhoc/exportembedding/ds3/cnn_10_epocas_8_filters164_semv.txt
