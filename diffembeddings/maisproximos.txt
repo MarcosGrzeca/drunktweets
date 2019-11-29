@@ -18,6 +18,39 @@ beer
     beer      wine     drink    drinks    coffee     beers  drinking    bottle   whiskey       tea 
 1.0000000 0.8526084 0.7997232 0.7799885 0.7744594 0.7730991 0.7705956 0.7221602 0.6919562 0.6875389 
 
+Word2Vec
+
+drunk
+   drunk    lemons inventive  annoys      dlac     grade       b2b  surround chiacchia   cnygolf 
+1.0000000 0.7101371 0.6992908 0.6954494 0.6915878 0.6840284 0.6799745 0.6783514 0.6782357 0.6761358 
+   googly  entirely   rebekah      dine 
+0.6755319 0.6755067 0.6743196 0.6737572 
+
+alcohol
+ alcohol           swill             huh tooturnttuesday          became    overhearduvm 
+      1.0000000       0.6480321       0.6473916       0.6472620       0.6463652       0.6413273 
+        bedside        disliked           yeahh           seton          manner           dried 
+      0.6331998       0.6289661       0.6225252       0.6222472       0.6210146       0.6183396 
+          baker        connects            fiji 
+      0.6160062       0.6158467       0.6148573 
+
+sober
+    sober         exhaling         marketed       miscarried         smallest           workin 
+       1.0000000        0.6777393        0.6682533        0.6654497        0.6591532        0.6578714 
+             20p conferencefinals      trayloreanb         merengue            willy            hwffc 
+       0.6552865        0.6540764        0.6519318        0.6518506        0.6493740        0.6488536 
+           mckay       newfriends         engaging 
+       0.6483295        0.6482696        0.6471230
+
+beer
+       beer        foreal      superior    punishable         crema         fleur craftbeertime 
+    1.0000000     0.6517272     0.6473354     0.6462830     0.6446430     0.6416235     0.6362272 
+          snl    electrical lemonademouth    precocious    supporters    candidates       parfums 
+    0.6359436     0.6359364     0.6356149     0.6338538     0.6335807     0.6335396     0.6334466 
+     gruesome 
+    0.6334144 
+
+
 CNN-DS3
 
 drunk
