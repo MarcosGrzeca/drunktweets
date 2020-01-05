@@ -13,7 +13,7 @@ DS1-Q2:
 	adhoc/exportembedding/ds1/q2/cnn_10_epocas_8_filters164semv.txt
 
 DS1-Q3:
-	adhoc/exportembedding/ds1/q3/cnn_10_epocas_8_filters164semv.txt
+	adhoc/exportembedding/ds1/q3/cnn_10_epocas_8_filters164_semv.txt
 
 DS2
 	adhoc/exportembedding/ds2/cnn_10_epocas_8_filters164semv.txt

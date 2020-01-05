@@ -51,27 +51,38 @@ beer
     0.6334144 
 
 
-CNN-DS3
-
+==========================================
+DS1-Q1
 drunk
-  drunk regretting    nervous   battling       nail  adulation    tattoos      rocks        mud   dreaming 
- 1.0000000  0.5750554  0.5511207  0.5182133  0.5132370  0.4728701  0.4666685  0.4620446  0.4611356  0.4581517
+
+drunk       liquor        vodka      tequila drinkodemayo        booze     problems       easier 
+   1.0000000    0.7364490    0.6577352    0.6549928    0.6433708    0.6425017    0.6362010    0.6285982 
+     shelves          hen     beverage        peach        tipsy         cold      quickly 
+   0.6230973    0.6219587    0.6189461    0.6167021    0.6151268    0.6089316    0.6029170 
 
 alcohol
-    alcohol             january          letsgethammered          jester 
-      1.0000000       0.3746059       0.3625082       0.3619225 
-     throughout             axe           share           loved		outstanding 	chase
-      0.3601472       0.3556186       0.3556122       0.3538242 	0.3515161 		0.3466926 
+  alcohol    tequila      crawl      booze     liquor     easier      tipsy       moon    cocktia    shelves 
+ 1.0000000  0.7703055  0.7301540  0.7197106  0.7192224  0.7089320  0.7069343  0.7060839  0.7024771  0.6971900 
+     vodka        bud      faced afterparty      guide 
+ 0.6947607  0.6946033  0.6944962  0.6924425  0.6921365
 
 sober
-    sober      come       UNK       hit      weed  flipping     beach     shoes   farting       fam 
-1.0000000 0.3693756 0.3599422 0.3546640 0.3462594 0.3425548 0.3338555 0.3281227 0.3240038 0.3227742
+    sober       ufo      love       UNK     tapas      find      time   brother   grandma spokesmen     since 
+1.0000000 0.3635848 0.3622671 0.3428615 0.3359517 0.3350355 0.3336140 0.3307202 0.3216234 0.3188398 0.3166909 
+    touch     rated pointless        mi 
+0.3126694 0.3089535 0.3060148 0.3059627 
 
 beer
+    beer    whisky       sjp    brooke   ratchet   genesee     route     crawl      ends       bud     beers 
+1.0000000 0.6410542 0.6275214 0.6145588 0.6091685 0.6016718 0.6003590 0.5958365 0.5953299 0.5870899 0.5868210 
+  hopping alcoholic     snaps  hammered 
+0.5807932 0.5777145 0.5733247 0.5722514 
 
-     beer     blurry      tiger      route     social   reaction   language    smarter downstairs   wonderin 
-1.0000000  0.5609640  0.5078022  0.4907982  0.4901360  0.4860876  0.4832599  0.4765479  0.4738221  0.4722598 
-
+wine
+       wine           vodka       liquor        damnn         tour      tequila         deep 
+   1.0000000    0.6571749    0.6524967    0.6489326    0.6455252    0.6134213    0.6114993 
+     sipping          pop       easier drinkodemayo hopandsketch     problems        chats 
+   0.6095939    0.6067770    0.6053357    0.5935824    0.5919676    0.5917707    0.5916445 
 
 DS1-Q2
 
@@ -97,7 +108,91 @@ alcohol   blackout    weekend      three    durring   beerpong   vitamins downst
  0.3233166  0.3220487  0.3218512  0.3200462
 
 
- LSTM DS3
+DS1-Q3
+
+drunk         smores       enjoying          turnt charlestonwine           dark       includes 
+ 1.0000000      0.3749260      0.3627298      0.3584997      0.3519171      0.3473728      0.3453265 
+    enough          natty       struggle           pile         alread        tanning        harvest 
+ 0.3426842      0.3420402      0.3417863      0.3381496      0.3366545      0.3347854      0.3337077 
+    little 
+ 0.3329053 
+
+
+      alcohol   finallyy      chair     gluten     ukcorp       roof    cabinet     classy  newspaper      syrup 
+ 1.0000000  0.3636060  0.3390235  0.3176388  0.2971810  0.2967006  0.2947508  0.2935788  0.2925362  0.2923073 
+     malty     matter      mouth bestbusker    maidana 
+ 0.2862016  0.2788044  0.2777507  0.2750837  0.2720110 
+
+    sober    career    breezy     binge       can    coming     whoaa  hangover    easier     money     maybe 
+1.0000000 0.4368943 0.3973805 0.3852281 0.3776991 0.3714186 0.3684894 0.3605490 0.3540698 0.3518774 0.3512994 
+     note    levels     wanna     night 
+0.3495217 0.3457904 0.3447943 0.3437846 
+
+       beer     explain      jersey      flower   plastered       queer     markets cincodemayo        came 
+  1.0000000   0.3372184   0.3362815   0.3285639   0.3049258   0.3047425   0.2988839   0.2872893   0.2857380 
+        but         yes    realtalk     whoever         wut        remy 
+  0.2809585   0.2757384   0.2737716   0.2714737   0.2703439   0.2684775 
+
+          wine elysianbrewing        coolers           bean         better            bae         smells 
+     1.0000000      0.2901611      0.2867700      0.2831245      0.2745721      0.2695367      0.2688869 
+   traditional      noregrets          crush           fuck         attack        average     phenomenal 
+     0.2612225      0.2547281      0.2546855      0.2543745      0.2537278      0.2512955      0.2506742 
+          what 
+     0.2466800 
+
+DS2
+    drunk  diarrhea  weekends    koozie   carolyn   counter  missiles   firebal    points  grandmas   commish 
+1.0000000 0.3960580 0.3898827 0.3843427 0.3589996 0.3550452 0.3550277 0.3537647 0.3511279 0.3486509 0.3479172 
+      dry  chipotle    lucies      twxx 
+0.3450179 0.3423349 0.3405586 0.3403743
+
+  alcohol      ihop      haha       mix     shiit    pattys  flavored  toonight      mart  grabbing      weed 
+1.0000000 0.5212596 0.4838240 0.4793185 0.4763015 0.4698666 0.4662628 0.4654030 0.4627921 0.4626794 0.4619548 
+   justin   patrick    wheres     knots 
+0.4562870 0.4552223 0.4525762 0.4511942 
+
+    sober       url     shots   drunken     tasty       mix     pints stumbling   surface    poured    fridge 
+1.0000000 0.8154163 0.7933246 0.7896570 0.7793223 0.7770798 0.7732610 0.7678690 0.7673754 0.7669067 0.7636860 
+     pool   patrick    george      butt 
+0.7616865 0.7587836 0.7587457 0.7585388
+
+beer não (é keyword)
+
+      wine   lastnight      spring     dancing alternative    highness       calum       stash    giivenss 
+  1.0000000   0.5631350   0.5426831   0.5384771   0.5275098   0.5204646   0.5189649   0.5116897   0.5037195 
+    secrets        wake          rt      wheres     driving     soldier 
+  0.5025383   0.5020606   0.5008418   0.4998587   0.4996717   0.4988076 
+
+    party   dropped      whos     drugs      wipe       sat     tried       ppl   attempt marijuana   stomach 
+1.0000000 0.6869672 0.6807468 0.6628525 0.6539840 0.6450618 0.6432550 0.6422238 0.6417882 0.6372204 0.6343003 
+ canadian  renegade  patricks      gods 
+0.6338862 0.6324891 0.6306522 0.6286238 
+
+CNN-DS3
+
+drunk
+  drunk regretting    nervous   battling       nail  adulation    tattoos      rocks        mud   dreaming 
+ 1.0000000  0.5750554  0.5511207  0.5182133  0.5132370  0.4728701  0.4666685  0.4620446  0.4611356  0.4581517
+
+alcohol
+    alcohol             january          letsgethammered          jester 
+      1.0000000       0.3746059       0.3625082       0.3619225 
+     throughout             axe           share           loved   outstanding   chase
+      0.3601472       0.3556186       0.3556122       0.3538242   0.3515161     0.3466926 
+
+sober
+    sober      come       UNK       hit      weed  flipping     beach     shoes   farting       fam 
+1.0000000 0.3693756 0.3599422 0.3546640 0.3462594 0.3425548 0.3338555 0.3281227 0.3240038 0.3227742
+
+beer
+
+     beer     blurry      tiger      route     social   reaction   language    smarter downstairs   wonderin 
+1.0000000  0.5609640  0.5078022  0.4907982  0.4901360  0.4860876  0.4832599  0.4765479  0.4738221  0.4722598 
+
+
+
+========================================================
+LSTM DS3
 
 
     drunk      imdrunk        yaass         beer          url       amanda       merica      whiskey 

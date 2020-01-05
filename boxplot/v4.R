@@ -10,3 +10,4 @@ ggplot(data, aes(x=algorithm, y=f1_measure, fill=embedding)) +
     geom_boxplot()
 
 
+
