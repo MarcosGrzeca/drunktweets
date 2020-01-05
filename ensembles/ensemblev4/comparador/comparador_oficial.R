@@ -39,7 +39,8 @@ for (year in 1:5) {
 	data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
 	data_test <- maFinal[-trainIndex,]
 	
-	bigDataFrame <- bind_cols(list(as.numeric(as.character(svmLoko)), as.numeric(as.character(svmResults)), as.numeric(as.character(xgboost)), as.numeric(as.character(nnResults))))
+	# bigDataFrame <- bind_cols(list(as.numeric(as.character(svmLoko)), as.numeric(as.character(svmResults)), as.numeric(as.character(xgboost)), as.numeric(as.character(nnResults))))
+	bigDataFrame <- bind_cols(list(as.numeric(as.character(svmLoko)), as.numeric(as.character(svmResults)), as.numeric(as.character(nnResults))))
 	pred <- round(rowMeans(bigDataFrame),0)
 	
 	#bigDataFrame <- bind_cols(list(as.numeric(as.character(svmResults)), as.numeric(as.character(xgboost))))
