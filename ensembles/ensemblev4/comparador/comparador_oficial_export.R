@@ -14,6 +14,13 @@ addRowAdpaterBamos <- function(resultados, f1, precision, recall) {
   return (newdf)
 }
 
+f <- function(x, outputFile) {
+  if (x[2] != x[3] && x[2] != x[4] && x[2] != x[5] && x[2] != x[6]) {
+    print(paste(x[1], sep=","))
+    cat(paste(x[1], x[2], x[3], x[4], x[5], x[6], sep=","), file= outputFile, append = T, fill = T)
+  }
+}
+
 for (year in 1:1) {
 	svmResults <- readRDS(file = paste0("ensembles/ensemblev3/resultados/", expName, "/svm", year, ".rds"))
 	nnResults <- readRDS(file = paste0("ensembles/ensemblev3/resultados/", expName, "/newdl/neuralprob", year, ".rds"))
@@ -41,14 +48,6 @@ for (year in 1:1) {
 	bigDataFrame <- bind_cols(list(as.numeric(as.character(svmLoko)), as.numeric(as.character(svmResults)), as.numeric(as.character(nnResults))))
 	pred <- round(rowMeans(bigDataFrame),0)
 	finalDataFrame <- bind_cols(list(data_test$idInterno), list(as.factor(data_test$resposta)), list(as.factor(pred)), list(as.factor(round(svmLoko, 0))), list(as.factor(round(svmResults, 0))), list(as.factor(round(nnResults, 0))))
-	View(finalDataFrame)
+	
+	apply(finalDataFrame, 1, f, paste0("falhas/", expName, "_", year, ".txt"))
 }
-
-f <- function(x, outputFile) {
-  if (x[2] != x[3] && x[2] != x[4] && x[2] != x[5] && x[2] != x[6]) {
-    print(paste(x[1], sep=","))
-    cat(paste(x[1], x[2], x[3], x[4], x[5], x[6], sep=","), file= outputFile, append = T, fill = T)
-  }
-}
-
-apply(finalDataFrame, 1, f, "falhas/exp1.txt")
