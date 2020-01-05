@@ -16,7 +16,6 @@ addRowAdpaterBamos <- function(resultados, f1, precision, recall) {
 
 for (year in 1:1) {
 	svmResults <- readRDS(file = paste0("ensembles/ensemblev3/resultados/", expName, "/svm", year, ".rds"))
-	xgboost <- readRDS(file = paste0("ensembles/ensemblev4/resultados/", expName, "/xgboost", year, ".rds"))
 	nnResults <- readRDS(file = paste0("ensembles/ensemblev3/resultados/", expName, "/newdl/neuralprob", year, ".rds"))
 	svmLoko <- readRDS(file = paste0("ensembles/ensemblev4/resultados/", expName, "/svmpoly", year, ".rds"))
 	
@@ -39,19 +38,17 @@ for (year in 1:1) {
 	data_train <- as.data.frame(unclass(maFinal[ trainIndex,]))
 	data_test <- maFinal[-trainIndex,]
 	
-	bigDataFrame <- bind_cols(list(as.numeric(as.character(svmLoko)), as.numeric(as.character(svmResults)), as.numeric(as.character(xgboost)), as.numeric(as.character(nnResults))))
+	bigDataFrame <- bind_cols(list(as.numeric(as.character(svmLoko)), as.numeric(as.character(svmResults)), as.numeric(as.character(nnResults))))
 	pred <- round(rowMeans(bigDataFrame),0)
-	
-		
-	matriz <- confusionMatrix(data = as.factor(pred), as.factor(data_test$resposta), positive="1")
-	print(matriz$byClass["F1"])
-	print(matriz$byClass["Precision"])
-	print(matriz$byClass["Recall"])
-
-	resultados <- addRowAdpaterBamos(resultados, matriz$byClass["F1"], matriz$byClass["Precision"], matriz$byClass["Recall"])
+	finalDataFrame <- bind_cols(list(data_test$idInterno), list(as.factor(data_test$resposta)), list(as.factor(pred)), list(as.factor(round(svmLoko, 0))), list(as.factor(round(svmResults, 0))), list(as.factor(round(nnResults, 0))))
+	View(finalDataFrame)
 }
 
-View(resultados)
-mean(resultados$F1 * 100)
-mean(resultados$Precision * 100)
-mean(resultados$Recall * 100)
+f <- function(x, outputFile) {
+  if (x[2] != x[3] && x[2] != x[4] && x[2] != x[5] && x[2] != x[6]) {
+    print(paste(x[1], sep=","))
+    cat(x[1], file=outputFile)
+  }
+}
+
+apply(finalDataFrame, 1, f, "falhas/exp1.txt")
