@@ -21,7 +21,7 @@ f <- function(x, outputFile) {
   }
 }
 
-for (year in 1:1) {
+for (year in 1:5) {
 	svmResults <- readRDS(file = paste0("ensembles/ensemblev3/resultados/", expName, "/svm", year, ".rds"))
 	nnResults <- readRDS(file = paste0("ensembles/ensemblev3/resultados/", expName, "/newdl/neuralprob", year, ".rds"))
 	svmLoko <- readRDS(file = paste0("ensembles/ensemblev4/resultados/", expName, "/svmpoly", year, ".rds"))
