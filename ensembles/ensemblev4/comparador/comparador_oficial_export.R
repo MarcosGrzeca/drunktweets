@@ -47,7 +47,7 @@ for (year in 1:1) {
 f <- function(x, outputFile) {
   if (x[2] != x[3] && x[2] != x[4] && x[2] != x[5] && x[2] != x[6]) {
     print(paste(x[1], sep=","))
-    cat(x[1], file=outputFile)
+    cat(paste(x[1], x[2], x[3], x[4], x[5], x[6], sep=","), file= outputFile, append = T, fill = T)
   }
 }
 
