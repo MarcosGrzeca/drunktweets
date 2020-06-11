@@ -5,10 +5,10 @@ library(doMC)
 library(mlbench)
 library(magrittr)
 
-CORES <- 4
+CORES <- 5
 registerDoMC(CORES)
 
-expName <- "exp1"
+expName <- "exp3"
 
 resultados <- data.frame(matrix(ncol = 4, nrow = 0))
 names(resultados) <- c("F1", "Precision", "Recall")
@@ -56,19 +56,15 @@ for (year in 1:5) {
 	bigDataFrame <- bind_cols(list(as.numeric(as.character(svmResults)), as.numeric(as.character(xgboost)), as.numeric(as.character(nnResults))))
 	
 	library(caret)
-	trainIndex <- createDataPartition(data_test$resposta, p=0.8, list=FALSE)
+	trainIndex <- createDataPartition(data_test$resposta, p=0.9, list=FALSE)
 	dados_train <- data_test[ trainIndex,]
 	dados_test <- data_test[-trainIndex,]
 
 	classifier <- treinarPoly(subset(dados_train, select = -c(resposta)), dados_train$resposta)
-
+	
 	# out-of-sample accuracy
 	pred <- predict(classifier, subset(dados_test, select = -c(resposta)))
-	resultados <- addRowSimple(resultados, "Com", round(precision(preds>.50, resposta_test) * 100,6), round(recall(preds>.50, resposta_test) * 100,6))
-
-
-
-	
+	#resultados <- addRowSimple(resultados, "Com", round(precision(preds>.50, resposta_test) * 100,6), round(recall(preds>.50, resposta_test) * 100,6))	
 	#bigDataFrame <- bind_cols(list(as.numeric(as.character(svmResults)), as.numeric(as.character(xgboost))))
 	#pred <- round(rowMeans(bigDataFrame),0)
 	
@@ -78,7 +74,6 @@ for (year in 1:5) {
 	print(matriz$byClass["F1"])
 	print(matriz$byClass["Precision"])
 	print(matriz$byClass["Recall"])
-
 	resultados <- addRowAdpaterBamos(resultados, matriz$byClass["F1"], matriz$byClass["Precision"], matriz$byClass["Recall"])
 }
 
