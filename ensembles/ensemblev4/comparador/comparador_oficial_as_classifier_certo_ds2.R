@@ -8,7 +8,7 @@ library(magrittr)
 CORES <- 10
 registerDoMC(CORES)
 
-expName <- "ds2"
+expName <- "ds3"
 
 resultados <- data.frame(matrix(ncol = 4, nrow = 0))
 names(resultados) <- c("F1", "Precision", "Recall")
@@ -29,6 +29,8 @@ treinarPoly <- function(data_train, resposta) {
             trControl = trainControl(method = "cv", number = 5))
     return (fit)
 }
+
+set.seed(10)
 
 for (year in 1:5) {
 	svmResults <- readRDS(file = paste0("ensembles/ensemblev3/resultados/", expName, "/svm", year, ".rds"))
