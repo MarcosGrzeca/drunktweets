@@ -5,10 +5,10 @@ library(doMC)
 library(mlbench)
 library(magrittr)
 
-CORES <- 5
+CORES <- 10
 registerDoMC(CORES)
 
-expName <- "exp3"
+expName <- "exp1"
 
 resultados <- data.frame(matrix(ncol = 4, nrow = 0))
 names(resultados) <- c("F1", "Precision", "Recall")
@@ -50,21 +50,22 @@ for (year in 1:5) {
 	load(datasetFile)
 
 	trainIndex <- readRDS(file = paste0("ensembles/ensemblev2/resample/", expName, "/", "trainIndex", year, ".rds"))
+	
 	dados <- bind_cols(list(as.numeric(as.character(svmResults)), as.numeric(as.character(svmLoko)), as.numeric(as.character(nnResults))))
 	dados_com_resposta <- maFinal[-trainIndex,]
 
-	trainIndex <- createDataPartition(dados_com_resposta$resposta, p=0.9, list=FALSE)
-	dados_train <- dados[ trainIndex,]
-	dados_test <- dados[-trainIndex,]
+	trainIndexNew <- createDataPartition(dados_com_resposta$resposta, p=0.9, list=FALSE)
+	dados_train <- dados[ trainIndexNew,]
+	dados_test <- dados[-trainIndexNew,]
 	
-	classifier <- treinarPoly(dados_train, dados_com_resposta$resposta)
+	classifier <- treinarPoly(dados_train, dados_com_resposta$resposta[trainIndexNew])
 	
 	# out-of-sample accuracy
 	pred <- predict(classifier, dados_test)
 	pred
 	
 	# bigDataFrame <- as.numeric(as.character(svmResults))
-	matriz <- confusionMatrix(data = as.factor(pred), as.factor(dados_test$resposta), positive="1")
+	matriz <- confusionMatrix(data = as.factor(pred), as.factor(dados_com_resposta$resposta[-trainIndexNew]), positive="1")
 	print(matriz$byClass["F1"])
 	print(matriz$byClass["Precision"])
 	print(matriz$byClass["Recall"])
