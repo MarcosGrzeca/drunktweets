@@ -64,12 +64,12 @@ for (year in 1:5) {
 	
 	# out-of-sample accuracy
 	pred <- predict(classifier, subset(dados_test, select = -c(resposta)))
+	pred
 	#resultados <- addRowSimple(resultados, "Com", round(precision(preds>.50, resposta_test) * 100,6), round(recall(preds>.50, resposta_test) * 100,6))	
 	#bigDataFrame <- bind_cols(list(as.numeric(as.character(svmResults)), as.numeric(as.character(xgboost))))
 	#pred <- round(rowMeans(bigDataFrame),0)
 	
 	# bigDataFrame <- as.numeric(as.character(svmResults))
-	pred <- round(bigDataFrame,0)
 	matriz <- confusionMatrix(data = as.factor(pred), as.factor(dados_test$resposta), positive="1")
 	print(matriz$byClass["F1"])
 	print(matriz$byClass["Precision"])
