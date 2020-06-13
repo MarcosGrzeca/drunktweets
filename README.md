@@ -27,14 +27,18 @@ Path: `exp4/svmpoly/lstm/ds1q1.R`
 
 
 ### Gerar embeddings
- - DS1-Q1: `adhoc/exportembedding/ds1/lstm_q1.R`
+- DS1-Q1: `adhoc/exportembedding/ds1/lstm_q1.R`
+
+- DS3:
+  - `adhoc/exportembedding/ds3/lstm_10_epocas_v2.txt`
 
 ### Geradores média
- - DS1-Q1: `adhoc/redemaluca/ds1/dados/q1_redemaluca_lstm_PCA.R`
- - DS1-Q2: ``
- - DS1-Q3: ``
- - DS2: `exp4/svmpoly/lstm/ds2.R` **Verificar**
- - DS3: `adhoc/redemaluca/ds3/dados/ds3_redemaluca_lstm_PCA.R`
+- DS1-Q1: `adhoc/redemaluca/ds1/dados/q1_redemaluca_lstm_PCA.R`
+- DS1-Q2: ``
+- DS1-Q3: ``
+- DS2: `exp4/svmpoly/lstm/ds2.R` **Verificar**
+- DS3: `adhoc/redemaluca/ds3/dados/ds3_redemaluca_lstm_PCA.R`
+  - `adhoc/redemaluca/ds3/ds3_representacao_with_lstm_pca_15.RData`
 
 
 
@@ -54,15 +58,17 @@ Path: `exp4/svmpoly/lstm/ds1q1.R`
 - DS1-Q2:
 - DS1-Q3:
 - DS2: 
-- DS3: 
+- DS3: `ipmbilstm/exportembedding/ds3/lstm_oficial.R`
+  - `bilstm/exportembedding/ds3/bilstm_10_epocas_v2.txt`
 
 ### Gerar média de cada tweet
 - DS1-Q1: `ipmbilstm/ds1/dados/q1_redemaluca_bilstm_PCA.R`
   - `ipmbilstm/exportembedding/ds1/q1_representacao_bilstm_pca.RData`
- - DS1-Q2:
- - DS1-Q3:
- - DS2: 
- - DS3: 
+- DS1-Q2:
+- DS1-Q3:
+- DS2: 
+- DS3: `ipmbilstm/exportembedding/ds3/ds3_redemaluca_bilstm_PCA.R`
+  - `ipmbilstm/exportembedding/ds3/ds3_representacao_with_bilstm_pca_15.RData`
 
 ### Executar os classificadores
 - DS1-Q1: `exp4/svmpoly/bilstm/ds1q1.R`
