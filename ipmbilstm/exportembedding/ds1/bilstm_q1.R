@@ -8,6 +8,7 @@ source(file_path_as_absolute("utils/tokenizer.R"))
 
 dados <- getDadosBaselineByQ("q1")
 # dados$textEmbedding <- removePunctuation(dados$textEmbedding)
+View(dados)
 
 maxlen <- 38
 max_words <- 7860
@@ -48,9 +49,13 @@ main_input <- layer_input(shape = c(maxlen), dtype = "int32")
 main_output <- main_input %>% 
   layer_embedding(vocab_size, embedding_dims, input_length = maxlen, name = "embedding") %>%
   bidirectional(
-    layer_lstm(units = 128, return_sequences = TRUE) %>%
-    layer_lstm(units = 64, return_sequences = TRUE, recurrent_dropout = 0.2) %>%
-    layer_lstm(units = 32) %>%
+    layer_lstm(units = 128, return_sequences = TRUE)
+  ) %>%
+  bidirectional(
+    layer_lstm(units = 64, return_sequences = TRUE, recurrent_dropout = 0.2)
+  ) %>%
+  bidirectional(
+    layer_lstm(units = 32)
   ) %>%
   layer_dense(units = 1, activation = 'sigmoid')
 
@@ -92,6 +97,7 @@ predictions <- model %>% predict(list(dados_test_sequence))
 predictions2 <- round(predictions, 0)
 matriz <- confusionMatrix(data = as.factor(predictions2), as.factor(dados_test$resposta), positive="1")
 resultados <- addRowAdpater(resultados, "TESTE", matriz)
+
 
 ##
 library(dplyr)

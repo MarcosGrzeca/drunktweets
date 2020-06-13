@@ -75,7 +75,7 @@ Path: `exp4/svmpoly/lstm/ds1q1.R`
 - DS1-Q2:
 - DS1-Q3:
 - DS2: 
-- DS3: 
+- DS3: `exp4/svmpoly/bilstm/ds3.R`
 
 
 ### Resultados
