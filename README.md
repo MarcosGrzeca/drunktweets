@@ -25,7 +25,11 @@ Drunk tweets
 ### Files
 Path: `exp4/svmpoly/lstm/ds1q1.R`
 
-### Geradores
+
+### Gerar embeddings
+ - DS1-Q1: `adhoc/exportembedding/ds1/lstm_q1.R`
+
+### Geradores média
  - DS1-Q1: `adhoc/redemaluca/ds1/dados/q1_redemaluca_lstm_PCA.R`
  - DS1-Q2: ``
  - DS1-Q3: ``
@@ -36,3 +40,47 @@ Path: `exp4/svmpoly/lstm/ds1q1.R`
 
 ## Experimentos Bi-LSTM
 
+### Info úteis
+ - Folder: `ipmbilstm`
+
+### Passos
+1 - Gerar embeddings
+2 - Gerar média de cada tweet
+3 - Classificar similar a `exp4/svmpoly/lstm/ds3.R`
+
+### Gerar embeddings
+- DS1-Q1: `ipmbilstm/exportembedding/ds1/bilstm_q1.R`
+  - `ipmbilstm/exportembedding/ds1/q1/bilstm_10_epocas.txt`
+- DS1-Q2:
+- DS1-Q3:
+- DS2: 
+- DS3: 
+
+### Gerar média de cada tweet
+- DS1-Q1: `ipmbilstm/ds1/dados/q1_redemaluca_bilstm_PCA.R`
+  - `ipmbilstm/exportembedding/ds1/q1_representacao_bilstm_pca.RData`
+ - DS1-Q2:
+ - DS1-Q3:
+ - DS2: 
+ - DS3: 
+
+### Executar os classificadores
+- DS1-Q1: `exp4/svmpoly/bilstm/ds1q1.R`
+- DS1-Q2:
+- DS1-Q3:
+- DS2: 
+- DS3: 
+
+
+### Resultados
+[Planilha de resultados](https://docs.google.com/spreadsheets/d/112byd2PSnWVh7KbdJP3AlDGEZne6a-5zVCjZrbNqXTg/edit?usp=sharing)
+
+## Restore Database
+
+Remover linhas
+- SET @MYSQLDUMP_TEMP_LOG_BIN = @@SESSION.SQL_LOG_BIN;
+- SET @@SESSION.SQL_LOG_BIN= 0;
+- SET @@GLOBAL.GTID_PURGED='d2298455-xxxx-xxxx-xxxx-42010a980029:1-3413775';
+- SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN
+
+[Fonte](https://help.poralix.com/articles/mysql-access-denied-you-need-the-super-privilege-for-this-operation)
