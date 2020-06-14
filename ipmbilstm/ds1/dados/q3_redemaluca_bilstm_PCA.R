@@ -36,7 +36,7 @@ typesdfm <- dfm(types, verbose=TRUE)
 #    keptFeatures = NULL, language = "english", thesaurus = NULL,
 #    dictionary = NULL, valuetype = c("glob", "regex", "fixed"), ..
 
-w2v <- readr::read_delim("ipmbilstm/exportembedding/ds1/q3/bilstm_10_epocas.txt", 
+w2v <- readr::read_delim("ipmbilstm/exportembedding/ds1/q3/bilstm_10_epocas_new.txt", 
                   skip=1, delim=" ", quote="",
                   col_names=c("word", paste0("V", 1:100)))
 
@@ -64,4 +64,4 @@ enriquecimento <- cbind(typesdfm, entidadesdfm)
 pca_entities <- prcomp(enriquecimento, scale = FALSE)
 
 X <- cbind(embed,pca_entities$x[,1:9], dados$resposta)
-save(X, file = "ipmbilstm/exportembedding/ds1/q3_representacao_bilstm_pca.RData")
+save(X, file = "ipmbilstm/exportembedding/ds1/q3_representacao_bilstm_pca_new.RData")
