@@ -2,7 +2,6 @@ library(tools)
 library(rword2vec)
 library(lsa)
 library(readr)
-library(quanteda)
 library(caret)
 
 library(doMC)
@@ -40,10 +39,6 @@ set.seed(10)
 for (year in 1:10) {
 	load(embeddingsFile)
 	inTrain <- createDataPartition(y = X[, ncol(X)], p = 0.8, list = FALSE)
-
-	if (year < 5) {
-		next;
-	}
 
 	tam <- ncol(X) - 1
 	one_hot_train <- X[inTrain, 1:tam]
