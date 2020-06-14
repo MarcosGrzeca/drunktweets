@@ -72,7 +72,7 @@ main_output <- main_input %>%
     layer_lstm(units = 64, return_sequences = TRUE, recurrent_dropout = 0.2)
   ) %>%
   bidirectional(
-    layer_lstm(units = 32) %>%
+    layer_lstm(units = 32)
   ) %>%
   layer_dense(units = 1, activation = 'sigmoid')
 
@@ -120,6 +120,6 @@ words <- words %>%
 
 row.names(embedding_matrixTwo) <- c("UNK", words$word)
 
-embedding_file <- "bilstm/exportembedding/ds3/bilstm_10_epocas_v2.txt"
+embedding_file <- "ipmbilstm/exportembedding/ds3/bilstm_10_epocas_v2.txt"
 write.table(embedding_matrixTwo, embedding_file, sep=" ",row.names=TRUE)
 system(paste0("sed -i 's/\"//g' ", embedding_file))
