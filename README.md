@@ -2,6 +2,20 @@
 Drunk tweets
 
 
+## Dimensões
+- DS1-Q1:
+  - maxlen <- 38
+  - max_words <- 7860
+  - PCA <- 13
+- DS1-Q2:
+  - maxlen <- 38
+  - max_words <- 4405
+  - PCA <- 12
+- DS1-Q3: 
+  - maxlen <- 38
+  - max_words <- 3080
+  - PCA <- 9
+
 ## Experimentos Ensemble
 
 ### Processo
@@ -56,19 +70,23 @@ Path: `exp4/svmpoly/lstm/ds1q1.R`
 ### Gerar embeddings
 - DS1-Q1: `ipmbilstm/exportembedding/ds1/bilstm_q1.R`
   - `ipmbilstm/exportembedding/ds1/q1/bilstm_10_epocas.txt`
-- DS1-Q2:
-- DS1-Q3:
+- DS1-Q2: `ipmbilstm/exportembedding/ds1/bilstm_q2.R`
+  - `ipmbilstm/exportembedding/ds1/q2/bilstm_10_epocas.txt`
+- DS1-Q3: `ipmbilstm/exportembedding/ds1/bilstm_q3.R`
+  - `ipmbilstm/exportembedding/ds1/q3/bilstm_10_epocas.txt`
 - DS2: 
 - DS3: `ipmbilstm/exportembedding/ds3/lstm_oficial.R`
-  - `bilstm/exportembedding/ds3/bilstm_10_epocas_v2.txt`
+  - `ipmbilstm/exportembedding/ds3/bilstm_10_epocas_v2.txt`
 
 * AMI: 30062019RServer*
 
 ### Gerar média de cada tweet
 - DS1-Q1: `ipmbilstm/ds1/dados/q1_redemaluca_bilstm_PCA.R`
   - `ipmbilstm/exportembedding/ds1/q1_representacao_bilstm_pca.RData`
-- DS1-Q2:
-- DS1-Q3:
+- DS1-Q2: `ipmbilstm/ds1/dados/q2_redemaluca_bilstm_PCA.R`
+  - `ipmbilstm/exportembedding/ds1/q2_representacao_bilstm_pca.RData`
+- DS1-Q3: `ipmbilstm/ds1/dados/q3_redemaluca_bilstm_PCA.R`
+  - `ipmbilstm/exportembedding/ds1/q3_representacao_bilstm_pca.RData`
 - DS2: 
 - DS3: `ipmbilstm/exportembedding/ds3/ds3_redemaluca_bilstm_PCA.R`
   - `ipmbilstm/exportembedding/ds3/ds3_representacao_with_bilstm_pca_15.RData`
@@ -78,8 +96,8 @@ Path: `exp4/svmpoly/lstm/ds1q1.R`
 
 ### Executar os classificadores
 - DS1-Q1: `exp4/svmpoly/bilstm/ds1q1.R`
-- DS1-Q2:
-- DS1-Q3:
+- DS1-Q2: `exp4/svmpoly/bilstm/ds1q2.R`
+- DS1-Q3: `exp4/svmpoly/bilstm/ds1q3.R`
 - DS2: 
 - DS3: `exp4/svmpoly/bilstm/ds3.R`
 
