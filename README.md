@@ -46,6 +46,7 @@ Path: `exp4/svmpoly/lstm/ds1q1.R`
 
 ### Info úteis
  - Folder: `ipmbilstm`
+ - Comentar caret em `utils/getDados.R` 
 
 ### Passos
 1 - Gerar embeddings
@@ -61,6 +62,8 @@ Path: `exp4/svmpoly/lstm/ds1q1.R`
 - DS3: `ipmbilstm/exportembedding/ds3/lstm_oficial.R`
   - `bilstm/exportembedding/ds3/bilstm_10_epocas_v2.txt`
 
+*Pode ser local*
+
 ### Gerar média de cada tweet
 - DS1-Q1: `ipmbilstm/ds1/dados/q1_redemaluca_bilstm_PCA.R`
   - `ipmbilstm/exportembedding/ds1/q1_representacao_bilstm_pca.RData`
@@ -70,12 +73,17 @@ Path: `exp4/svmpoly/lstm/ds1q1.R`
 - DS3: `ipmbilstm/exportembedding/ds3/ds3_redemaluca_bilstm_PCA.R`
   - `ipmbilstm/exportembedding/ds3/ds3_representacao_with_bilstm_pca_15.RData`
 
+
+* AMI: ubuntur3542206*
+
 ### Executar os classificadores
 - DS1-Q1: `exp4/svmpoly/bilstm/ds1q1.R`
 - DS1-Q2:
 - DS1-Q3:
 - DS2: 
 - DS3: `exp4/svmpoly/bilstm/ds3.R`
+
+* AMI: 30062019RServer*
 
 
 ### Resultados
