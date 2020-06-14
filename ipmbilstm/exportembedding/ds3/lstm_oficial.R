@@ -66,8 +66,12 @@ main_input <- layer_input(shape = c(maxlen), dtype = "int32")
 main_output <- main_input %>% 
   layer_embedding(vocab_size, embedding_dims, input_length = maxlen, name = "embedding") %>%
   bidirectional(
-    layer_lstm(units = 128, return_sequences = TRUE) %>%
-    layer_lstm(units = 64, return_sequences = TRUE, recurrent_dropout = 0.2) %>%
+    layer_lstm(units = 128, return_sequences = TRUE)
+  ) %>%
+  bidirectional(
+    layer_lstm(units = 64, return_sequences = TRUE, recurrent_dropout = 0.2)
+  ) %>%
+  bidirectional(
     layer_lstm(units = 32) %>%
   ) %>%
   layer_dense(units = 1, activation = 'sigmoid')

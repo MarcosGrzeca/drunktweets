@@ -62,7 +62,7 @@ Path: `exp4/svmpoly/lstm/ds1q1.R`
 - DS3: `ipmbilstm/exportembedding/ds3/lstm_oficial.R`
   - `bilstm/exportembedding/ds3/bilstm_10_epocas_v2.txt`
 
-*Pode ser local*
+* AMI: 30062019RServer*
 
 ### Gerar média de cada tweet
 - DS1-Q1: `ipmbilstm/ds1/dados/q1_redemaluca_bilstm_PCA.R`
