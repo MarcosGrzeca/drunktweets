@@ -1,6 +1,6 @@
 library(tools)
 library(keras)
-library(caret)
+#library(caret)
 library(dplyr)
 source(file_path_as_absolute("utils/functions.R"))
 #source(file_path_as_absolute("processadores/discretizar.R"))

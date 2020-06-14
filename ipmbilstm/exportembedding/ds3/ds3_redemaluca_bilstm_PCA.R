@@ -37,7 +37,7 @@ typesdfm <- dfm(types, verbose=TRUE)
 #    keptFeatures = NULL, language = "english", thesaurus = NULL,
 #    dictionary = NULL, valuetype = c("glob", "regex", "fixed"), ..
 
-w2v <- readr::read_delim("bilstm/exportembedding/ds3/bilstm_10_epocas_v2.txt", 
+w2v <- readr::read_delim("ipmbilstm/exportembedding/ds3/bilstm_10_epocas_v2.txt", 
                   skip=1, delim=" ", quote="",
                   col_names=c("word", paste0("V", 1:100)))
 
