@@ -15,6 +15,10 @@ Drunk tweets
   - maxlen <- 38
   - max_words <- 3080
   - PCA <- 9
+- DS2:
+  - maxlen <- 38
+  - max_words <- 18391
+  - PCA <- 50
 
 ## Experimentos Ensemble
 
@@ -74,7 +78,8 @@ Path: `exp4/svmpoly/lstm/ds1q1.R`
   - `ipmbilstm/exportembedding/ds1/q2/bilstm_10_epocas.txt`
 - DS1-Q3: `ipmbilstm/exportembedding/ds1/bilstm_q3.R`
   - `ipmbilstm/exportembedding/ds1/q3/bilstm_10_epocas_new.txt`
-- DS2: 
+- DS2: `bilstm/exportembedding/ds2/bilstm_v2.R`
+  - `ipmbilstm/exportembedding/ds2/bilstm_10_epocas.txt`
 - DS3: `ipmbilstm/exportembedding/ds3/lstm_oficial.R`
   - `ipmbilstm/exportembedding/ds3/bilstm_10_epocas_v2.txt`
 
@@ -87,7 +92,8 @@ Path: `exp4/svmpoly/lstm/ds1q1.R`
   - `ipmbilstm/exportembedding/ds1/q2_representacao_bilstm_pca.RData`
 - DS1-Q3: `ipmbilstm/ds1/dados/q3_redemaluca_bilstm_PCA.R`
   - `ipmbilstm/exportembedding/ds1/q3_representacao_bilstm_pca_new.RData`
-- DS2: 
+- DS2: `ipmbilstm/ds2/dados/ds2_redemaluca_bilstm_pca.R`
+  - `ipmbilstm/ds2/dados/ds2_representacao_bilstm_PCA_50.RData`
 - DS3: `ipmbilstm/exportembedding/ds3/ds3_redemaluca_bilstm_PCA.R`
   - `ipmbilstm/exportembedding/ds3/ds3_representacao_with_bilstm_pca_15.RData`
 
@@ -98,7 +104,7 @@ Path: `exp4/svmpoly/lstm/ds1q1.R`
 - DS1-Q1: `exp4/svmpoly/bilstm/ds1q1.R`
 - DS1-Q2: `exp4/svmpoly/bilstm/ds1q2.R`
 - DS1-Q3: `exp4/svmpoly/bilstm/ds1q3.R`
-- DS2: 
+- DS2:  `exp4/svmpoly/bilstm/ds2.R`
 - DS3: `exp4/svmpoly/bilstm/ds3.R`
 
 * AMI: 30062019RServer*
