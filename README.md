@@ -122,3 +122,35 @@ Remover linhas
 - SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN
 
 [Fonte](https://help.poralix.com/articles/mysql-access-denied-you-need-the-super-privilege-for-this-operation)
+
+### BERT
+
+## Documentos
+- Tutorial em code lab: https://mccormickml.com/2019/07/22/BERT-fine-tuning/
+- Tutoral em R: https://blogs.rstudio.com/ai/posts/2019-09-30-bert-r/
+- Artigo: https://arxiv.org/pdf/1810.04805.pdf
+
+## Menos importantes
+- Doc oficial: https://github.com/google-research/bert
+
+
+## Code Labs
+- MarcosTutorial.ipynb: teste feito com DS1-Q2
+- Marcos word_to_sentence_embedding.ipynb: IMDB
+
+## Passos
+
+### Gerar CSV
+- DS1-Q1: `ipmbilstm/exportembedding/ds1/bilstm_q1.R`
+  - ``
+- DS1-Q2: `ipmbilstm/exportembedding/ds1/bilstm_q2.R`
+  - ``
+- DS1-Q3: `ipmbilstm/exportembedding/ds1/bilstm_q3.R`
+  - ``
+- DS2: `ipmbilstm/exportembedding/ds2/bilstm_v2.R`
+  - ``
+- DS3: `ipmbilstm/exportembedding/ds3/lstm_oficial.R`
+  - ``
+
+### Utilizar projeto
+- https://github.com/MarcosGrzeca/berttestes
