@@ -20,6 +20,18 @@ Drunk tweets
   - max_words <- 18391
   - PCA <- 50
 
+
+## Drink2Vec - DNN
+
+### Resultados
+[Planilha de resultados](https://docs.google.com/spreadsheets/d/1YFfZEjP8I3NONUvdPovOf1AwA6TEZbLdq_NaTMSlK90/edit#gid=450516288)
+
+## Drink2Vec - SVM
+
+### Resultados
+[Planilha de resultados](https://docs.google.com/spreadsheets/d/1BU6NxRKoT2ozmOH1g9f6yRtO2qeXtiUs7J-4TCJ__IQ/edit#gid=628839925)
+
+
 ## Experimentos Ensemble
 
 ### Processo
