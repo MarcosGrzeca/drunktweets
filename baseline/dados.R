@@ -178,7 +178,9 @@ getDadosBaselineByQ <- function(var) {
 	dados$textEmbedding <- iconv(dados$textEmbedding, to='ASCII//TRANSLIT')
 	dados$textEmbedding = gsub("'", "", dados$textEmbedding, ignore.case=T)
 	dados$textEmbedding = gsub("“", "", dados$textEmbedding)
-  	dados$textEmbedding = gsub("”", "", dados$textEmbedding)
+  dados$textEmbedding = gsub("”", "", dados$textEmbedding)
+  dados$textEmbedding = gsub("a\\?o", "", dados$textEmbedding) #Apresentava caracteres estranhos ao exportar para planilha
+  	
 
 	dados$entidades <- enc2utf8(dados$entidades)
 	dados$entidades <- iconv(dados$entidades, to='ASCII//TRANSLIT')

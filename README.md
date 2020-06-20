@@ -141,16 +141,16 @@ Remover linhas
 ## Passos
 
 ### Gerar CSV
-- DS1-Q1: `ipmbilstm/exportembedding/ds1/bilstm_q1.R`
-  - ``
-- DS1-Q2: `ipmbilstm/exportembedding/ds1/bilstm_q2.R`
-  - ``
-- DS1-Q3: `ipmbilstm/exportembedding/ds1/bilstm_q3.R`
-  - ``
+- DS1-Q1: `bert/exportarcsv.R`
+  - `bert/exp1.csv`
+- DS1-Q2: `bert/exportarcsv.R`
+  - `bert/exp2.csv`
+- DS1-Q3: `bert/exportarcsv.R`
+  - `bert/exp3.csv`
 - DS2: `ipmbilstm/exportembedding/ds2/bilstm_v2.R`
-  - ``
+  - `bert/ds2.csv`
 - DS3: `ipmbilstm/exportembedding/ds3/lstm_oficial.R`
-  - ``
+  - `bert/ds33.csv`
 
 ### Utilizar projeto
 - https://github.com/MarcosGrzeca/berttestes
