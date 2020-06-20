@@ -150,7 +150,11 @@ Remover linhas
 - DS2: `ipmbilstm/exportembedding/ds2/bilstm_v2.R`
   - `bert/ds2.csv`
 - DS3: `ipmbilstm/exportembedding/ds3/lstm_oficial.R`
-  - `bert/ds33.csv`
+  - `bert/ds3.csv`
 
 ### Utilizar projeto
 - https://github.com/MarcosGrzeca/berttestes
+
+
+### Resultados
+[Planilha de resultados](https://docs.google.com/spreadsheets/d/1GYIbqFk9f_9-GQYBGADx9S_47XZIOl2ixR1eaqdAYFU/edit?usp=sharing)
