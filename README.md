@@ -121,6 +121,11 @@ Path: `exp4/svmpoly/lstm/ds1q1.R`
 
 * AMI: 30062019RServer*
 
+### BI-LSTM MEnor
+- `ipmbilstm/exportembedding/ds1/bilstm_q1_menor.R`
+- `ipmbilstm/ds1/dados/q1_redemaluca_bilstm_PCA_menor.R`
+- `exp4/svmpoly/bilstm/ds1q1_menor.R`
+
 
 ### Resultados
 [Planilha de resultados](https://docs.google.com/spreadsheets/d/112byd2PSnWVh7KbdJP3AlDGEZne6a-5zVCjZrbNqXTg/edit?usp=sharing)
