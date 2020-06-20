@@ -113,6 +113,8 @@ Path: `exp4/svmpoly/lstm/ds1q1.R`
 * AMI: ubuntur3542206*
 
 ### Executar os classificadores
+
+** SVM **
 - DS1-Q1: `exp4/svmpoly/bilstm/ds1q1.R`
 - DS1-Q2: `exp4/svmpoly/bilstm/ds1q2.R`
 - DS1-Q3: `exp4/svmpoly/bilstm/ds1q3.R`
@@ -120,6 +122,14 @@ Path: `exp4/svmpoly/lstm/ds1q1.R`
 - DS3: `exp4/svmpoly/bilstm/ds3.R`
 
 * AMI: 30062019RServer*
+
+** XGBOOST **
+- DS1-Q1: `exp4/xgboost/bilstm/ds1q1.R`
+- DS1-Q2: `exp4/xgboost/bilstm/ds1q2.R`
+- DS1-Q3: `exp4/xgboost/bilstm/ds1q3.R`
+- DS2:  ``
+- DS3: ``
+
 
 ### BI-LSTM MEnor
 - `ipmbilstm/exportembedding/ds1/bilstm_q1_menor.R`
