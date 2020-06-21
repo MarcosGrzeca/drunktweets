@@ -110,11 +110,11 @@ Path: `exp4/svmpoly/lstm/ds1q1.R`
   - `ipmbilstm/exportembedding/ds3/ds3_representacao_with_bilstm_pca_15.RData`
 
 
-* AMI: ubuntur3542206*
+*AMI: ubuntur3542206*
 
 ### Executar os classificadores
 
-** SVM **
+**SVM**
 - DS1-Q1: `exp4/svmpoly/bilstm/ds1q1.R`
 - DS1-Q2: `exp4/svmpoly/bilstm/ds1q2.R`
 - DS1-Q3: `exp4/svmpoly/bilstm/ds1q3.R`
@@ -123,7 +123,7 @@ Path: `exp4/svmpoly/lstm/ds1q1.R`
 
 * AMI: 30062019RServer*
 
-** XGBOOST **
+**XGBOOST**
 - DS1-Q1: `exp4/xgboost/bilstm/ds1q1.R`
 - DS1-Q2: `exp4/xgboost/bilstm/ds1q2.R`
 - DS1-Q3: `exp4/xgboost/bilstm/ds1q3.R`
