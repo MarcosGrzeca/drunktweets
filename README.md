@@ -19,6 +19,10 @@ Drunk tweets
   - maxlen <- 38
   - max_words <- 18391
   - PCA <- 50
+- DS3:
+  - maxlen <- 38
+  - max_words <- 183919322
+  - PCA <- ?? 
 
 
 ## Drink2Vec - DNN
@@ -195,3 +199,28 @@ Remover linhas
 - 30062019RServer: username:8787
 - ubuntur3542206: username:8080
 - bertfunciona: rstudio:8080
+
+
+## CNN direta
+
+### Files
+- DS1-Q1: `drunktweets/cnndireto/ds1/cnn_q3.R`
+- DS1-Q2: `drunktweets/cnndireto/ds1/cnn_q2.R`
+- DS1-Q3: `drunktweets/cnndireto/ds1/cnn_q3.R`
+- DS2: `drunktweets/cnndireto/ds2.R`
+- DS3: `drunktweets/cnndireto/ds3.R`
+
+### Resultados
+[Planilha de resultados](https://docs.google.com/spreadsheets/d/1un4tlaz3wBAL0lCJ1xXHbrTQ8q64vqmlRqVFA__7_dA/edit?usp=sharing)
+
+## Bi-LSTM direta
+
+### Files
+- DS1-Q1: ``
+- DS1-Q2: ``
+- DS1-Q3: ``
+- DS2: ``
+- DS3: ``
+
+### Resultados
+[Planilha de resultados](https://docs.google.com/spreadsheets/d/1un4tlaz3wBAL0lCJ1xXHbrTQ8q64vqmlRqVFA__7_dA/edit?usp=sharing)
