@@ -216,11 +216,11 @@ Remover linhas
 ## Bi-LSTM direta
 
 ### Files
-- DS1-Q1: ``
-- DS1-Q2: ``
-- DS1-Q3: ``
-- DS2: ``
-- DS3: ``
+- DS1-Q1: `drunktweets/bilstmdireta/ds1/bilstm_q1.R`
+- DS1-Q2: `drunktweets/bilstmdireta/ds1/bilstm_q2.R`
+- DS1-Q3: `drunktweets/bilstmdireta/ds1/bilstm_q3.R`
+- DS2: `drunktweets/bilstmdireta/ds2.R`
+- DS3: `drunktweets/bilstmdireta/ds3.R`
 
 ### Resultados
 [Planilha de resultados](https://docs.google.com/spreadsheets/d/1un4tlaz3wBAL0lCJ1xXHbrTQ8q64vqmlRqVFA__7_dA/edit?usp=sharing)
